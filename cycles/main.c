@@ -16,10 +16,10 @@
 
 #define INPUT_LENGTH 5
 
-int sum(int* arr)
+int sum(int *arr)
 {
   int sum = 0;
-  int length = sizeof(arr)/sizeof(arr[0]);
+  int length = sizeof(arr) / sizeof(arr[0]);
   for (int i = 0; i < length; ++i)
     sum += arr[i];
   return sum;
