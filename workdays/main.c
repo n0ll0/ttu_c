@@ -6,8 +6,14 @@ int main()
   const int juuni_keskmine_bruutopalk = 2113;
 
   int tp_algus = input_i("toopaeva algus: "); // I allow starting on previous days so -value
+  if (tp_algus < 0)
+  {
+    printf("Ärgem alusta eile oma tööga\n");
+    return 1;
+  }
+
   int tp_lopp = input_i("toopaeva lopp: ");
-  if (tp_lopp < tp_algus && tp_algus >= 0)
+  if (tp_lopp <= tp_algus)
   {
     printf("Ei saa toopaeva lopetada enne kui toopaev on alanud\n");
     return 1;
