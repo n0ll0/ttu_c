@@ -1,25 +1,9 @@
-// Tsüklid
-// Laiendatud labori kirjeldus
-
-// Kodutöö: Toidukaalu programmi edasiarendus
-
-// Menüü peab olema kahetasemeline
-// Esimese taseme menüüst valitakse toote kategooria (nt puuviljad, juurviljad). Sul peab olema vähemalt 3 kategooriat.
-// Teise taseme menüüst valitakse valitud kategooriasse kuuluv toode. Igas kategoorias peab olema 3 toodet.
-// Näita konkreetsele veale omast veateadet. Peab toetama järgnevaid:
-// Toode pole kaalu peal / kaal negatiivne
-// Tundmatu kategooria / kategooriat ei eksisteeri
-// Tundmatu toode / toodet ei eksisteeri
-
 #include <stdio.h>
-#include "../input.c"
+#include <stdlib.h>
 
-#define INPUT_LENGTH 5
-
-int sum(int *arr)
+int sum(int* arr, int length)
 {
   int sum = 0;
-  int length = sizeof(arr) / sizeof(arr[0]);
   for (int i = 0; i < length; ++i)
     sum += arr[i];
   return sum;
@@ -27,17 +11,24 @@ int sum(int *arr)
 
 int main()
 {
-  int inputs[INPUT_LENGTH];
+  int numberOfInputs;
+  if (scanf("%d", &numberOfInputs) == -1) return 1;
+  if (numberOfInputs < 1)
+    return 1;
 
-  for (int i = 0; i < INPUT_LENGTH; ++i)
+  int* inputs = (int*)malloc(numberOfInputs * sizeof(int));
+
+  for (int i = 0; i < numberOfInputs; ++i)
   {
     int input;
-    printf("Sisesta arv %d / %d\n", i + 1, INPUT_LENGTH);
-    scanf("%d", &input);
+    printf("Sisesta arv %d / %d\n", i + 1, numberOfInputs);
+    if (scanf("%d", &input) == -1) return 1;
     inputs[i] = input;
 
-    printf("%d\n", sum(inputs));
+    printf("%d\n", sum(inputs, i+1));
   }
+
+  free(inputs);
 
   return 0;
 }
