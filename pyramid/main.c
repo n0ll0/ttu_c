@@ -58,7 +58,11 @@ int count_digits(int n)
 
 int max(int a, int b)
 {
-  return (a > b) ? a : b;
+  if (a > b)
+  {
+    return a;
+  }
+  return b;
 }
 
 void printEverythingWithPrintfFormatting(int size)
@@ -73,42 +77,43 @@ void printEverythingWithPrintfFormatting(int size)
   row[1] = '#';
   row[size] = '\0';
 
-  printf("%-*s  %*s  %*s\n", size, "",
+  printf("%-*s  %*s  %*s\n", size - 3, "",
          row_len, "row",
          total_len, "total");
 
   for (int i = 3; i <= size; i++)
   {
-    row[i-1] = '#';
-    printf("%-*s  %*d  %*d\n", size + 3, row,
-           row_len + 1, i,
-           total_len + 2, total_count);
-    total_count += i+1;
+    row[i - 1] = '#';
+    printf("%-*s  %*d  %*d\n", size, row,
+           row_len, i,
+           total_len, total_count);
+    total_count += i + 1;
   }
 
   free(row);
 #else
-  printf("%*s%*s%*s%*s",size+1," O \n",size+1,"-|-\n",size+1," | \n",size,"/ \\");
+  printf("%*s%*s%*s%*s", size + 1, " O \n", size + 1, "-|-\n", size + 1, " | \n", size, "/ \\");
   int row_len = max(count_digits(size), 4);
   int total_len = max(count_digits((size * 2) + (size * size / 2)), 7);
   int total_count = 3;
   char *row = (char *)malloc((size + 1) * sizeof(char));
-  for (int u=0;u<size+1;u++) row[u]=' ';
+  for (int u = 0; u < size + 1; u++)
+    row[u] = ' ';
   row[size] = '\0';
-  row[size-1] = '#';
-  row[size-2] = '#';
+  row[size - 1] = '#';
+  row[size - 2] = '#';
 
-  printf("%*s  %*s\n",
+  printf("  %*s  %*s\n",
          row_len, "row",
          total_len, "total");
 
   for (int i = 3; i <= size; i++)
   {
-    row[size-i] = '#';
+    row[size - i] = '#';
     printf("%s  %*d  %*d\n", row,
-           row_len-2, i,
+           row_len, i,
            total_len, total_count);
-    total_count += i+1;
+    total_count += i + 1;
   }
 
   free(row);
