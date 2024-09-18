@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#define MIRROR 0
+#define NOT_MIRROR 1
 
 int count_digits(int n);
 void printEverythingWithPrintfFormatting(int size);
@@ -63,7 +63,7 @@ int max(int a, int b)
 
 void printEverythingWithPrintfFormatting(int size)
 {
-#if MIRROR
+#if NOT_MIRROR
   printf(" O\n-|-\n |\n/ \\");
   int row_len = max(count_digits(size), 4);
   int total_len = max(count_digits((size * 2) + (size * size / 2)), 7);
