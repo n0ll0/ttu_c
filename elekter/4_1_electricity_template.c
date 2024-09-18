@@ -4,8 +4,8 @@
  * Created:     10.10.2022
  * Last edit:   24.09.2023
  *
- * Description: Starter code for functions lab task with return statements. 
- *              This will calculate the power prices and give a comparison on 
+ * Description: Starter code for functions lab task with return statements.
+ *              This will calculate the power prices and give a comparison on
  *              savings when going from incandescent to LED bulbs.
  */
 #include <stdio.h>
@@ -17,11 +17,11 @@
 /* Number of days for calculation*/
 #define DAYS_PER_MONTH 30
 
-/* Value added tax in percentages */ 
+/* Value added tax in percentages */
 #define VAT_PERCENTAGE 20.0f
 
-/* FILL IN! Something you buy regularly */ 
-#define ITEM_NAME "......."
+/* FILL IN! Something you buy regularly */
+#define ITEM_NAME "Food"
 #define ITEM_COST 0.01f
 
 float ReadPositiveFloat(void);
@@ -32,64 +32,60 @@ float CalculateVat(float price, float vatPcnt);
 int CalcMonthlyConsumption(int nConsumers, int nHours, int power, int days);
 int CalcItemsForMoney(float money, float costPerItem);
 
-
 int main(void)
 {
     float pricePerMwh, pricePerKwh, priceWithVat, vatCost;
     float costIncandescent, costLED;
     int numOfBulbs, hoursPerBulb, consIncandescent, consLED;
     int purchasableItems;
-    
+
     printf("Enter the market price for electricity in MWh: ");
     pricePerMwh = ReadPositiveFloat();
-    
+
     /* Convert from MWh to kWh and find prices with and without VAT */
     pricePerKwh = ConvertMwhToKwh(pricePerMwh);
     vatCost = CalculateVat(pricePerKwh, VAT_PERCENTAGE);
     priceWithVat = pricePerKwh + vatCost;
-    
-    
+
     printf("\nMarket cost of electricity is %.2f EUR / MWh.\n", pricePerMwh);
     printf("This is %.4f EUR per kWh before taxes.\n", pricePerKwh);
     printf("The government takes %.4f EUR in taxes.\n", vatCost);
     printf("With taxes, the cost for you is %.4f EUR / kWh\n\n", priceWithVat);
-    
-    
+
     printf("Lets do a rough savings estimate when switching "
            "from incandescent bulbs to LEDs\n\n");
-    
+
     printf("Number of E27 lightbulbs in use: ");
     numOfBulbs = ReadPositiveInteger();
-    
+
     printf("Average hours per day the bulbs are turned on for: ");
     hoursPerBulb = ReadPositiveInteger();
-    
+
     /* Calculate avg monthly consumption for LED and incandescent bulbs */
-    consIncandescent = CalcMonthlyConsumption(numOfBulbs, hoursPerBulb, 
-                                                POWER_INCANDESCENT, 
-                                                DAYS_PER_MONTH);
-    consLED = CalcMonthlyConsumption(numOfBulbs, hoursPerBulb, POWER_LED, 
-                                        DAYS_PER_MONTH);
-    
+    consIncandescent = CalcMonthlyConsumption(numOfBulbs, hoursPerBulb,
+                                              POWER_INCANDESCENT,
+                                              DAYS_PER_MONTH);
+    consLED = CalcMonthlyConsumption(numOfBulbs, hoursPerBulb, POWER_LED,
+                                     DAYS_PER_MONTH);
+
     /* Calculate the equivalent cost in euros for the consumptions */
     costIncandescent = CalculateElectricityCost(consIncandescent, priceWithVat);
     costLED = CalculateElectricityCost(consLED, priceWithVat);
-    
+
     printf("\nResults are calculated for a %d-day month.\n", DAYS_PER_MONTH);
     printf("\nUsing %d W incandescent bulbs consumes %d W, costing %.2f EUR\n",
            POWER_INCANDESCENT, consIncandescent, costIncandescent);
     printf("Using %d W LED bulbs consumes %d W, costing %.2f EUR\n",
            POWER_LED, consLED, costLED);
-    
+
     purchasableItems = CalcItemsForMoney(costIncandescent - costLED, ITEM_COST);
-    
+
     printf("That's a saving of %.2f EUR.\n", costIncandescent - costLED);
-    printf("At the price of %.2f, you could buy %d %s with that money!", 
-            ITEM_COST, purchasableItems, ITEM_NAME);
-    
+    printf("At the price of %.2f, you could buy %d %s with that money!\n",
+           ITEM_COST, purchasableItems, ITEM_NAME);
+
     return 0;
 }
-
 
 /**
  * Description:    Reads a positive real number value from the keyboard.
@@ -97,38 +93,38 @@ int main(void)
  *
  * Parameters:     -
  *
- * Return:         Positive (> 0) real number 
+ * Return:         Positive (> 0) real number
  */
 float ReadPositiveFloat(void)
 {
     float userValue;
-    while (scanf("%f", &userValue) == -1 && userValue <= 0) {
-        while (getchar() != "\n");
+    while (scanf("%f", &userValue) == -1 && userValue <= 0)
+    {
+        while (getchar() != 10);
     };
     return userValue;
 }
 
- 
 /**
  * Description:    Reads a positive integer from the keyboard.
  *                 Doesn't return until user gives a positive value.
  *
  * Parameters:     -
  *
- * Return:         Positive (> 0) integer 
+ * Return:         Positive (> 0) integer
  */
 int ReadPositiveInteger(void)
 {
     int userValue;
-    while (scanf("%d", &userValue) == -1 && userValue <= 0) {
-        while (getchar() != "\n");
+    while (scanf("%d", &userValue) == -1 && userValue <= 0)
+    {
+        while (getchar() != 10);
     };
     return userValue;
 }
 
-
 /**
- * Description:    Converts price given in MWh (megawatt-hours) to kWh 
+ * Description:    Converts price given in MWh (megawatt-hours) to kWh
  *                 (kilowatt-hours)
  *
  * Parameters:     price - price for 1 MWh
@@ -137,9 +133,8 @@ int ReadPositiveInteger(void)
  */
 float ConvertMwhToKwh(float price)
 {
-    return 0;
+    return price / 1000.0f;
 }
-
 
 /**
  * Description:    Calculates cost of electricity for the amount of energy
@@ -152,9 +147,8 @@ float ConvertMwhToKwh(float price)
  */
 float CalculateElectricityCost(int consumption, float price)
 {
-    return 0;
+    return consumption * price / 1000.0f;
 }
-
 
 /**
  * Description:    Calculates the amount of VAT for the given amount of money.
@@ -167,13 +161,12 @@ float CalculateElectricityCost(int consumption, float price)
  */
 float CalculateVat(float price, float vatPcnt)
 {
-    return 0;
+    return price * vatPcnt / 100;
 }
-
 
 /**
  * Description:    Calculates how many watt-hours are consumed in a month
- *                 by n devices using the same amount of power 
+ *                 by n devices using the same amount of power
  *                 for a given amount of hours per day.
  *
  * Parameters:     nConsumers - number of power consumers
@@ -185,9 +178,8 @@ float CalculateVat(float price, float vatPcnt)
  */
 int CalcMonthlyConsumption(int nConsumers, int nHours, int power, int days)
 {
-    return 0;
+    return nConsumers * nHours * power * days;
 }
-
 
 /**
  * Description:    Calculates how many items in full can be bought
@@ -200,5 +192,5 @@ int CalcMonthlyConsumption(int nConsumers, int nHours, int power, int days)
  */
 int CalcItemsForMoney(float money, float costPerItem)
 {
-    return 0;
+    return (int)(money / costPerItem);
 }

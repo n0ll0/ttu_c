@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int sum(int* arr, int length)
+int sum(int* arr, unsigned int length)
 {
   int sum = 0;
   for (int i = 0; i < length; ++i)
@@ -18,7 +18,7 @@ int main()
 
   int* inputs = (int*)malloc(numberOfInputs * sizeof(int));
 
-  for (int i = 0; i < numberOfInputs; ++i)
+  for (unsigned int i = 0; i < numberOfInputs; ++i)
   {
     int input;
     printf("Sisesta arv %d / %d\n", i + 1, numberOfInputs);
