@@ -8,6 +8,8 @@
  *              sequences.
  */
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 
 /* With for the divider line and menu */
 #define WIDTH 65
@@ -24,6 +26,10 @@ void ArithmeticSequenceGenerator(float start, float diff, int cnt);
 /* Functions to handle geometric sequence */
 void GeometricSequence(void);
 void GeometricSequenceGenerator(float start, float ratio, int cnt);
+
+/* Functions to handle prime sequence */
+void PrimeSequence(void);
+void PrimeSequenceGenerator(int bounds);
 
 int main(void)
 {
@@ -53,6 +59,9 @@ int main(void)
         break;
     case 2:
         GeometricSequence();
+        break;
+    case 3:
+        PrimeSequence();
         break;
     default:
         printf("Unknown option!\n");
@@ -93,7 +102,6 @@ void ArithmeticSequence(void)
     ArithmeticSequenceGenerator(start, diff, cnt);
 }
 
-
 /**
  * Description:    Starting point for the geometric sequence calculator.
  *                 Prompts user for the inputs required
@@ -124,6 +132,21 @@ void GeometricSequence(void)
     GeometricSequenceGenerator(start, ratio, cnt);
 }
 
+void PrimeSequence(void)
+{
+    float start;
+    int bounds;
+
+    /* Header for this generation */
+    printf("Prime sequence generator\n");
+    PrintSeparator(WIDTH);
+
+    printf("Enter the upper bound integer: ");
+    scanf("%d", &bounds);
+
+    /* Call the generator with user specified parameters */
+    PrimeSequenceGenerator(bounds);
+}
 
 /**
  * Description:    Generates and prints an arithmetic sequence
@@ -136,14 +159,23 @@ void GeometricSequence(void)
  */
 void ArithmeticSequenceGenerator(float start, float diff, int cnt)
 {
+    char buffer[WIDTH] = "";
+    char temp[20];
     printf("Results:\n");
-    for (int i = 0; i < cnt; i++) {
-        printf("%.2f ", start); // Arithmetic sequence formula
+    for (int i = 0; i < cnt; i++)
+    {
+        snprintf(temp, sizeof(temp), "%.2f ", start);
+        if (strlen(buffer) + strlen(temp) >= WIDTH)
+        {
+            puts(buffer);
+            buffer[0] = '\0';
+        }
+        strcat(buffer, temp);
         start += diff;
     }
+    puts(buffer);
     printf("\n");
 }
-
 
 /**
  * Description:    Generates and prints a geometric sequence
@@ -156,14 +188,55 @@ void ArithmeticSequenceGenerator(float start, float diff, int cnt)
  */
 void GeometricSequenceGenerator(float start, float ratio, int cnt)
 {
+    char buffer[WIDTH] = "";
+    char temp[20];
     printf("Results:\n");
-    for (int i = 0; i < cnt; i++) {
-        printf("%.2f ", start); // Geometric sequence formula
+    for (int i = 0; i < cnt; i++)
+    {
+        snprintf(temp, sizeof(temp), "%.2f ", start);
+        if (strlen(buffer) + strlen(temp) >= WIDTH)
+        {
+            puts(buffer);
+            buffer[0] = '\0';
+        }
+        strcat(buffer, temp);
         start *= ratio;
     }
+    puts(buffer);
     printf("\n");
 }
 
+int isPrime(int n)
+{
+    int i = 2;
+    for (int i = 2; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void PrimeSequenceGenerator(int bounds)
+{
+    char buffer[WIDTH] = "";
+    char temp[20];
+    printf("Prime numbers:\n");
+    for (int num = 1; num < bounds; num++) {
+        if (isPrime(num)) {
+            snprintf(temp, sizeof(temp), "%d ", num);
+            if (strlen(buffer) + strlen(temp) >= WIDTH) {
+                puts(buffer);
+                buffer[0] = '\0'; // Reset buffer
+            }
+            strcat(buffer, temp);
+        }
+    }
+    puts(buffer); // Print remaining content
+    printf("\n");
+}
 
 /**
  * Description:    Prints a greeting message
@@ -175,31 +248,12 @@ void GeometricSequenceGenerator(float start, float ratio, int cnt)
 void PrintAsciiWelcomeMsg(void)
 {
     /* TODO: add ASCII art */
-    printf(" _____________________\n\
-|  _________________  |\n\
-| |              /  | |\n\
-| |       /\\    /   | |\n\
-| |  /\\  /  \\  /    | |\n\
-| | /  \\/    \\/     | |\n\
-| |/             JO | |\n\
-| |_________________| |\n\
-|  __ __ __ __ __ __  |\n\
-| |__|__|__|__|__|__| |\n\
-| |__|__|__|__|__|__| |\n\
-| |__|__|__|__|__|__| |\n\
-| |__|__|__|__|__|__| |\n\
-| |__|__|__|__|__|__| |\n\
-| |__|__|__|__|__|__| |\n\
-|  ___ ___ ___   ___  |\n\
-| | 7 | 8 | 9 | | + | |\n\
-| |___|___|___| |___| |\n\
-| | 4 | 5 | 6 | | - | |\n\
-| |___|___|___| |___| |\n\
-| | 1 | 2 | 3 | | x | |\n\
-| |___|___|___| |___| |\n\
-| | . | 0 | = | | / | |\n\
-| |___|___|___| |___| |\n\
-|_____________________|\n\n");
+    printf("\n  ________                                   __\n\
+ /  _____/  ____   ____   ________________ _/  |_  ___________\n\
+/   \\  ____/ __ \\ /    \\_/ __ \\_  __ \\__  \\\\   __\\/  _ \\_  __ \\\n\
+\\    \\_\\  \\  ___/|   |  \\  ___/|  | \\// __ \\|  | (  <_> )  | \\/\n\
+ \\______  /\\___  >___|  /\\___  >__|  (____  /__|  \\____/|__|\n\
+        \\/     \\/     \\/     \\/           \\/\n\n");
 }
 
 /**
@@ -235,9 +289,9 @@ void PrintMenu(int width)
 void PrintSeparator(int width)
 {
     printf("\n");
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < width; i++)
+    {
         printf("#");
     }
     printf("\n\n");
 }
-
