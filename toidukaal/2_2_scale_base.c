@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include "../input.c"
 
 // typedef enum
 // {
@@ -10,22 +12,22 @@
 struct productMultipliers
 {
     float pricePerKilo;
-    char* name;
+    char *name;
 };
 
-struct productMultipliers ProductArr[9] = {
-    {1.50f, "Banana"},
-    {2.00f, "Orange"},
-    {2.00f, "Apple"},
-    {2.50f, "Pear"},
-    {3.00f, "Plum"},
-    {2.50f, "Lemon"},
-    {1.49f, "Tomato"},
-    {1.20f, "Cucumber"},
-    {0.99f, "Potato"},
-};
+// struct productMultipliers ProductArr[9] = {
+//     {1.50f, "Banana"  },
+//     {2.00f, "Orange"  },
+//     {2.00f, "Apple"   },
+//     {2.50f, "Pear"    },
+//     {3.00f, "Plum"    },
+//     {2.50f, "Lemon"   },
+//     {1.49f, "Tomato"  },
+//     {1.20f, "Cucumber"},
+//     {0.99f, "Potato"  },
+// };
 
-void printCategory(int i, bool usePrefix)
+void printCategory(int i, int usePrefix)
 {
     switch (i)
     {
@@ -63,7 +65,7 @@ void printCategory(int i, bool usePrefix)
     }
 }
 
-void printProductsInCategory(int cat, bool usePrefix)
+void printProductsInCategory(int cat, int usePrefix, struct productMultipliers *ProductArr)
 {
     for (int j = 0; j < 3; j++)
     {
@@ -79,52 +81,80 @@ void printProductsInCategory(int cat, bool usePrefix)
     printf("\n");
 }
 
-bool printError(bool erroryExpression)
+void askForCategoryNumber()
 {
-    if (erroryExpression) {
-        printf("\nError!\n");
-        while (getchar() != '\n');
-    }
-    return erroryExpression;
-};
+    printf("Enter category number: ");
+}
+
+void askForProductCode()
+{
+    printf("Enter product number: ");
+}
+
+void askForWeight()
+{
+    printf("Enter weight: ");
+}
+
+int isGoodInput(int cat)
+{
+    return cat > 0 && cat < 4;
+}
+
+int isPositive(float n)
+{
+    return n > 0;
+}
+
+void populateProducts(struct productMultipliers *ProductArr)
+{
+    ProductArr[0] = (struct productMultipliers){1.50f, "Banana"};
+    ProductArr[1] = (struct productMultipliers){2.00f, "Orange"};
+    ProductArr[2] = (struct productMultipliers){2.00f, "Apple"};
+    ProductArr[3] = (struct productMultipliers){2.50f, "Pear"};
+    ProductArr[4] = (struct productMultipliers){3.00f, "Plum"};
+    ProductArr[5] = (struct productMultipliers){2.50f, "Lemon"};
+    ProductArr[6] = (struct productMultipliers){1.49f, "Tomato"};
+    ProductArr[7] = (struct productMultipliers){1.20f, "Cucumber"};
+    ProductArr[8] = (struct productMultipliers){0.99f, "Potato"};
+}
 
 int main(void)
 {
-    // Variable declarations (INCOMPLETE!)
     float weight;
     int productCode;
     int category;
 
+    // Heap allocation of ProductArr
+    struct productMultipliers *ProductArr = malloc(9 * sizeof(struct productMultipliers));
+    if (ProductArr == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return 1;
+    }
+
+    populateProducts(ProductArr);
+
     // List all available products (INCOMPLETE!)
     printf("Available products\n");
 
-    // Read in product code
-    do
+    for (int i = 0; i < 3; i++)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            printCategory(i, true);
-            printProductsInCategory(i, false);
-        }
-        printf("Enter category number: ");
-    } while (printError((scanf("%d", &category) != 1) || (category < 1 || category > 3)));
-    category--;
+        printCategory(i, true);
+        printProductsInCategory(i, false, ProductArr);
+    }
 
-    do
-    {
-        printCategory(category, false);
-        printProductsInCategory(category, true);
-        printf("Enter product number: ");
-    } while (printError((scanf("%d", &productCode) != 1) || (productCode < 1 || productCode > 3)));
+    // Read in product code
+    category = read_int(askForCategoryNumber, isGoodInput) - 1;
+    printf("%d\n",category);
+
+    printCategory(category, false);
+    printProductsInCategory(category, true, ProductArr);
+
+    productCode = read_int(askForProductCode, isGoodInput);
     productCode += category * 3 - 1;
 
     // Read in product weight (FIX THE MISTAKE!)
-    do
-    {
-        // if (weight <= 0)
-        //     printf("Asetage toode kaalule!\n");
-        printf("Enter weight: ");
-    } while (printError((scanf("%f", &weight) != 1) || (weight <= 0)));
+    weight = read_float(askForWeight, isPositive);
 
     // Calculate the total cost
     float pricePerKilo = ProductArr[productCode].pricePerKilo;
@@ -134,6 +164,8 @@ int main(void)
     printf("\nProduct number %d [%s] - ", productCode, ProductArr[productCode].name);
     printf("Price per kilo %.2f EUR\n", pricePerKilo);
     printf("Total price: %.2f EUR\n", totalPrice);
+    
+    free(ProductArr);
 
     return 0;
 }

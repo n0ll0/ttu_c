@@ -8,7 +8,6 @@
  *              sequences.
  */
 #include <stdio.h>
-#include <math.h>
 
 /* With for the divider line and menu */
 #define WIDTH 65
