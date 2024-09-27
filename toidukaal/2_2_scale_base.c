@@ -1,31 +1,45 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
-#include "../input.c"
 
-// typedef enum
-// {
-//     false,
-//     true
-// } bool;
+int clearBuffer(int boolean, void (*ErrorFunction)())
+{
+  if (boolean)
+  {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+      ;
+    (*ErrorFunction)();
+  }
+  return boolean;
+}
+
+int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
+{
+  int i;
+  do
+  {
+    askFn();
+  } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+  return i;
+}
+
+float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)())
+{
+  float i;
+  do
+  {
+    askFn();
+  } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+  return i;
+}
 
 struct productMultipliers
 {
     float pricePerKilo;
     char *name;
 };
-
-// struct productMultipliers ProductArr[9] = {
-//     {1.50f, "Banana"  },
-//     {2.00f, "Orange"  },
-//     {2.00f, "Apple"   },
-//     {2.50f, "Pear"    },
-//     {3.00f, "Plum"    },
-//     {2.50f, "Lemon"   },
-//     {1.49f, "Tomato"  },
-//     {1.20f, "Cucumber"},
-//     {0.99f, "Potato"  },
-// };
 
 void printCategory(int i, int usePrefix)
 {
@@ -106,6 +120,15 @@ int isPositive(float n)
     return n > 0;
 }
 
+void printProductIsNotOnScale()
+{
+    printf("Please place the product onto the scale!\n");
+}
+void printErr()
+{
+    printf("Invalid input!\n");
+}
+
 void populateProducts(struct productMultipliers *ProductArr)
 {
     ProductArr[0] = (struct productMultipliers){1.50f, "Banana"};
@@ -139,22 +162,22 @@ int main(void)
 
     for (int i = 0; i < 3; i++)
     {
-        printCategory(i, true);
-        printProductsInCategory(i, false, ProductArr);
+        printCategory(i, 1);
+        printProductsInCategory(i, 0, ProductArr);
     }
 
     // Read in product code
-    category = read_int(askForCategoryNumber, isGoodInput) - 1;
+    category = read_int(askForCategoryNumber, isGoodInput, printErr) - 1;
     printf("%d\n",category);
 
-    printCategory(category, false);
-    printProductsInCategory(category, true, ProductArr);
+    printCategory(category, 0);
+    printProductsInCategory(category, 1, ProductArr);
 
-    productCode = read_int(askForProductCode, isGoodInput);
+    productCode = read_int(askForProductCode, isGoodInput, printErr);
     productCode += category * 3 - 1;
 
     // Read in product weight (FIX THE MISTAKE!)
-    weight = read_float(askForWeight, isPositive);
+    weight = read_float(askForWeight, isPositive, printProductIsNotOnScale);
 
     // Calculate the total cost
     float pricePerKilo = ProductArr[productCode].pricePerKilo;

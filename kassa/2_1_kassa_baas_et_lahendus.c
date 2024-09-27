@@ -16,6 +16,7 @@ int main(void)
     /* Loe sisse kogu ostusumma. Vihje: kasuta scanf funktsiooni */
     scanf("%f", &purchaseTotal);
 
+    /* Loe sisse kas kliendikaart esitati või mitte */
     while (loyaltyCardPresented != 1 && loyaltyCardPresented != 0)
     {
         printf("Did client present loyalty card?\n1 - yes\n0 - no\n");
@@ -25,10 +26,8 @@ int main(void)
             while (getchar() != '\n');
         }
     }
-    // printf("Did client present loyalty card?\n1 - yes\n0 - no\n");
-    // /* Loe sisse kas kliendikaart esitati või mitte */
-    // scanf("%d", &loyaltyCardPresented);
 
+    /* Loe sisse kas anda kliendile lisasoodustus? */
     while (applyExtraDiscount != 1 && applyExtraDiscount != 0)
     {
         printf("Apply extra discount?\n1 - yes\n0 - no\n");
@@ -38,9 +37,6 @@ int main(void)
             while (getchar() != '\n');
         }
     }
-    // printf("Apply extra discount?\n1 - yes\n0 - no\n");
-    // /* Loe sisse kas anda kliendile lisasoodustus? */
-    // scanf("%d", &applyExtraDiscount);
 
     /** Allahindluse haldamine
      * Else if lause kasutamine, liittingimuse moodustamine ja

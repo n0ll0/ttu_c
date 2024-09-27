@@ -1,17 +1,20 @@
 #include <stdio.h>
-#include <math.h>
+// #include <math.h>
 #include <stdlib.h>
 
-#define NOT_MIRROR 1
+#define NOT_MIRROR 0
 
 int count_digits(int n);
 void printEverythingWithPrintfFormatting(int size);
 
 int main()
 {
-  unsigned int size;
-  printf("Input tower size: ");
+  int size;
+  printf("Input tower size [7-20]: ");
   scanf("%d", &size);
+  if (size > 20 || size < 7)
+    return 1;
+
   printEverythingWithPrintfFormatting(size);
   return 0;
   // printf(" O\n-|-\n |\n/ \\");
@@ -73,6 +76,7 @@ void printEverythingWithPrintfFormatting(int size)
   int total_len = max(count_digits((size * 2) + (size * size / 2)), 7);
   int total_count = 3;
   char *row = (char *)malloc((size + 1) * sizeof(char));
+  if (row == NULL) return;
   row[0] = '#';
   row[1] = '#';
   row[size] = '\0';

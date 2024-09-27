@@ -134,7 +134,6 @@ void GeometricSequence(void)
 
 void PrimeSequence(void)
 {
-    float start;
     int bounds;
 
     /* Header for this generation */
@@ -209,7 +208,8 @@ void GeometricSequenceGenerator(float start, float ratio, int cnt)
 int isPrime(int n)
 {
     int i = 2;
-    for (int i = 2; i <= sqrt(n); i++)
+    int check = sqrt(n);
+    for (; i <= check; i++)
     {
         if (n % i == 0)
         {
@@ -221,10 +221,17 @@ int isPrime(int n)
 
 void PrimeSequenceGenerator(int bounds)
 {
+    for (int i = 2; i<bounds; i++)
+    {
+        if (isPrime(i))
+        {
+            printf("%d ", i);
+        }
+    }
     char buffer[WIDTH] = "";
     char temp[20];
     printf("Prime numbers:\n");
-    for (int num = 1; num < bounds; num++) {
+    for (int num = 2; num < bounds; num++) {
         if (isPrime(num)) {
             snprintf(temp, sizeof(temp), "%d ", num);
             if (strlen(buffer) + strlen(temp) >= WIDTH) {
@@ -276,6 +283,7 @@ void PrintMenu(int width)
      */
     printf("#  %-*.*s #\n", textArea, textArea, "1 - Arithmetic sequence generator");
     printf("#  %-*.*s #\n", textArea, textArea, "2 - Geometric sequence generator");
+    printf("#  %-*.*s #\n", textArea, textArea, "3 - Prime number generator");
     printf("#  %-*.*s #\n", textArea, textArea, "0 - exit");
 }
 

@@ -21,8 +21,8 @@
 #define VAT_PERCENTAGE 20.0f
 
 /* FILL IN! Something you buy regularly */
-#define ITEM_NAME "Food"
-#define ITEM_COST 0.01f
+#define ITEM_NAME "Penny"
+#define ITEM_COST 0.05f
 
 float ReadPositiveFloat(void);
 int ReadPositiveInteger(void);
@@ -161,7 +161,7 @@ float CalculateElectricityCost(int consumption, float price)
  */
 float CalculateVat(float price, float vatPcnt)
 {
-    return price * vatPcnt / 100;
+    return price * vatPcnt * 0.01f;
 }
 
 /**

@@ -8,16 +8,22 @@
  *              appointment schedule for clients.
  */
 #include <stdio.h>
-#include "../input.c"
 
 #define WORKDAY_START_HOUR 8
 #define WORKDAY_START_MIN 0
+#define WORKDAY_END_HOUR 17
+#define WORKDAY_END_MIN 0
+#define WORKDAY_BREAK_HOUR 0
+#define WORKDAY_BREAK_MIN 10
 
 void PrintTime(int hour, int min);
 
 int GetPositiveInt();
 
-void PrintTimetable(int startHour, int startMin, int nClients, int appLen);
+void PrintTimetable(int startHour, int startMin, int nClients, int appLen, int breakMin, int breakHour, int workDayStartHour, int workDayStartMin, int workDayEndHour, int workDayEndMin);
+
+int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)());
+float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)());
 
 int main(void)
 {
@@ -31,7 +37,7 @@ int main(void)
     printf("Enter client session length\n");
     int sessionLength = GetPositiveInt();
 
-    PrintTimetable(WORKDAY_START_HOUR, WORKDAY_START_MIN, clients, sessionLength);
+    PrintTimetable(WORKDAY_START_HOUR, WORKDAY_START_MIN, clients, sessionLength, WORKDAY_BREAK_MIN, WORKDAY_BREAK_HOUR, WORKDAY_START_HOUR, WORKDAY_START_MIN, WORKDAY_END_HOUR, WORKDAY_END_MIN);
 
     return 0;
 }
@@ -53,7 +59,7 @@ void emptyFn() {};
  */
 int GetPositiveInt()
 {
-    return read_int(emptyFn, isPositiveInt);
+    return read_int(emptyFn, isPositiveInt, emptyFn);
 }
 
 int better_int_div(int numerator, int denominator) // only for positive integers!
@@ -69,12 +75,34 @@ int better_int_div(int numerator, int denominator) // only for positive integers
  * Parameters:     cMin - current minute value
  *                 cHour - current hour value
  *                 interval - number of minutes to add to current time
+ *                 breakMin - how long a break is after each appointment
+ *                 breakHour - how long a break is after each appointment
+ *                 workDayStartHour - start of the workday
+ *                 workDayStartMin - start of the workday
+ *                 workDayEndHour - start of the workday
+ *                 workDayEndMin - start of the workday
  *
  * Return:         Hour value after adding the period
  */
-int CalcNextHour(int cMin, int cHour, int interval)
+int CalcNextHour(int cMin, int cHour, int interval, int workDayStartHour, int workDayStartMin, int workDayEndHour, int workDayEndMin)
 {
-    return (cHour + better_int_div(cMin + interval, 60))%24;
+    // Calculate total minutes to add
+    int totalMinutes = interval;
+
+    // Calculate new time in minutes
+    int newMinutes = cMin + totalMinutes;
+    int newHour = cHour + newMinutes / 60;
+    newMinutes %= 60;
+    newMinutes %= 24;
+
+    // Adjust for workday boundaries
+    if ((newHour < workDayStartHour || (newHour == workDayStartHour && newMinutes < workDayStartMin)))
+    {
+        newHour = workDayStartHour;
+        newMinutes = workDayStartMin;
+    }
+
+    return newHour;
 }
 
 /**
@@ -83,12 +111,33 @@ int CalcNextHour(int cMin, int cHour, int interval)
  * Parameters:     cMin - current minute value
  *                 cHour - current hour value
  *                 interval - number of minutes to add to current time
+ *                 breakMin - how long a break is after each appointment
+ *                 breakHour - how long a break is after each appointment
+ *                 workDayStartHour - start of the workday
+ *                 workDayStartMin - start of the workday
+ *                 workDayEndHour - start of the workday
+ *                 workDayEndMin - start of the workday
  *
  * Return:         Minute value after adding the period
  */
-int CalcNextMin(int cMin, int cHour, int interval)
+int CalcNextMin(int cMin, int cHour, int interval, int workDayStartHour, int workDayStartMin, int workDayEndHour, int workDayEndMin)
 {
-    return (cMin + interval) % 60;
+    // Calculate total minutes to add
+    int totalMinutes = interval;
+
+    // Calculate new time in minutes
+    int newMinutes = cMin + totalMinutes;
+    int newHour = cHour + newMinutes / 60;
+    newMinutes %= 60;
+
+    // Adjust for workday boundaries
+    if ((newHour < workDayStartHour || (newHour == workDayStartHour && newMinutes < workDayStartMin)))
+    {
+        newHour = workDayStartHour;
+        newMinutes = workDayStartMin;
+    }
+
+    return newMinutes;
 }
 
 /**
@@ -132,15 +181,72 @@ void PrintTimeInterval(int startHour, int startMin, int endHour, int endMin)
  *
  * Return:         -
  */
-void PrintTimetable(int startHour, int startMin, int nClients, int appLen)
+void PrintTimetable(
+    int startHour,
+    int startMin,
+    int nClients,
+    int appLen,
+    int breakMin,
+    int breakHour,
+    int workDayStartHour,
+    int workDayStartMin,
+    int workDayEndHour,
+    int workDayEndMin)
 {
     int nHour = startHour;
     int nMin = startMin;
+    int i = 1;
+    printf("\n\tDay %d\n", i);
+
     for (int cl = 0; cl < nClients; cl++)
     {
-        nHour = CalcNextHour(nMin, nHour, appLen);
-        nMin = CalcNextMin(nMin, nHour, appLen);
-        PrintTimeInterval(nHour, nMin, CalcNextHour(nMin, nHour, appLen), CalcNextMin(nMin, nHour, appLen));
+        nHour = CalcNextHour(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin) + breakHour;
+        nMin = CalcNextMin(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin) + breakMin;
+        int nextHour = CalcNextHour(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin);
+        int nextMin = CalcNextMin(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin);
+        int liigapikk = nextHour * 60 + nextMin > (workDayEndHour * 60 + workDayEndMin);
+        if ((nHour * 60 + nMin) > (workDayEndHour * 60 + workDayEndMin) || (liigapikk))
+        {
+            i++;
+            nHour = workDayStartHour;
+            nMin = workDayStartMin;
+            printf("\n\tDay %d\n", i);
+        }
+        PrintTimeInterval(nHour, nMin, CalcNextHour(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin), CalcNextMin(nMin, nHour, appLen, workDayStartHour, workDayStartMin, workDayEndHour, workDayEndMin));
         printf("\n");
     }
+}
+
+int clearBuffer(int boolean, void (*ErrorFunction)())
+{
+    if (boolean)
+    {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
+        (*ErrorFunction)();
+    }
+    return boolean;
+}
+
+int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
+{
+    int i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+    return i;
+}
+
+float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)())
+{
+    float i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+    return i;
 }
