@@ -3,28 +3,36 @@
 
 int main()
 {
+  int tp_algus;
+  int tp_lopp;
+  int tp_arv;
+  int tunnipalk;
   const int juuni_keskmine_bruutopalk = 2113;
 
-  int tp_algus = input_i("toopaeva algus: "); // I allow starting on previous days so -value
+  printf("Tööpäeva algus: ");
+  scanf("%d", &tp_algus);
   if (tp_algus < 0)
   {
     printf("Ärgem alusta eile oma tööga\n");
     return 1;
   }
 
-  int tp_lopp = input_i("toopaeva lopp: ");
+  printf("Tööpäeva lõpp: ");
+  scanf("%d", &tp_lopp);
   if (tp_lopp <= tp_algus)
   {
     printf("Ei saa toopaeva lopetada enne kui toopaev on alanud\n");
     return 1;
   }
-  int tp_arv = input_i("toopaevade arv kalendrikuus: ");
+  printf("toopaevade arv kalendrikuus: ");
+  scanf("%d", &tp_arv);
   if (tp_arv < 1)
   {
     printf("Voiks moned paevad tool ka kaia\n");
     return 1;
   }
-  int tunnipalk = input_i("sinu tunnipalk: ");
+  printf("sinu tunnipalk: ");
+  scanf("%d", &tunnipalk);
   if (tunnipalk <= 0)
   {
     printf("Kas see on heategevus?\n");
