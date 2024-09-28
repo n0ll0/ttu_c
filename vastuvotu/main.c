@@ -1,0 +1,346 @@
+/**
+ * File:        4_3_timetable_template.c
+ * Author:      Risto Heinsar
+ * Created:     21.09.2023
+ * Last edit:   24.09.2023
+ *
+ * Description: Starter code for the functions lab task, generating an
+ *              appointment schedule for clients.
+ */
+#include <stdio.h>
+
+#define WORKDAY_START_HOUR 8
+#define WORKDAY_START_MIN 0
+#define WORKDAY_END_HOUR 17
+#define WORKDAY_END_MIN 0
+#define WORKDAY_BREAK_HOUR 0
+#define WORKDAY_BREAK_MIN 10
+
+#define MAX_SESSION_LENGTH (WORKDAY_END_HOUR * 60 + WORKDAY_END_MIN) - (WORKDAY_START_HOUR * 60 + WORKDAY_START_MIN)
+
+void PrintTime(int hour, int min);
+int GetPositiveInt();
+void PrintTimetable(int startHour, int startMin, int nClients, int appLen, int breakHour, int breakMin, int workDayStartHour, int workDayStartMin, int workDayEndHour, int workDayEndMin);
+
+int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)());
+float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)());
+
+int main(void)
+{
+    printf("Workday starts at ");
+    PrintTime(WORKDAY_START_HOUR, WORKDAY_START_MIN);
+    printf("\n\n");
+
+    printf("Enter num of clients\n");
+    int clients = GetPositiveInt();
+
+    printf("Enter client session length\n");
+    int sessionLength = GetPositiveInt();
+
+    if (sessionLength > MAX_SESSION_LENGTH)
+    {
+        printf("Session length is at max %d minutes ",
+               (MAX_SESSION_LENGTH));
+        printf("\n");
+        return 1;
+    }
+
+    PrintTimetable(
+        WORKDAY_START_HOUR,
+        WORKDAY_START_MIN,
+        clients,
+        sessionLength,
+        WORKDAY_BREAK_HOUR,
+        WORKDAY_BREAK_MIN,
+        WORKDAY_START_HOUR,
+        WORKDAY_START_MIN,
+        WORKDAY_END_HOUR,
+        WORKDAY_END_MIN);
+
+    return 0;
+}
+
+/**
+ * Boolean comparisson function
+ */
+int isPositiveInt(int a)
+{
+    return a > 0;
+}
+
+/**
+ * self explanatory
+ */
+void empty_function() {};
+
+void PrintErrorAfterFailure()
+{
+    printf("Please input a positive integer!\n");
+};
+
+/**
+ * Description:    Returns a positive integer from the user. On non-positive
+ *                 input, gives an error and reprompts the user
+ *
+ * Parameters:     -
+ *
+ * Return:         Positive integer entered by the user
+ */
+int GetPositiveInt()
+{
+    return read_int(empty_function, isPositiveInt, PrintErrorAfterFailure);
+}
+
+int better_int_div(int numerator, int denominator) // only for positive integers!
+{
+    if (numerator < denominator)
+        return 0;
+    return numerator / denominator;
+};
+
+int GetHourFromTimestamp(int timestamp)
+{
+    return timestamp / 60;
+}
+int GetMinFromTimestamp(int timestamp)
+{
+    return timestamp % 60;
+}
+int GetTimestamp(int hours, int minutes)
+{
+    return hours * 60 + minutes;
+}
+
+int CalcNextTimestamp(
+    int cTimestamp,
+    int interval,
+    int workDayStartTimestamp,
+    int workDayEndTimestamp)
+{
+    // Calculate new time in minutes
+    int newTimestamp = cTimestamp + interval;
+
+    return newTimestamp;
+}
+
+/**
+ * Description:    Finds the hour value when adding period to current time.
+ *
+ * Parameters:     cMin - current minute value
+ *                 cHour - current hour value
+ *                 interval - number of minutes to add to current time
+ *                 breakMin - how long a break is after each appointment
+ *                 breakHour - how long a break is after each appointment
+ *                 workDayStartHour - start of the workday
+ *                 workDayStartMin - start of the workday
+ *                 workDayEndHour - end of the workday
+ *                 workDayEndMin - end of the workday
+ *
+ * Return:         Hour value after adding the period
+ */
+/*int CalcNextHour(
+    int cTimestamp,
+    int interval,
+    int workDayStartTimestamp,
+    int workDayEndTimestamp)
+{
+    int newTimestamp = CalcNextTimestamp(
+        cTimestamp,
+        interval,
+        workDayStartTimestamp,
+        workDayEndTimestamp);
+
+    return GetHourFromTimestamp(newTimestamp);
+}*/
+
+/**
+ * Description:    Finds the minute value when adding period to current time.
+ *
+ * Parameters:     cMin - current minute value
+ *                 cHour - current hour value
+ *                 interval - number of minutes to add to current time
+ *                 breakMin - how long a break is after each appointment
+ *                 breakHour - how long a break is after each appointment
+ *                 workDayStartHour - start of the workday
+ *                 workDayStartMin - start of the workday
+ *                 workDayEndHour - start of the workday
+ *                 workDayEndMin - start of the workday
+ *
+ * Return:         Minute value after adding the period
+ */
+/*int CalcNextHour(
+    int cTimestamp,
+    int interval,
+    int workDayStartTimestamp,
+    int workDayEndTimestamp)
+{
+    int newTimestamp = CalcNextTimestamp(
+        cTimestamp,
+        interval,
+        workDayStartTimestamp,
+        workDayEndTimestamp);
+
+    return GetMinFromTimestamp(newTimestamp);
+}*/
+
+/**
+ * Description:    Prints the time passed using hh:mm format. Hour values below
+ *                 10 are space-padded and minue values below 10 are zero-padded
+ *
+ * Parameters:     hour - current hour value
+ *                 min - current minute value
+ *
+ * Return:         -
+ */
+void PrintTime(int hour, int min)
+{
+    printf("%02d:%02d", hour, min);
+}
+
+/**
+ * Description:    Prints a time interval using hh:mm - hh:mm format.
+ *
+ * Parameters:     startHour - Starting hour value
+ *                 startMin - Starting minute value
+ *                 endHour - End hour value
+ *                 endMin - End minute value
+ *
+ * Return:         -
+ */
+void PrintTimeInterval(
+    int startHour,
+    int startMin,
+    int endHour,
+    int endMin)
+{
+    PrintTime(startHour, startMin);
+    printf(" - ");
+    PrintTime(endHour, endMin);
+}
+
+/**
+ * Description:    Prints the timetable for the client appointments
+ *
+ * Parameters:     startHour - Start of the work day (hours)
+ *                 startMin - Start of the workday (minutes)
+ *                 nClients - number of clients to schedule an appointment for
+ *                 appLen - appointment length
+ *
+ * Return:         -
+ */
+void PrintTimetable(
+    int startHour,
+    int startMin,
+    int nClients,
+    int appLen,
+    int breakHour,
+    int breakMin,
+    int workDayStartHour,
+    int workDayStartMin,
+    int workDayEndHour,
+    int workDayEndMin)
+{
+    int nTimestamp = GetTimestamp(startHour, startMin);
+    int breakTime = GetTimestamp(breakHour, breakMin);
+    int i = 1;
+    printf("\n\tDay %d\n", i);
+    int workdayStartTimestamp = (workDayStartHour * 60 + workDayStartMin);
+    int workdayEndTimestamp = (workDayEndHour * 60 + workDayEndMin);
+
+    int nextTimestamp =
+        CalcNextTimestamp(
+            nTimestamp,
+            appLen,
+            workdayStartTimestamp,
+            workdayEndTimestamp) +
+        breakTime;
+    for (int cl = 0; cl < nClients; cl++)
+    {
+        nextTimestamp =
+            CalcNextTimestamp(
+                nTimestamp,
+                appLen,
+                workdayStartTimestamp,
+                workdayEndTimestamp);
+        if (nextTimestamp > workdayEndTimestamp)
+        {
+            i++;
+            nTimestamp = workdayStartTimestamp;
+            nextTimestamp =
+                CalcNextTimestamp(
+                    nTimestamp,
+                    appLen,
+                    workdayStartTimestamp,
+                    workdayEndTimestamp);
+            printf("\n\tDay %d\n", i);
+        }
+        PrintTimeInterval(
+            GetHourFromTimestamp(nTimestamp),
+            GetMinFromTimestamp(nTimestamp),
+            GetHourFromTimestamp(nextTimestamp),
+            GetMinFromTimestamp(nextTimestamp));
+        printf("\n");
+        nTimestamp = nextTimestamp + breakTime;
+    }
+}
+
+/**
+ * Description:    Scanf tends to run into errors,
+ * so it is necessary to clear the stdin buffer
+ *
+ * Parameters:     boolean - boolean for if an error occurred
+ *                 ErrorFunction - function to call if an error occurred
+ *
+ * Return:         parameter boolean
+ */
+int clearBuffer(int boolean, void (*ErrorFunction)())
+{
+    if (boolean)
+    {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
+        (*ErrorFunction)();
+    }
+    return boolean;
+}
+
+/**
+ * Description:    Try to read integer from stdin until input is valid
+ *
+ * Parameters:     askFn - function to call before each input iteration
+ *                 validity_comparisson - boolean comparisson function
+ *                 ErrorFunction - function to call if an error occurres
+ *
+ * Return:         integer
+ */
+int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
+{
+    int i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+    return i;
+}
+
+/**
+ * Description:    Try to read float from stdin until input is valid
+ *
+ * Parameters:     askFn - function to call before each input iteration
+ *                 validity_comparisson - boolean comparisson function
+ *                 ErrorFunction - function to call if an error occurres
+ *
+ * Return:         float
+ */
+float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)())
+{
+    float i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+    return i;
+}
