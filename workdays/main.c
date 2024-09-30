@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "../input.c"
 
 int main()
 {

@@ -3,36 +3,36 @@
 
 int clearBuffer(int boolean, void (*ErrorFunction)())
 {
-  if (boolean)
-  {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-      ;
-    (*ErrorFunction)();
-  }
-  return boolean;
+    if (boolean)
+    {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
+        (*ErrorFunction)();
+    }
+    return boolean;
 }
 
-int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
+int read_int(const void (*askFn)(), int (*validity_comparisson)(int), const void (*ErrorFunction)())
 {
-  int i;
-  do
-  {
-    askFn();
-  } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+    int i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
 
-  return i;
+    return i;
 }
 
 float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)())
 {
-  float i;
-  do
-  {
-    askFn();
-  } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+    float i;
+    do
+    {
+        askFn();
+    } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
 
-  return i;
+    return i;
 }
 
 struct productMultipliers
@@ -95,15 +95,15 @@ void printProductsInCategory(int cat, int usePrefix, struct productMultipliers *
     printf("\n");
 }
 
-void askForCategoryNumber()
-{
-    printf("Enter category number: ");
-}
+// void askForCategoryNumber()
+// {
+//     printf("Enter category number: ");
+// }
 
-void askForProductCode()
-{
-    printf("Enter product number: ");
-}
+// void askForProductCode()
+// {
+//     printf("Enter product number: ");
+// }
 
 void askForWeight()
 {
@@ -150,7 +150,8 @@ int main(void)
 
     // Heap allocation of ProductArr
     struct productMultipliers *ProductArr = malloc(9 * sizeof(struct productMultipliers));
-    if (ProductArr == NULL) {
+    if (ProductArr == NULL)
+    {
         fprintf(stderr, "Memory allocation failed\n");
         return 1;
     }
@@ -158,22 +159,40 @@ int main(void)
     populateProducts(ProductArr);
 
     // List all available products (INCOMPLETE!)
-    printf("Available products\n");
+    // printf("Available products\n");
 
-    for (int i = 0; i < 3; i++)
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     printCategory(i, 1);
+    //     printProductsInCategory(i, 0, ProductArr);
+    // }
+
+    const void askForCategoryNumber()
     {
-        printCategory(i, 1);
-        printProductsInCategory(i, 0, ProductArr);
+        printf("\nAvailable products\n\n");
+        for (int i = 0; i < 3; i++)
+        {
+            printCategory(i, 1);
+            printProductsInCategory(i, 0, ProductArr);
+        }
+        printf("\nEnter category number: ");
     }
 
     // Read in product code
     category = read_int(askForCategoryNumber, isGoodInput, printErr) - 1;
-    printf("%d\n",category);
+    printf("%d\n", category);
 
-    printCategory(category, 0);
-    printProductsInCategory(category, 1, ProductArr);
+    const void askForProductCode()
+    {
+        printf("\n");
+        printCategory(category, 0);
+        printProductsInCategory(category, 1, ProductArr);
+        printf("\nEnter product number: ");
+    };
 
-    productCode = read_int(askForProductCode, isGoodInput, printErr);
+    productCode = read_int(
+        askForProductCode,
+        isGoodInput, printErr);
     productCode += category * 3 - 1;
 
     // Read in product weight (FIX THE MISTAKE!)
@@ -187,7 +206,7 @@ int main(void)
     printf("\nProduct number %d [%s] - ", productCode, ProductArr[productCode].name);
     printf("Price per kilo %.2f EUR\n", pricePerKilo);
     printf("Total price: %.2f EUR\n", totalPrice);
-    
+
     free(ProductArr);
 
     return 0;
