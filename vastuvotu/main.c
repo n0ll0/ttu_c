@@ -88,7 +88,16 @@ void PrintErrorAfterFailure()
  */
 int GetPositiveInt()
 {
-    return read_int(empty_function, isPositiveInt, PrintErrorAfterFailure);
+    int result;
+
+    while (scanf("%d", &result) != 1 || result < 1)
+    {
+        printf("Please enter a positive integer: ");
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
+
+    return result;
 }
 
 int better_int_div(int numerator, int denominator) // only for positive integers!
@@ -218,6 +227,20 @@ void PrintTimeInterval(
     PrintTime(endHour, endMin);
 }
 
+int count_digits(int n)
+{
+    if (n == 0)
+        return 1;
+
+    int count = 0;
+    while (n > 0)
+    {
+        n /= 10;
+        count++;
+    }
+    return count;
+}
+
 /**
  * Description:    Prints the timetable for the client appointments
  *
@@ -242,11 +265,11 @@ void PrintTimetable(
 {
     int nTimestamp = GetTimestamp(startHour, startMin);
     int breakTime = GetTimestamp(breakHour, breakMin);
-    int i = 1;
-    printf("\n\tDay %d\n", i);
+    int day = 1;
+    printf("\nDay %d\n", day);
     int workdayStartTimestamp = (workDayStartHour * 60 + workDayStartMin);
     int workdayEndTimestamp = (workDayEndHour * 60 + workDayEndMin);
-
+    int clientPadding = count_digits(nClients);
     int nextTimestamp =
         CalcNextTimestamp(
             nTimestamp,
@@ -254,7 +277,7 @@ void PrintTimetable(
             workdayStartTimestamp,
             workdayEndTimestamp) +
         breakTime;
-    for (int cl = 0; cl < nClients; cl++)
+    for (int client = 0; client < nClients; client++)
     {
         nextTimestamp =
             CalcNextTimestamp(
@@ -264,7 +287,7 @@ void PrintTimetable(
                 workdayEndTimestamp);
         if (nextTimestamp > workdayEndTimestamp)
         {
-            i++;
+            day++;
             nTimestamp = workdayStartTimestamp;
             nextTimestamp =
                 CalcNextTimestamp(
@@ -272,8 +295,9 @@ void PrintTimetable(
                     appLen,
                     workdayStartTimestamp,
                     workdayEndTimestamp);
-            printf("\n\tDay %d\n", i);
+            printf("\nDay %d\n", day);
         }
+        printf("\tClient %*d\t\t", clientPadding, client);
         PrintTimeInterval(
             GetHourFromTimestamp(nTimestamp),
             GetMinFromTimestamp(nTimestamp),
@@ -282,65 +306,4 @@ void PrintTimetable(
         printf("\n");
         nTimestamp = nextTimestamp + breakTime;
     }
-}
-
-/**
- * Description:    Scanf tends to run into errors,
- * so it is necessary to clear the stdin buffer
- *
- * Parameters:     boolean - boolean for if an error occurred
- *                 ErrorFunction - function to call if an error occurred
- *
- * Return:         parameter boolean
- */
-int clearBuffer(int boolean, void (*ErrorFunction)())
-{
-    if (boolean)
-    {
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF)
-            ;
-        (*ErrorFunction)();
-    }
-    return boolean;
-}
-
-/**
- * Description:    Try to read integer from stdin until input is valid
- *
- * Parameters:     askFn - function to call before each input iteration
- *                 validity_comparisson - boolean comparisson function
- *                 ErrorFunction - function to call if an error occurres
- *
- * Return:         integer
- */
-int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
-{
-    int i;
-    do
-    {
-        askFn();
-    } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
-
-    return i;
-}
-
-/**
- * Description:    Try to read float from stdin until input is valid
- *
- * Parameters:     askFn - function to call before each input iteration
- *                 validity_comparisson - boolean comparisson function
- *                 ErrorFunction - function to call if an error occurres
- *
- * Return:         float
- */
-float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)())
-{
-    float i;
-    do
-    {
-        askFn();
-    } while (clearBuffer((scanf("%f", &i) != 1) || !validity_comparisson(i), ErrorFunction));
-
-    return i;
 }
