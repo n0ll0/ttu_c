@@ -94,7 +94,8 @@ int GetPositiveInt()
     {
         printf("Please enter a positive integer: ");
         int c;
-        while ((c = getchar()) != '\n' && c != EOF);
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
     }
 
     return result;
@@ -120,17 +121,13 @@ int GetTimestamp(int hours, int minutes)
     return hours * 60 + minutes;
 }
 
-int CalcNextTimestamp(
-    int cTimestamp,
-    int interval,
-    int workDayStartTimestamp,
-    int workDayEndTimestamp)
-{
-    // Calculate new time in minutes
-    int newTimestamp = cTimestamp + interval;
+// int CalcNextTimestamp(int cTimestamp, int interval)
+// {
+//     // Calculate new time in minutes
+//     int newTimestamp = cTimestamp + interval;
 
-    return newTimestamp;
-}
+//     return newTimestamp;
+// }
 
 /**
  * Description:    Finds the hour value when adding period to current time.
@@ -265,39 +262,24 @@ void PrintTimetable(
 {
     int nTimestamp = GetTimestamp(startHour, startMin);
     int breakTime = GetTimestamp(breakHour, breakMin);
+    int workdayStartTimestamp = GetTimestamp(workDayStartHour, workDayStartMin);
+    int workdayEndTimestamp = GetTimestamp(workDayEndHour, workDayEndMin);
+    int clientPadding = count_digits(nClients);
+    int nextTimestamp = nextTimestamp + appLen + breakTime;
+
     int day = 1;
     printf("\nDay %d\n", day);
-    int workdayStartTimestamp = (workDayStartHour * 60 + workDayStartMin);
-    int workdayEndTimestamp = (workDayEndHour * 60 + workDayEndMin);
-    int clientPadding = count_digits(nClients);
-    int nextTimestamp =
-        CalcNextTimestamp(
-            nTimestamp,
-            appLen,
-            workdayStartTimestamp,
-            workdayEndTimestamp) +
-        breakTime;
     for (int client = 0; client < nClients; client++)
     {
-        nextTimestamp =
-            CalcNextTimestamp(
-                nTimestamp,
-                appLen,
-                workdayStartTimestamp,
-                workdayEndTimestamp);
+        nextTimestamp = nTimestamp + appLen;
         if (nextTimestamp > workdayEndTimestamp)
         {
             day++;
             nTimestamp = workdayStartTimestamp;
-            nextTimestamp =
-                CalcNextTimestamp(
-                    nTimestamp,
-                    appLen,
-                    workdayStartTimestamp,
-                    workdayEndTimestamp);
+            nextTimestamp = nTimestamp + appLen;
             printf("\nDay %d\n", day);
         }
-        printf("\tClient %*d\t\t", clientPadding, client);
+        printf("\tClient %*d:\t\t", clientPadding, client);
         PrintTimeInterval(
             GetHourFromTimestamp(nTimestamp),
             GetMinFromTimestamp(nTimestamp),
