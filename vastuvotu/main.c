@@ -7,6 +7,16 @@
  * Description: Starter code for the functions lab task, generating an
  *              appointment schedule for clients.
  */
+
+/**
+******************************************************************************
+* @file	main.c
+* @author 	n0ll0
+* @version 0.1
+* @date 01.10.2024
+* @brief Generating an appointment schedule for clients
+******************************************************************************
+*/
 #include <stdio.h>
 
 #define WORKDAY_START_HOUR 8
@@ -20,10 +30,20 @@
 
 void PrintTime(int hour, int min);
 int GetPositiveInt();
-void PrintTimetable(int startHour, int startMin, int nClients, int appLen, int breakHour, int breakMin, int workDayStartHour, int workDayStartMin, int workDayEndHour, int workDayEndMin);
+void PrintTimetable(
+    int startHour,
+    int startMin,
+    int nClients,
+    int appLen,
+    int breakHour,
+    int breakMin,
+    int workDayStartHour,
+    int workDayStartMin,
+    int workDayEndHour,
+    int workDayEndMin);
 
-int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)());
-float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)());
+// int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)());
+// float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)());
 
 int main(void)
 {
@@ -101,18 +121,19 @@ int GetPositiveInt()
     return result;
 }
 
-int better_int_div(int numerator, int denominator) // only for positive integers!
+// only for positive integers!
+int better_int_div(int numerator, int denominator)
 {
     if (numerator < denominator)
         return 0;
     return numerator / denominator;
 };
 
-int GetHourFromTimestamp(int timestamp)
+int GetHourFromTs(int timestamp)
 {
     return timestamp / 60;
 }
-int GetMinFromTimestamp(int timestamp)
+int GetMinFromTs(int timestamp)
 {
     return timestamp % 60;
 }
@@ -241,10 +262,16 @@ int count_digits(int n)
 /**
  * Description:    Prints the timetable for the client appointments
  *
- * Parameters:     startHour - Start of the work day (hours)
- *                 startMin - Start of the workday (minutes)
- *                 nClients - number of clients to schedule an appointment for
- *                 appLen - appointment length
+ * Parameters:     startHourstartHour - Start of the work day (hours)
+ *                 startMinstartMin - Start of the workday (minutes)
+ *                 nClientsnClients - number of clients to schedule an appointment for
+ *                 appLenappLen - appointment length
+ *                 breakHour - break hour
+ *                 breakMin - break minute
+ *                 workDayStartHour - work day start hour
+ *                 workDayStartMin - work day start min
+ *                 workDayEndHour - work day end hour
+ *                 workDayEndMin - work day end min
  *
  * Return:         -
  */
@@ -260,32 +287,32 @@ void PrintTimetable(
     int workDayEndHour,
     int workDayEndMin)
 {
-    int nTimestamp = GetTimestamp(startHour, startMin);
+    int nTs = GetTimestamp(startHour, startMin);
     int breakTime = GetTimestamp(breakHour, breakMin);
-    int workdayStartTimestamp = GetTimestamp(workDayStartHour, workDayStartMin);
-    int workdayEndTimestamp = GetTimestamp(workDayEndHour, workDayEndMin);
+    int wStartTs = GetTimestamp(workDayStartHour, workDayStartMin);
+    int wEndTs = GetTimestamp(workDayEndHour, workDayEndMin);
     int clientPadding = count_digits(nClients);
-    int nextTimestamp = nextTimestamp + appLen + breakTime;
+    int nextTs = nextTs + appLen + breakTime;
 
     int day = 1;
     printf("\nDay %d\n", day);
     for (int client = 0; client < nClients; client++)
     {
-        nextTimestamp = nTimestamp + appLen;
-        if (nextTimestamp > workdayEndTimestamp)
+        nextTs = nTs + appLen;
+        if (nextTs > wEndTs)
         {
             day++;
-            nTimestamp = workdayStartTimestamp;
-            nextTimestamp = nTimestamp + appLen;
+            nTs = wStartTs;
+            nextTs = nTs + appLen;
             printf("\nDay %d\n", day);
         }
         printf("\tClient %*d:\t\t", clientPadding, client);
         PrintTimeInterval(
-            GetHourFromTimestamp(nTimestamp),
-            GetMinFromTimestamp(nTimestamp),
-            GetHourFromTimestamp(nextTimestamp),
-            GetMinFromTimestamp(nextTimestamp));
+            GetHourFromTs(nTs),
+            GetMinFromTs(nTs),
+            GetHourFromTs(nextTs),
+            GetMinFromTs(nextTs));
         printf("\n");
-        nTimestamp = nextTimestamp + breakTime;
+        nTs = nextTs + breakTime;
     }
 }
