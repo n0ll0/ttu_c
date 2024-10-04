@@ -11,6 +11,8 @@
  */
 #include <stdio.h>
 
+#define MAX_LENGTH 50
+
 void ReadIntArray(int nums[], size_t len);
 void PrintArray(int nums[], size_t len);
 int Min(int nums[], size_t len);
@@ -23,10 +25,11 @@ double ArithmeticMean(int nums[], size_t len);
 
 int main(void)
 {
-    size_t length;
+    size_t length = 100;
     printf("How many numbers wil you enter?: ");
     scanf("%ld", &length);
-    int nums[length];
+    int* nums = malloc(length*sizeof(int));
+    // int nums[MAX_LENGTH];
 
     ReadIntArray(nums, length);
     PrintArray(nums, length);
