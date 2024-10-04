@@ -221,20 +221,26 @@ int isPrime(int n)
 
 void PrimeSequenceGenerator(int bounds)
 {
-    // for (int i = 2; i<bounds; i++)
+    // int count;
+    // for (int i = 2; i < bounds; i++)
     // {
     //     if (isPrime(i))
     //     {
     //         printf("%d ", i);
+    //         count++;
+    //         if (count%10) printf("\n");
     //     }
     // }
     char buffer[WIDTH] = "";
     char temp[20];
     printf("Prime numbers:\n");
-    for (int num = 2; num < bounds; num++) {
-        if (isPrime(num)) {
+    for (int num = 2; num < bounds; num++)
+    {
+        if (isPrime(num))
+        {
             snprintf(temp, sizeof(temp), "%d ", num);
-            if (strlen(buffer) + strlen(temp) >= WIDTH) {
+            if (strlen(buffer) + strlen(temp) >= WIDTH)
+            {
                 puts(buffer);
                 buffer[0] = '\0'; // Reset buffer
             }
