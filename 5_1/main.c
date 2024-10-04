@@ -4,7 +4,6 @@
 
 void ReadIntArray(int nums[], size_t len);
 int CountPositiveNumbers(int nums[], size_t len);
-int GetPositiveInt();
 
 int main()
 {
@@ -46,9 +45,11 @@ int main()
   printf("\nNums:\n");
   for (int i = 0; i < N; i++)
     printf("%d ", nums[i]);
+
   printf("\nResult:\n");
   for (int i = 0; i < N; i++)
     printf("%d ", result[i]);
+
   printf("\nPositives:\n");
   if (positiveLen > 0)
   {
@@ -60,6 +61,7 @@ int main()
     printf("Empty Array");
   }
   printf("\n");
+
   return 0;
 }
 
@@ -85,19 +87,4 @@ void ReadIntArray(int nums[], size_t len)
   }
 
   printf("\n");
-}
-
-int GetPositiveInt()
-{
-  int result;
-
-  while (scanf("%d", &result) != 1 || result < 1)
-  {
-    printf("Please enter a positive integer: ");
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-      ;
-  }
-
-  return result;
 }
