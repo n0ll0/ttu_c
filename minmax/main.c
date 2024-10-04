@@ -106,9 +106,7 @@ int Max(int nums[], size_t len)
     for (int i = 1; i < len; i++)
     {
         if (nums[i] > max)
-        {
             max = nums[i];
-        }
     }
     return max;
 }
@@ -128,9 +126,7 @@ int Min(int nums[], size_t len)
     for (int i = 1; i < len; i++)
     {
         if (nums[i] < min)
-        {
             min = nums[i];
-        }
     }
     return min;
 }
@@ -170,9 +166,7 @@ void PrintPositions(int nums[], size_t len, int val)
     for (int pos = 0; pos < len; ++pos)
     {
         if (nums[pos] == val)
-        {
             printf("%d ", pos);
-        }
     }
 };
 
