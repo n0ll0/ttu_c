@@ -96,11 +96,12 @@ void printEverythingWithPrintfFormatting(int size)
 
   free(row);
 #else
-  printf("%*s%*s%*s%*s", size + 1, " O \n", size + 1, "-|-\n", size + 1, " | \n", size, "/ \\");
   int row_len = max(count_digits(size), 4);
   int total_len = max(count_digits((size * 2) + (size * size / 2)), 7);
   int total_count = 3;
   char *row = (char *)malloc((size + 1) * sizeof(char));
+  if (row == NULL) return;
+  printf("%*s%*s%*s%*s", size + 1, " O \n", size + 1, "-|-\n", size + 1, " | \n", size, "/ \\");
   for (int u = 0; u < size + 1; u++)
     row[u] = ' ';
   row[size] = '\0';

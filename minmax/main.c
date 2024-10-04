@@ -10,7 +10,6 @@
  *              times they occur in the array in part 2.
  */
 #include <stdio.h>
-#define LENGTH 6
 
 void ReadIntArray(int nums[], size_t len);
 void PrintArray(int nums[], size_t len);
@@ -24,28 +23,31 @@ double ArithmeticMean(int nums[], size_t len);
 
 int main(void)
 {
-    int nums[LENGTH];
+    size_t length;
+    printf("How many numbers wil you enter?: ");
+    scanf("%ld", &length);
+    int nums[length];
 
-    ReadIntArray(nums, LENGTH);
-    PrintArray(nums, LENGTH);
+    ReadIntArray(nums, length);
+    PrintArray(nums, length);
 
     printf("\n");
 
-    int min = Min(nums, LENGTH);
+    int min = Min(nums, length);
     printf("Min value is: %d\n", min);
     printf("Min value position(s) is/are: ");
-    PrintPositions(nums, LENGTH, min);
-    printf("\nMin value occurred %d times\n\n", CountNumbers(nums, LENGTH, min));
+    PrintPositions(nums, length, min);
+    printf("\nMin value occurred %d times\n\n", CountNumbers(nums, length, min));
 
-    int max = Max(nums, LENGTH);
+    int max = Max(nums, length);
     printf("Max value is: %d\n", max);
     printf("Max value position(s) is/are: ");
-    PrintPositions(nums, LENGTH, max);
-    printf("\nMax value occurred %d times\n\n", CountNumbers(nums, LENGTH, max));
+    PrintPositions(nums, length, max);
+    printf("\nMax value occurred %d times\n\n", CountNumbers(nums, length, max));
 
-    printf("Sum is: %d\n", Sum(nums, LENGTH));
-    printf("Product is: %ld\n", Product(nums, LENGTH));
-    printf("Arithmetic mean is: %.3lf\n\n", ArithmeticMean(nums, LENGTH));
+    printf("Sum is: %d\n", Sum(nums, length));
+    printf("Product is: %ld\n", Product(nums, length));
+    printf("Arithmetic mean is: %.3lf\n\n", ArithmeticMean(nums, length));
 
     return 0;
 }
