@@ -10,8 +10,8 @@
 
 /**
 ******************************************************************************
-* @file	main.c
-* @author 	n0ll0
+* @file main.c
+* @author n0ll0
 * @version 0.1
 * @date 01.10.2024
 * @brief Generating an appointment schedule for clients
@@ -41,9 +41,6 @@ void PrintTimetable(
     int workDayStartMin,
     int workDayEndHour,
     int workDayEndMin);
-
-// int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)());
-// float read_float(void (*askFn)(), int (*validity_comparisson)(float), void (*ErrorFunction)());
 
 int main(void)
 {
@@ -264,7 +261,8 @@ int count_digits(int n)
  *
  * Parameters:     startHourstartHour - Start of the work day (hours)
  *                 startMinstartMin - Start of the workday (minutes)
- *                 nClientsnClients - number of clients to schedule an appointment for
+ *                 nClientsnClients - number of clients to schedule an 
+ *                                    appointment for
  *                 appLenappLen - appointment length
  *                 breakHour - break hour
  *                 breakMin - break minute
