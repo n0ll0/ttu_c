@@ -4,15 +4,20 @@
 
 void ReadIntArray(int nums[], size_t len);
 int CountPositiveNumbers(int nums[], size_t len);
+int IsInArray(int arr[], size_t len, int num);
+void PrintArray(int *arr, size_t len, const char *word);
+void PrintPairs(int *arr, size_t len, const char *word);
 
 int main()
 {
   int nums[N];
   int result[N];
+  int posArray[N];
+  int UniqueValues[N];
 
   ReadIntArray(nums, N);
   int newPos = 0;
-  for (size_t i = 0; i < N; ++i)
+  for (int i = 0; i < N; ++i)
   {
     if (nums[i] < 0)
     {
@@ -21,7 +26,7 @@ int main()
     }
   }
 
-  for (size_t i = 0; i < N; ++i)
+  for (int i = 0; i < N; ++i)
   {
     if (nums[i] >= 0)
     {
@@ -30,36 +35,33 @@ int main()
     }
   }
 
-  size_t positiveLen = (size_t)CountPositiveNumbers(nums, N);
-  int posArray[positiveLen];
+  int positiveLen = (int)CountPositiveNumbers(nums, N);
 
   if (positiveLen > 0)
   {
-    for (size_t i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
       if (nums[i] > 0)
         posArray[i] = nums[i];
     }
   }
 
-  printf("\nNums:\n");
+  size_t j = 0;
   for (int i = 0; i < N; i++)
-    printf("%d ", nums[i]);
-
-  printf("\nResult:\n");
-  for (int i = 0; i < N; i++)
-    printf("%d ", result[i]);
-
-  printf("\nPositives:\n");
-  if (positiveLen > 0)
   {
-    for (int i = 0; i < positiveLen; i++)
-      printf("%d ", posArray[i]);
+    if (!IsInArray(UniqueValues, j, nums[i]))
+    {
+      UniqueValues[j] = nums[i];
+      j++;
+    }
   }
-  else
-  {
-    printf("Empty Array");
-  }
+
+  PrintArray(nums, N, "\nNums:\n");
+  PrintArray(result, N, "\nResult:\n");
+  PrintArray(posArray, positiveLen, "\nPositives\n");
+  PrintArray(UniqueValues, j, "\nNonrecurrent array%d:\n");
+  PrintPairs(result, N, "\nPairs:\n");
+
   printf("\n");
 
   return 0;
@@ -88,3 +90,39 @@ void ReadIntArray(int nums[], size_t len)
 
   printf("\n");
 }
+
+int IsInArray(int arr[], size_t len, int num)
+{
+  for (int i = 0; i < len; ++i) // O(n) complexity
+  {
+    if (arr[i] == num)
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void PrintArray(int *arr, size_t len, const char *word)
+{
+  printf(word, NULL);
+  for (int i = 0; i < len; i++)
+    printf("%d ", arr[i]);
+}
+
+void PrintPairs(int *arr, size_t len, const char *word)
+{
+  printf(word, NULL);
+  int negativesLen = len - CountPositiveNumbers(arr, len);
+
+  if (negativesLen > 0)
+  {
+    for (int i=0; i< negativesLen;i++)
+    {
+      if (IsInArray(arr+i, len, -arr[i]))
+      {
+        printf("(%d, %d) ", arr[i], -arr[i]);
+      }
+    }
+  }
+};

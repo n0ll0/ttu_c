@@ -9,6 +9,7 @@ int GetIntInRange(int min, int max, char prompt[], char error[]);
 int IsNumInRange(int num, int min, int max);
 void ReadIntArray(int nums[], size_t len);
 void PrintComparisson(int a, int b);
+void DivideValues(int a, int b);
 
 int main(int argc, char const *argv[])
 {
@@ -17,11 +18,13 @@ int main(int argc, char const *argv[])
 
   char error[50];
   sprintf(error, "Error! Index must be between 1 and %d", LENGTH);
-  int firstIndex = GetIntInRange(1, LENGTH, "Enter first index: ", error);
-  printf("DEBUG: first corresponding value: %d\n", nums[firstIndex-1]);
-  int secondINdex = GetIntInRange(1, LENGTH, "Enter second index: ", error);
-  printf("DEBUG: second corresponding value: %d\n", nums[secondINdex-1]);
+  int firstIndex = GetIntInRange(1, LENGTH, "Enter first index: ", error) - 1;
+  printf("DEBUG: first corresponding value: %d\n", nums[firstIndex]);
+  int secondIndex = GetIntInRange(1, LENGTH, "Enter second index: ", error) - 1;
+  printf("DEBUG: second corresponding value: %d\n", nums[secondIndex]);
 
+  PrintComparisson(nums[firstIndex], nums[secondIndex]);
+  DivideValues(nums[firstIndex], nums[secondIndex]);
   return 0;
 }
 
@@ -65,7 +68,7 @@ int GetIntInRange(int min, int max, char prompt[], char error[])
 void ReadIntArray(int nums[], size_t len)
 {
   char prompt[50];
-  char* error = "Please enter an integer";
+  char *error = "Please enter an integer";
 
   for (int i = 0; i < len; ++i)
   {
@@ -89,19 +92,15 @@ void ReadIntArray(int nums[], size_t len)
 void PrintComparisson(int a, int b)
 {
   if (a == b)
-    printf("a & b are equal");
+    printf("first = second");
 
   if (a > b)
-    printf("a is greater");
+    printf("first > second");
 
   if (a < b)
-    printf("b is greater");
+    printf("first < second");
 
   printf("\n");
-}
-
-double GreaterRatio(int a, int b)
-{
 }
 
 /**
@@ -117,9 +116,36 @@ double GreaterRatio(int a, int b)
 void DivideValues(int a, int b)
 {
   if (a == b)
-    printf("%d / %d = 1\n", a, b);
-  if (a > b)
-    printf("%d / %d = %lf\n", a, b, (double)a / (double)b);
-  if (b > a)
-    printf("%d / %d = %lf\n", b, a, (double)a / (double)b);
+  {
+    if (b == 0)
+    {
+      printf("Cannot divide with 0!\n");
+    }
+    else
+    {
+      printf("%d / %d = 1\n", a, b);
+    }
+  }
+  else if (a > b)
+  {
+    if (b == 0)
+    {
+      printf("Cannot divide with 0!\n");
+    }
+    else
+    {
+      printf("%d / %d = %lf\n", a, b, (double)a / (double)b);
+    }
+  }
+  else if (b > a)
+  {
+    if (a == 0)
+    {
+      printf("Cannot divide with 0!\n");
+    }
+    else
+    {
+      printf("%d / %d = %lf\n", b, a, (double)b / (double)a);
+    }
+  }
 }
