@@ -153,7 +153,7 @@ void PrintPairs(int *arr, size_t len, const char *word)
   {
     for (int i = 0; i < negativesLen; i++)
     {
-      if (IsInArray(rearranged, len, -rearranged[i]))
+      if (IsInArray(rearranged + i*4, len - i*4, -rearranged[i]))
       {
         printf("(%d, %d) ", rearranged[i], -rearranged[i]);
       }
