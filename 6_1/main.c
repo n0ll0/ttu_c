@@ -13,6 +13,7 @@ size_t MakeUniqueArr(int *arr, int *unique, size_t len);
 
 int main()
 {
+  printf("Ülesanne 1: Uute massiivide koostamine + lisa 1 + lisa 2\n\n");
   int nums[N];
   int result[N];
   int posArray[N];

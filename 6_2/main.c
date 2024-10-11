@@ -13,6 +13,8 @@ void DivideValues(int a, int b);
 
 int main(int argc, char const *argv[])
 {
+  printf("Ülesanne 2: kahe arvu võrdlus\n\n");
+
   int nums[LENGTH];
   ReadIntArray(nums, LENGTH);
 

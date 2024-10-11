@@ -19,6 +19,8 @@ void display_results(int ageGroups[]);
 
 int main(void)
 {
+  printf("Kodutöö: vanuselise jaotuse looja\n\n");
+
   int ageGroups[GROUPS] = {0};
   int age, idx;
 

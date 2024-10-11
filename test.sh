@@ -10,6 +10,7 @@
 # cd toidukaal && gcc main.c -lm && ./a.out
 # cd vastuvotu && gcc main.c -lm && ./a.out
 # cd workdays && gcc main.c && ./a.out
-# cd 5_1 && gcc main.c -lm && ./a.out
-# cd 5_2 && gcc main.c -lm && ./a.out
-cd 5_k && gcc main.c -lm && ./a.out
+# cd 6_1 && gcc main.c -lm && ./a.out && cd ..
+# cd 6_2 && gcc main.c -lm && ./a.out && cd ..
+# cd 6_k && gcc main.c -lm && ./a.out && cd ..
+# cd 6_t && gcc main.c -lm -g && ./a.out && cd ..
