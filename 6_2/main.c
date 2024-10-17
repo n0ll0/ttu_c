@@ -49,7 +49,7 @@ int GetIntInRange(int min, int max, char prompt[], char error[])
 {
   printf("\n%s", prompt);
   int num;
-  while (scanf("%d", &num) != 1 || !IsNumInRange(num, min, max))
+  while (scanf("%d", &num) != 1 || num < min || num > max)
   {
     printf("\n%s\n\n%s", error, prompt);
     while (getchar() != 10)
