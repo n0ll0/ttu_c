@@ -1,10 +1,10 @@
 #include <stdio.h>
-#define ARRAY_LENGTH 10
+#define ARRAY_LENGTH 5
 #define MATRIX_DIMENSION 5
 
 void ReadIntArray(int nums[], size_t len, const char *word);
 void PrintArray(int *arr, size_t len, const char *word);
-void Sort(int *arr, size_t len);
+void BubbleSort(int *arr, size_t len);
 
 int main(int argc, char const *argv[])
 {
@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
   PrintArray(array, ARRAY_LENGTH, "\nEntered array:\n");
   printf("\n\n");
 
-  Sort(array, ARRAY_LENGTH);
+  BubbleSort(array, ARRAY_LENGTH);
 
   PrintArray(array, ARRAY_LENGTH, "\nAscending order:\n");
   printf("\n\n\nDescending order:\n");
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
   for (int y = 0; y < MATRIX_DIMENSION; ++y)
   {
     char prompt[24];
-    sprintf(prompt, "Enter matrix row %d / %d", y + 1, MATRIX_DIMENSION);
+    sprintf(prompt, "Enter matrix row %d / %d\n", y + 1, MATRIX_DIMENSION);
     ReadIntArray(matrix[y], MATRIX_DIMENSION, prompt);
   }
 
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
 
   for (int y = 0; y < MATRIX_DIMENSION; ++y)
   {
-    Sort(matrix[y], MATRIX_DIMENSION);
+    BubbleSort(matrix[y], MATRIX_DIMENSION);
   }
 
   printf("\nSorted matrix:\n{\n\t");
@@ -66,7 +66,7 @@ void ReadIntArray(int nums[], size_t len, const char *word)
   for (int i = 0; i < len; i++)
   {
     int number;
-    printf("Enter number %d / %ld: ", i + 1, len);
+    printf("\tEnter number %d / %ld: ", i + 1, len);
     scanf("%d", &number);
     nums[i] = number;
   }
@@ -88,16 +88,21 @@ void Swap(int *a, int *b)
   *a = *b ^ *a;
 }
 
-void Sort(int *arr, size_t len)
+void BubbleSort(int *arr, size_t len)
 {
-  for (int i = 0; i < len; i++)
+  int i = 0,
+      j = 0,
+      n=0;
+  for (; i < len; ++i)
   {
-    for (int j = 0; j < len; j++)
+    for (j = i+1; j < len; ++j)
     {
-      if (arr[i] < arr[j])
+      printf("%d ", ++n);
+      if (arr[i] > arr[j])
       {
         Swap(&arr[i], &arr[j]);
       }
     }
   }
+  printf("\n");
 }
