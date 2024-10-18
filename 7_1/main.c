@@ -92,15 +92,22 @@ void BubbleSort(int *arr, size_t len)
 {
   int i = 0,
       j = 0,
-      n=0;
+      n = 0,
+      swapped = 0;
   for (; i < len; ++i)
   {
-    for (j = i+1; j < len; ++j)
+    for (j = i + 1; j < len; ++j)
     {
       printf("%d ", ++n);
+      swapped = 0;
       if (arr[i] > arr[j])
       {
         Swap(&arr[i], &arr[j]);
+        swapped = 1;
+      }
+      if (!swapped)
+      {
+        break;
       }
     }
   }
