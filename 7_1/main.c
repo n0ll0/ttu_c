@@ -80,6 +80,7 @@ void ReadMatrix(int **matrix, size_t dimensions)
     ReadIntArray(matrix[y], dimensions, prompt);
   }
 }
+
 void PrintMatrix(int **matrix, size_t dimensions)
 {
   printf("{\n\t");
@@ -95,12 +96,14 @@ void PrintAscendingArray(int *arr, size_t len)
 {
   PrintArray(arr, len, "\nAscending order:\n");
 }
+
 void PrintDescendingArray(int *arr, size_t len)
 {
   printf("\n\n\nDescending order:\n");
-  for (size_t i = 1; i <= len; i++)
-    printf("%d ", arr[len - i]);
+  for (size_t i = len; i >= 0; --i)
+    printf("%d ", arr[i]);
 }
+
 void Swap(int *a, int *b)
 {
   *a = *b ^ *a;
@@ -111,16 +114,16 @@ void Swap(int *a, int *b)
 void BubbleSort(int *arr, size_t len)
 {
   size_t i = 0,
-      j = 0;
+         j = 0;
   int n = 0,
       swapped = 0;
   for (; i < len; i++)
   {
     swapped = 0;
-    for (j = 0; j < len-i-1; j++)
+    for (j = 0; j < len - i - 1; j++)
     {
       printf("%d ", ++n);
-      if (arr[j] > arr[j+1])
+      if (arr[j] > arr[j + 1])
       {
         Swap(&arr[j], &arr[j + 1]);
         swapped = 1;

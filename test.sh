@@ -14,4 +14,4 @@
 # cd 6_2 && gcc main.c -lm && ./a.out && cd ..
 # cd 6_k && gcc main.c -lm && ./a.out && cd ..
 # cd 6_t && gcc main.c -lm -g && ./a.out && cd ..
-cd 7_1 && gcc main.c -lm -g && ./a.out && cd ..
+# cd 7_1 && gcc main.c -lm -g && ./a.out && cd ..

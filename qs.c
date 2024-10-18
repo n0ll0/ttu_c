@@ -27,9 +27,7 @@ void qs(int *arr, int low, int high)
     }
 
     // Recursively sort the two partitions
-    if (low < j)
-      qs(arr, low, j);
-    if (i < high)
-      qs(arr, i, high);
+    qs(arr, low, j);
+    qs(arr, i, high);
   }
 }
