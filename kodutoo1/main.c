@@ -27,9 +27,9 @@ double f(double x);
 int main()
 {
   // Initial value
-  double A = GetDoubleInRange(-1, INFINITY, "Algväärtus: ", "Vigane sisend!");
+  double A = GetDoubleInRange(-INFINITY, INFINITY, "Algväärtus: ", "Vigane sisend!");
   // step size
-  double H = GetDoubleInRange(-1, INFINITY, "Sammu suurus: ", "Vigane sisend!");
+  double H = GetDoubleInRange(-INFINITY, INFINITY, "Sammu suurus: ", "Vigane sisend!");
   // step count
   int N = GetIntInRange(1, MAX_N, "Mitu sammu?", "Vigane sisend!");
 
