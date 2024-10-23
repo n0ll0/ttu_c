@@ -27,6 +27,16 @@ void PrintDates(int day[], int month[], int year[], int n);
 int main(void)
 {
 
+  int day[MAX], month[MAX], year[MAX];
+  int n = ReadDates(day, month, year, MAX);
+  PrintDates(day, month, year, n);
+
+  for (int i = 0; i < n; i++)
+  {
+    int result = ValidateDate(day[i], month[i], year[i]);
+    printf("Date %d/%d/%d is %s\n", day[i], month[i], year[i],
+           result == DATE_VALID? "valid" : "invalid");
+  }
   return 0;
 }
 
@@ -44,6 +54,21 @@ int main(void)
  */
 int ReadDates(int day[], int month[], int year[], int max)
 {
+  int count = 0;
+  int day, month, year;
+
+  while (scanf("%d/%d/%d", &day, &month, &year) == 3 && count < max)
+  {
+    if (ValidateDate(day, month, year) == DATE_VALID)
+    {
+      day[count] = day;
+      month[count] = month;
+      year[count] = year;
+      count++;
+    }
+  }
+
+  return count;
 }
 
 /**
@@ -59,6 +84,12 @@ int ReadDates(int day[], int month[], int year[], int max)
  */
 void PrintDates(int day[], int month[], int year[], int n)
 {
+  int i;
+
+  for (i = 0; i < n; i++)
+  {
+    printf("%d/%d/%d\n", day[i], month[i], year[i]);
+  }
 }
 
 /**
@@ -70,6 +101,7 @@ void PrintDates(int day[], int month[], int year[], int n)
  */
 bool IsLeapYear(int year)
 {
+  return year % 4 == 0 && (year % 100!= 0 || year % 400 == 0);
 }
 
 /**
@@ -87,6 +119,18 @@ bool IsLeapYear(int year)
 int GetDaysInMonth(int month, int year)
 {
   // don't forget the leap year!
+  if (month < 1 || month > 12)
+    return 0;
+
+  switch (month)
+  {
+    case 2:
+      return IsLeapYear(year)? 29 : 28;
+    case 4: case 6: case 9: case 11:
+      return 30;
+    default:
+      return 31;
+  }
 }
 
 /**
@@ -103,4 +147,9 @@ int ValidateDate(int day, int month, int year)
 {
   // Hint: use the functions GetDaysInMonth
   // to assist in formulating the conditional statements
+  // to validate the date.
+  if (day < 1 || day > GetDaysInMonth(month, year))
+    return DATE_INVALID;
+
+  return DATE_VALID;
 }
