@@ -17,15 +17,21 @@
 #include <stdio.h>
 #include <math.h>
 
+#define MAX_N 20
+
 double GetDoubleInRange(double min, double max, char prompt[], char error[]);
+int GetIntInRange(int min, int max, char prompt[], char error[]);
 void Table(double A, double H, int N, double func());
 double f(double x);
 
 int main()
 {
-  double A = 1.7320508075688772;
-  double H = 1;
-  int N = 10;
+  // Initial value
+  double A = GetDoubleInRange(-1, INFINITY, "Algväärtus: ", "Vigane sisend!");
+  // step size
+  double H = GetDoubleInRange(-1, INFINITY, "Sammu suurus: ", "Vigane sisend!");
+  // step count
+  int N = GetIntInRange(1, MAX_N, "Mitu sammu?", "Vigane sisend!");
 
   Table(A, H, N, f);
 
@@ -73,6 +79,19 @@ double GetDoubleInRange(double min, double max, char prompt[], char error[])
   printf("\n%s", prompt);
   double num;
   while (scanf("%lf", &num) != 1 || num < min || num > max)
+  {
+    printf("\n%s\n\n%s", error, prompt);
+    while (getchar() != 10)
+      ;
+  }
+  return num;
+}
+
+int GetIntInRange(int min, int max, char prompt[], char error[])
+{
+  printf("\n%s", prompt);
+  int num;
+  while (scanf("%d", &num) != 1 || num < min || num > max)
   {
     printf("\n%s\n\n%s", error, prompt);
     while (getchar() != 10)
