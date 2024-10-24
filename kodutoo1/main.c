@@ -26,12 +26,14 @@ double f(double x);
 
 int main()
 {
+  double A, H;
+  int N;
   // Initial value
-  double A = GetDoubleInRange(-INFINITY, INFINITY, "Algväärtus: ", "Vigane sisend!");
+  A = GetDoubleInRange(-INFINITY, INFINITY, "Algväärtus: ", "Vigane sisend!");
   // step size
-  double H = GetDoubleInRange(-INFINITY, INFINITY, "Sammu suurus: ", "Vigane sisend!");
+  H = GetDoubleInRange(-INFINITY, INFINITY, "Sammu suurus: ", "Vigane sisend!");
   // step count
-  int N = GetIntInRange(1, MAX_N, "Mitu sammu?", "Vigane sisend!");
+  N = GetIntInRange(1, MAX_N, "Mitu sammu?", "Vigane sisend!");
 
   Table(A, H, N, f);
 
@@ -40,12 +42,13 @@ int main()
 
 void Table(double A, double H, int N, double func(double))
 {
+  double x = A;
+  double y;
   printf("#-----------------------------#\n");
   printf("| %-12s | %-12s |\n", "x", "y");
-  double x = A;
   for (int i = 0; i < N; ++i)
   {
-    double y = func(x);
+    y = func(x);
     // if (y == NAN)
     //   continue;
     printf("|--------------|--------------|\n");
@@ -72,6 +75,7 @@ double f(double x)
  * Parameters:     min - lower bound for the user input (inclusive)
  *                 max - upper bound for the user input (inclusive)
  *                 prompt - prompt for user input, printed before entry
+ *                 error - printed after errory entry
  *
  * Return:         number within the specified limits
  */
@@ -88,6 +92,17 @@ double GetDoubleInRange(double min, double max, char prompt[], char error[])
   return num;
 }
 
+/**
+ * Description:    Asks the user for an integer in between the given limits.
+ *                 Repeats until requirements are met and returns the number.
+ *
+ * Parameters:     min - lower bound for the user input (inclusive)
+ *                 max - upper bound for the user input (inclusive)
+ *                 prompt - prompt for user input, printed before entry
+ *                 error - printed after errory entry
+ *
+ * Return:         number within the specified limits
+ */
 int GetIntInRange(int min, int max, char prompt[], char error[])
 {
   int num;
