@@ -40,19 +40,19 @@ int main()
 
 void Table(double A, double H, int N, double func())
 {
-  printf("-------------------------------\n");
+  printf("#-----------------------------#\n");
   printf("| %-12s | %-12s |\n", "x", "y");
   double x = A;
   for (int i = 0; i < N; ++i)
   {
     double y = func(x);
-    if (y == NAN)
-      continue;
+    // if (y == NAN)
+    //   continue;
     printf("|--------------|--------------|\n");
     printf("| %12.2lf | %12.2lf |\n", x, y);
     x += H;
   }
-  printf("-------------------------------\n");
+  printf("#-----------------------------#\n");
 }
 
 /**
@@ -76,21 +76,21 @@ double f(double x)
  */
 double GetDoubleInRange(double min, double max, char prompt[], char error[])
 {
-  printf("\n%s", prompt);
   double num;
+  printf("\n%s", prompt);
   while (scanf("%lf", &num) != 1 || num < min || num > max)
   {
-    printf("\n%s\n\n%s", error, prompt);
     while (getchar() != 10)
       ;
+    printf("\n%s\n\n%s", error, prompt);
   }
   return num;
 }
 
 int GetIntInRange(int min, int max, char prompt[], char error[])
 {
-  printf("\n%s", prompt);
   int num;
+  printf("\n%s", prompt);
   while (scanf("%d", &num) != 1 || num < min || num > max)
   {
     printf("\n%s\n\n%s", error, prompt);
