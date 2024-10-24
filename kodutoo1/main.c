@@ -21,7 +21,7 @@
 
 double GetDoubleInRange(double min, double max, char prompt[], char error[]);
 int GetIntInRange(int min, int max, char prompt[], char error[]);
-void Table(double A, double H, int N, double func());
+void Table(double A, double H, int N, double func(double));
 double f(double x);
 
 int main()
@@ -38,7 +38,7 @@ int main()
   return 0;
 }
 
-void Table(double A, double H, int N, double func())
+void Table(double A, double H, int N, double func(double))
 {
   printf("#-----------------------------#\n");
   printf("| %-12s | %-12s |\n", "x", "y");
