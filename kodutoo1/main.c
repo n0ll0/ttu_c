@@ -60,8 +60,9 @@ void Table(double A, double H, int N, double func())
  */
 double f(double x)
 {
-  if (x*x == 3) return NAN;
-  return sqrt((x * x * x) + 1) / (3 - (x * x));
+  double x_sqr = x*x;
+  if (x_sqr == 3) return NAN;
+  return sqrt((x_sqr * x) + 1) / (3 - (x_sqr));
 }
 
 /**
