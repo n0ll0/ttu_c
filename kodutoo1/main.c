@@ -44,18 +44,26 @@ void Table(double A, double H, int N, double func(double))
 {
   double x = A;
   double y;
-  printf("#-----------------------------#\n");
-  printf("| %-12s | %-12s |\n", "x", "y");
+  char y_str[17];
+  printf("#-------------------------------------#\n");
+  printf("| %16s | %16s |\n", "x", "y");
   for (int i = 0; i < N; ++i)
   {
-    y = func(x);
-    // if (y == NAN)
-    //   continue;
-    printf("|--------------|--------------|\n");
-    printf("| %12.2lf | %12.2lf |\n", x, y);
+    if (x < -1)
+    {
+      sprintf(y_str, "%16s", "Complex");
+    }
+    else
+    {
+      y = func(x);
+      sprintf(y_str, "%16.2lf", y);
+    }
+
+    printf("|------------------|------------------|\n");
+    printf("| %16.2lf | %s |\n", x, y_str);
     x += H;
   }
-  printf("#-----------------------------#\n");
+  printf("#-------------------------------------#\n");
 }
 
 /**
@@ -63,8 +71,9 @@ void Table(double A, double H, int N, double func(double))
  */
 double f(double x)
 {
-  double x_sqr = x*x;
-  if (x_sqr == 3) return NAN;
+  double x_sqr = x * x;
+  if (x_sqr == 3 || x < -1)
+    return NAN;
   return sqrt((x_sqr * x) + 1) / (3 - (x_sqr));
 }
 

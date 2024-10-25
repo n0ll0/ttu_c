@@ -15,8 +15,11 @@
 
 #define MAX 100
 
-#define DATE_INVALID 0
-#define DATE_VALID 1
+#define DATE_VALID 0
+#define DATE_INVALID 1
+#define DATE_INVALID_YEAR_OOB 2
+#define DATE_INVALID_DAY_OOB 3
+#define DATE_INVALID_FEB 4
 
 bool IsLeapYear(int year);
 int GetDaysInMonth(int month, int year);
@@ -30,13 +33,6 @@ int main(void)
   int day[MAX], month[MAX], year[MAX];
   int n = ReadDates(day, month, year, MAX);
   PrintDates(day, month, year, n);
-
-  for (int i = 0; i < n; i++)
-  {
-    int result = ValidateDate(day[i], month[i], year[i]);
-    printf("Date %d/%d/%d is %s\n", day[i], month[i], year[i],
-           result == DATE_VALID? "valid" : "invalid");
-  }
   return 0;
 }
 
@@ -55,17 +51,12 @@ int main(void)
 int ReadDates(int day[], int month[], int year[], int max)
 {
   int count = 0;
-  int day, month, year;
 
-  while (scanf("%d/%d/%d", &day, &month, &year) == 3 && count < max)
+  while (count < max && scanf("%2d%2d%4d", &day[count], &month[count], &year[count]) == 3)
   {
-    if (ValidateDate(day, month, year) == DATE_VALID)
-    {
-      day[count] = day;
-      month[count] = month;
-      year[count] = year;
-      count++;
-    }
+    ++count;
+    if (getchar() == EOF)
+      return count;
   }
 
   return count;
@@ -88,7 +79,13 @@ void PrintDates(int day[], int month[], int year[], int n)
 
   for (i = 0; i < n; i++)
   {
-    printf("%d/%d/%d\n", day[i], month[i], year[i]);
+    int result = ValidateDate(day[i], month[i], year[i]);
+    printf("%02d.%02d.%04d < %s\n", day[i], month[i], year[i],
+           result == DATE_INVALID ? "Invalid date" :
+           result == DATE_INVALID_YEAR_OOB? "Year out of bounds" :
+           result == DATE_INVALID_DAY_OOB? "Day out of months bounds" :
+           result == DATE_INVALID_FEB? "29th of February only exists on leap year!" :
+           result == DATE_VALID ? "Ok" : "Ok");
   }
 }
 
@@ -101,7 +98,7 @@ void PrintDates(int day[], int month[], int year[], int n)
  */
 bool IsLeapYear(int year)
 {
-  return year % 4 == 0 && (year % 100!= 0 || year % 400 == 0);
+  return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 }
 
 /**
@@ -118,18 +115,20 @@ bool IsLeapYear(int year)
  */
 int GetDaysInMonth(int month, int year)
 {
-  // don't forget the leap year!
   if (month < 1 || month > 12)
     return 0;
 
   switch (month)
   {
-    case 2:
-      return IsLeapYear(year)? 29 : 28;
-    case 4: case 6: case 9: case 11:
-      return 30;
-    default:
-      return 31;
+  case 2:
+    return IsLeapYear(year) ? 29 : 28;
+  case 4:
+  case 6:
+  case 9:
+  case 11:
+    return 30;
+  default:
+    return 31;
   }
 }
 
@@ -148,8 +147,14 @@ int ValidateDate(int day, int month, int year)
   // Hint: use the functions GetDaysInMonth
   // to assist in formulating the conditional statements
   // to validate the date.
-  if (day < 1 || day > GetDaysInMonth(month, year))
+  if (day < 1)
     return DATE_INVALID;
+  if (year < 1900 || year >= 2100)
+    return DATE_INVALID_YEAR_OOB;
+  if (day > GetDaysInMonth(month, year))
+    return DATE_INVALID_DAY_OOB;
+  if (month == 2 && IsLeapYear(year) && day == 29)
+    return DATE_INVALID_FEB;
 
   return DATE_VALID;
 }
