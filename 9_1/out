@@ -1,0 +1,16 @@
+10 9 8 0 -10 8 5 
+7 6 9 1 -7 -9 4 
+-5 5 -5 5 -5 5 -5 
+8 7 6 5 4 3 2 
+1 2 3 4 5 6 7 
+-1 -2 -3 -4 -3 -2 -1 
+0 0 0 0 0 0 0 
+Sum of main diagonal elements with negative values: -7
+Sum of secondary diagonal elements with positive values: -2076401664
+Max in row 0: 10
+Max in row 1: 9
+Max in row 2: 5
+Max in row 3: 8
+Max in row 4: 7
+Max in row 5: -1
+Max in row 6: 0

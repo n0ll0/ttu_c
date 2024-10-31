@@ -16,5 +16,6 @@
 # cd 6_t && gcc main.c -lm -g && ./a.out && cd ..
 # cd 7_1 && gcc main.c -lm -g && ./a.out && cd ..
 # cd 8_1 && gcc main.c -lm -g && ./a.out < ./input && cd ..
-cd 8_2 && gcc main.c -lm -g && ./a.out < ./input && cd ..
+# cd 8_2 && gcc main.c -lm -g && ./a.out < ./input && cd ..
 # cd kodutoo1 && gcc main.c -lm -g && ./a.out && cd ..
+cd 9_1 && gcc main.c && ./a.out < ./input && cd ..
