@@ -5,8 +5,8 @@
 
 void ReadMatrix(int matrix[SIZE][SIZE], int rows, int cols);
 void PrintMatrix(int data[SIZE][SIZE], int rows, int cols);
-int32_t MainDiagonalNegSum(int data[SIZE][SIZE], int rows, int cols);
-int32_t AboveSecondaryDiagonalPosProduct(int data[SIZE][SIZE], int rows, int cols);
+int64_t MainDiagonalNegSum(int data[SIZE][SIZE], int rows, int cols);
+int64_t AboveSecondaryDiagonalPosProduct(int data[SIZE][SIZE], int rows, int cols);
 void FindMaxInRows(int data[SIZE][SIZE], int rows, int cols);
 
 int main(void)
@@ -17,11 +17,11 @@ int main(void)
 
     PrintMatrix(matrix, SIZE, SIZE);
 
-    int32_t sum = MainDiagonalNegSum(matrix, SIZE, SIZE);
-    printf("Sum of main diagonal elements with negative values: %d\n", sum);
+    int64_t sum = MainDiagonalNegSum(matrix, SIZE, SIZE);
+    printf("Sum of main diagonal elements with negative values: %" PRId64 "\n", sum);
 
-    int32_t secondaryProduct = AboveSecondaryDiagonalPosProduct(matrix, SIZE, SIZE);
-    printf("Sum of secondary diagonal elements with positive values: %d\n", secondaryProduct);
+    int64_t secondaryProduct = AboveSecondaryDiagonalPosProduct(matrix, SIZE, SIZE);
+    printf("Sum of secondary diagonal elements with positive values: %" PRId64 "\n", secondaryProduct);
 
     FindMaxInRows(matrix, SIZE, SIZE);
 
@@ -57,15 +57,15 @@ void PrintMatrix(int data[SIZE][SIZE], int rows, int cols)
     {
         for (int j = 0; j < rows; j++)
         {
-            printf("%d ", data[i][j]);
+            printf("%3d ", data[i][j]);
         }
         printf("\n");
     }
 }
 
-int32_t MainDiagonalNegSum(int data[SIZE][SIZE], int rows, int cols)
+int64_t MainDiagonalNegSum(int data[SIZE][SIZE], int rows, int cols)
 {
-    int32_t sum = 0;
+    int64_t sum = 0;
     for (int i = 0; i < rows && i < cols; i++)
     {
         if (data[i][i] < 0)
@@ -76,9 +76,9 @@ int32_t MainDiagonalNegSum(int data[SIZE][SIZE], int rows, int cols)
     return sum;
 }
 
-int32_t AboveSecondaryDiagonalPosProduct(int data[SIZE][SIZE], int rows, int cols)
+int64_t AboveSecondaryDiagonalPosProduct(int data[SIZE][SIZE], int rows, int cols)
 {
-    int32_t product = 1;
+    int64_t product = 1;
     int found = 0;
     for (int i = 0; i < rows; i++)
     {
