@@ -22,7 +22,7 @@
 
 /* Limits for the menu */
 #define MENU_OPTION_MIN 0
-#define MENU_OPTION_MAX 4
+#define MENU_OPTION_MAX 9
 
 int Menu(void);
 int GetIntInRange(int min, int max);
@@ -31,6 +31,13 @@ void DisplayMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols);
 void Swap(int *a, int *b);
 void SwitchRows(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int rowFrom, int rowTo);
 void SwitchColumns(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int colFrom, int colTo);
+void DeleteRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int rowToDelete);
+void DeleteColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int rowToDelete);
+void GenerateRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int row);
+void GenerateColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int col);
+void AddRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int row);
+void AddColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int col);
+void TransposeMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols);
 
 int main(void)
 {
@@ -39,7 +46,6 @@ int main(void)
 
   while (menuOption != 0)
   {
-    menuOption = Menu();
     switch (menuOption)
     {
     case 1:
@@ -60,23 +66,73 @@ int main(void)
       break;
     case 3:
       puts("Case 3: Switch rows");
-
+      if (rows <= 0 || cols <= 0)
+      {
+        puts("Error: Matrix is empty");
+        break;
+      }
       printf("Enter source row between 1 and %d", rows);
-      int row1 = -1 + GetIntInRange(0, rows);
+      int row1 = -1 + GetIntInRange(1, rows);
       printf("Enter destination row between 1 and %d", rows);
-      int row2 = -1 + GetIntInRange(0, rows);
+      int row2 = -1 + GetIntInRange(1, rows);
       SwitchRows(data, rows, cols, row1, row2);
       break;
     case 4:
       puts("Case 4: Switch columns");
-      /* 1. Prompt the user to enter the column numbers to switch
-       * 2. Call SwitchColumns() to switch the rows */
+      if (rows <= 0 || cols <= 0)
+      {
+        puts("Error: Matrix is empty");
+        break;
+      }
       printf("Enter source column between 1 and %d", cols);
-      int col1 = -1 + GetIntInRange(0, cols);
+      int col1 = -1 + GetIntInRange(1, cols);
       printf("Enter destination column between 1 and %d", cols);
-      int col2 = -1 + GetIntInRange(0, cols);
+      int col2 = -1 + GetIntInRange(1, cols);
       SwitchColumns(data, rows, cols, col1, col2);
 
+      break;
+    case 5:
+      puts("Case 5: Delete row");
+      if (rows <= 0 || cols <= 0)
+      {
+        puts("Error: Matrix is empty");
+        break;
+      }
+      printf("Enter row to delete between 1 and %d", rows);
+      int rowToDelete = -1 + GetIntInRange(1, rows);
+      DeleteRow(data, &rows, &cols, rowToDelete);
+      break;
+    case 6:
+      puts("Case 6: Delete column");
+      if (rows <= 0 || cols <= 0)
+      {
+        puts("Error: Matrix is empty");
+        break;
+      }
+      printf("Enter column to delete between 1 and %d", cols);
+      int colToDelete = -1 + GetIntInRange(1, cols);
+      DeleteColumn(data, &rows, &cols, colToDelete);
+      break;
+    case 7:
+      puts("Case 7: Generate new row");
+      printf("Enter row index to generate between 0 and %d", rows);
+      int rowTo = GetIntInRange(0, rows);
+      AddRow(data, &rows, &cols, rowTo);
+      break;
+    case 8:
+      puts("Case 8: Generate new column");
+      printf("Enter column index to generate between 0 and %d", cols);
+      int colTo = GetIntInRange(0, cols);
+      AddColumn(data, &rows, &cols, colTo);
+      break;
+    case 9:
+      if (rows <= 0 || cols <= 0)
+      {
+        puts("Error: Matrix is empty");
+        break;
+      }
+      puts("Case 9: Transpose matrix");
+      TransposeMatrix(data, rows, cols);
       break;
     case 0:
       puts("Case 0: Exiting");
@@ -86,6 +142,11 @@ int main(void)
       puts("Case ?: Sorry! We didn't understand Your request");
       break;
     }
+    if (cols <= 0 || rows <= 0)
+    {
+      puts("Warning: matrix is empty. Use case 1 to generate a new matrix.");
+    }
+    menuOption = Menu();
   }
 
   return 0;
@@ -108,6 +169,11 @@ int Menu(void)
   puts("2 - Display matrix");
   puts("3 - Switch rows");
   puts("4 - Switch columns");
+  puts("5 - Delete row");
+  puts("6 - Delete column");
+  puts("7 - Generate new row");
+  puts("8 - Generate new column");
+  puts("9 - Transpose matrix");
   puts("0 - Exit program");
   selection = GetIntInRange(MENU_OPTION_MIN, MENU_OPTION_MAX);
   return selection;
@@ -153,14 +219,12 @@ int GetIntInRange(int min, int max)
 void GenerateMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols)
 {
   srand(time(NULL));
-
-  for (int row = 0; row < rows; ++row)
+  int row = 0;
+  // int col;
+  do
   {
-    for (int col = 0; col < cols; ++col)
-    {
-      matrix[row][col] = rand() % (RAND_UPPER - RAND_LOWER + 1) + RAND_LOWER;
-    }
-  }
+    GenerateRow(matrix, rows, cols, row);
+  } while (row++ < rows);
 }
 
 /**
@@ -175,13 +239,18 @@ void GenerateMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols)
  */
 void DisplayMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols)
 {
-  for (int row = 0; row < rows; ++row)
+  int row = 0;
+  int col;
+  while (row < rows)
   {
-    for (int col = 0; col < cols; ++col)
+    col = 0;
+    while (col < cols)
     {
       printf("%3d ", matrix[row][col]);
+      ++col;
     }
     puts("");
+    ++row;
   }
 }
 
@@ -194,10 +263,14 @@ void Swap(int *a, int *b)
 
 void SwitchRows(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int rowFrom, int rowTo)
 {
-  for (int col = 0; col < cols; ++col)
-  {
-    Swap(&matrix[rowFrom][col], &matrix[rowTo][col]);
-  }
+  // idc about memory safety, but it's fine for this case
+  Swap(matrix[rowFrom], matrix[rowTo]);
+  // int col = 0;
+  // while (col < cols)
+  // {
+  //   Swap(&matrix[rowFrom][col], &matrix[rowTo][col]);
+  //   ++col;
+  // }
 }
 
 void SwitchColumns(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int colFrom, int colTo)
@@ -205,5 +278,69 @@ void SwitchColumns(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int c
   for (int row = 0; row < rows; ++row)
   {
     Swap(&matrix[row][colFrom], &matrix[row][colTo]);
+  }
+}
+
+void DeleteRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int rowToDelete)
+{
+  SwitchRows(matrix, *rows, *cols, rowToDelete, *rows - 1);
+  (*rows)--;
+}
+
+void DeleteColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int rowToDelete)
+{
+  SwitchColumns(matrix, *rows, *cols, rowToDelete, *cols - 1);
+  (*cols)--;
+}
+
+void GenerateRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int row)
+{
+  int col = 0;
+  while (col < cols)
+  {
+    matrix[row][col] = rand() % (RAND_UPPER - RAND_LOWER + 1) + RAND_LOWER;
+    ++col;
+  }
+}
+
+void GenerateColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols, int col)
+{
+  int row = 0;
+  while (row < rows)
+  {
+    matrix[row][col] = rand() % (RAND_UPPER - RAND_LOWER + 1) + RAND_LOWER;
+    ++row;
+  }
+}
+
+void AddRow(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int row)
+{
+  GenerateRow(matrix, *rows, *cols, *rows);
+  for (int otherRow = *rows; otherRow > row; --otherRow)
+  {
+    printf("Swapping indexes %d and %d\n", otherRow, otherRow - 1);
+    SwitchRows(matrix, *rows, *cols, otherRow, otherRow - 1);
+  }
+  (*rows)++;
+}
+
+void AddColumn(int matrix[LIMIT_ROWS][LIMIT_COLS], int *rows, int *cols, int col)
+{
+  GenerateColumn(matrix, *rows, *cols, *cols);
+  for (int otherColumn = *cols; otherColumn > col; --otherColumn)
+  {
+    SwitchColumns(matrix, *rows, *cols, otherColumn, otherColumn - 1);
+  }
+  (*cols)++;
+}
+
+void TransposeMatrix(int matrix[LIMIT_ROWS][LIMIT_COLS], int rows, int cols)
+{
+  for (int i = 0; i < rows; ++i)
+  {
+    for (int j = i + 1; j < cols; ++j)
+    {
+      Swap(&matrix[i][j], &matrix[j][i]);
+    }
   }
 }
