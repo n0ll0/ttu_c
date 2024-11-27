@@ -128,13 +128,14 @@ bool FindPhrase(char sentence[], char phrase[]);
 void PromptPassword(char correctPassword[]);
 void FormulateSentence(void);
 void PromptString(char str[], int max, char prompt[]);
+void StatString(char str[]);
 
 int main(void)
 {
   char sentence[MAX_SENTENCE_LENGTH];
   PromptString(sentence, MAX_SENTENCE_LENGTH, "Enter a sentence: ");
   // DebugString(sentence);
-  printf("Sentence length: %d\n", strlen(sentence));
+  printf("Sentence length: %ld\n", strlen(sentence));
 
   char prompt[MAX_SENTENCE_LENGTH];
   PromptString(prompt, MAX_SENTENCE_LENGTH, "Enter a prompt: ");
@@ -147,6 +148,10 @@ int main(void)
   PromptPassword("qwerty");
 
   FormulateSentence();
+
+  char str[MAX_SENTENCE_LENGTH];
+  PromptString(str, MAX_SENTENCE_LENGTH, "Enter a string: ");
+  StatString(str);
 
   return 0;
 }
@@ -201,7 +206,7 @@ void PromptPassword(char correctPassword[])
 void FormulateSentence(void)
 {
   // String where the final sentence will be held
-  char sentence[MAX_SENTENCE_LENGTH];
+  char sentence[2 * MAX_SENTENCE_LENGTH + 5];
 
   // Strings for the two user-entered words
   char words[WORDS_IN_SENTENCE][MAX_SENTENCE_LENGTH];
@@ -215,8 +220,55 @@ void FormulateSentence(void)
   }
 
   // Formulating the final sentence
-  sprintf(sentence, "%s is %s\n", words[0], words[1]);
+  // sprintf(sentence, "%s is %s\n", words[0], words[1]);
 
   // Print the final formulated sentence
-  printf("Result: %s\n", sentence);
+  // printf("Result: %s\n", sentence);
+  printf("Result: ");
+  printf("%s is %s\n", words[0], words[1]);
+}
+
+void StatString(char *str)
+{
+  size_t len = strlen(str);
+  printf("%s\n", str);
+  printf("Length of the string: %ld\n", len);
+
+  int alphabetic_characters = 0;
+  int digits = 0;
+  int specialChars = 0;
+  int spaces = 0;
+  int others = 0;
+
+  for (int i = 0; i < len; i++)
+  {
+    char c = str[i];
+    if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+    {
+      alphabetic_characters++;
+    }
+    else if (c >= '0' && c <= '9')
+    {
+      digits++;
+    }
+    else if (c == ' ' || c == '\t')
+    {
+      spaces++;
+    }
+    else if (c == '.' || c == ',' || c == '!' || c == '?' || c == ':' || c == ';' || c == '-' || c == '_')
+    {
+      specialChars++;
+    }
+    else
+    {
+      others++;
+    }
+  }
+  printf("Alphabetic characters: %d\n", alphabetic_characters);
+  printf("Digits: %d\n", digits);
+  printf("Special characters: %d\n", specialChars);
+  printf("Spaces: %d\n", spaces);
+  printf("Others: %d\n", others);
+
+  printf("Percentage of chars not alphabetic: %.1lf%%\n", 100.0 * ((double)(digits + specialChars + spaces + others) / (double)alphabetic_characters));
 }
