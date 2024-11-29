@@ -75,6 +75,7 @@ Täpne algoritm ja seega saavutatav nimekuju on sinu enda valida. Põhjenda vali
 #include <ctype.h>
 
 #define MAX_NAME_LENGTH 50
+#define MAX_MAIL_NAME_LENGTH 6
 #define MAX_EMAIL_LENGTH 100
 #define MAX_CSV_LINES 100
 
@@ -135,7 +136,7 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount)
     char firstName[MAX_NAME_LENGTH], lastName[MAX_NAME_LENGTH], email[MAX_EMAIL_LENGTH];
     int i = 0, j = 0;
 
-    // Extract first name
+    // first name
     while (entry[i] != ',' && entry[i] != '\0')
     {
         firstName[j++] = entry[i++];
@@ -143,7 +144,7 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount)
     firstName[j] = '\0';
     i++; // Skip the comma
 
-    // Extract last name
+    // last name
     j = 0;
     while (entry[i] != '\0')
     {
@@ -151,10 +152,9 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount)
     }
     lastName[j] = '\0';
 
-    // Generate initial email
+    // initial email
     snprintf(email, sizeof(email), "%.3s%.3s@ttu.ee", firstName, lastName);
 
-    // Convert to lowercase
     for (i = 0; email[i]; i++)
     {
         email[i] = tolower(email[i]);
@@ -178,6 +178,10 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount)
     // Print results
     printf("Name: %s %s\n", firstName, lastName);
     printf("E-mail: %s\n", email);
+
+    free(firstName);
+    free(lastName);
+    free(email);
 }
 
 int isEmailUnique(const char *email, char **existingEmails, int emailCount)
