@@ -88,13 +88,13 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount);
 
 int main(void)
 {
-    // char *data[] = {"Maria,Kask",
-    //                 "Johanna-Maria,Kask",
-    //                 "Kalev Kristjan,Kuusk"};
+    char *data1[] = {"Maria,Kask",
+                    "Johanna-Maria,Kask",
+                    "Kalev Kristjan,Kuusk"};
 
-    // int numOfPeople = sizeof data / sizeof(char *);
+    int numOfPeople = sizeof data1 / sizeof(char *);
 
-    // GenerateEmails(data, numOfPeople);
+    GenerateEmails(data1, numOfPeople);
 
     char **data;
     int numLines;
@@ -179,9 +179,9 @@ void ProcessPerson(const char entry[], char **existingEmails, int *emailCount)
     printf("Name: %s %s\n", firstName, lastName);
     printf("E-mail: %s\n", email);
 
-    free(firstName);
-    free(lastName);
-    free(email);
+    // free(firstName);
+    // free(lastName);
+    // free(email);
 }
 
 int isEmailUnique(const char *email, char **existingEmails, int emailCount)
