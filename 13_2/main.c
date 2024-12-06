@@ -205,12 +205,15 @@ void ReadCSV(char ***result, int *numLines)
 
     while (fgets(line, sizeof(line), stdin))
     {
-        // Remove newline character if present
-        line[strcspn(line, "\n")] = '\0';
 
         // Break if the line is empty
         if (line[0] == '\0')
             break;
+        if (line[0] == '\n')
+            continue;
+        // Remove newline character if present
+        line[strcspn(line, "\n")] = '\0';
+
 
         data = realloc(data, sizeof(char *) * (count + 1));
         if (!data)
