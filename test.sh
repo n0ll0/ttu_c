@@ -21,4 +21,5 @@
 # cd 9_1 && gcc main.c && ./a.out < ./input && cd ..
 # cd 10_1 && gcc main.c && ./a.out && cd ..
 # cd 13_1 && gcc main.c && ./a.out && cd ..
-cd 13_2 && gcc main.c && ./a.out < ./input.csv && cd ..
+# cd 13_2 && gcc main.c && ./a.out < ./input.csv && cd ..
+cd 14_1 && gcc main.c -lm && cd ..
