@@ -39,7 +39,7 @@
 #include <string.h>
 #define MAX_HIKE_PATHS 15
 #define MAX_NAME_LENGTH 20
-#define KIIRUS 5
+#define WALK_SPEED 5
 
 struct HikingPath
 {
@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
   //   PrintHikingPath(hikingPaths[i]);
   // }
 
-  PathsCompletableWithinTimeWithSpeed(hikingPaths, length, hours, KIIRUS);
+  PathsCompletableWithinTimeWithSpeed(hikingPaths, length, hours, WALK_SPEED);
 
   // free names memory
   for (size_t i = 0; i < length; i++)
