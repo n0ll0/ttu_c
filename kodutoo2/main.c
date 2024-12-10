@@ -52,7 +52,7 @@ void PrintHikingPath(struct HikingPath rada);
 void PrintAllHikingPaths(struct HikingPath *arr, int length);
 void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
                                          double hours, double speed);
-void qs(struct HikingPath *arr, int low, int high);
+int PathComparator(const void *a, const void *b);
 
 int main(int argc, char const *argv[])
 {
@@ -73,13 +73,13 @@ int main(int argc, char const *argv[])
   printf("\nSisesta tundide arv: ");
   scanf("%lf", &hours);
   printf("%lf\n", hours);
-  if (hours <= 0) {
+  if (hours <= 0)
+  {
     fprintf(stderr, "\033[1;31mTundide arv peab olema positiivne!\033[0m\n");
     exit(EXIT_FAILURE);
   }
 
-  qs(hikingPaths, 0, length - 1);
-
+  qsort(hikingPaths, length, sizeof(struct HikingPath), PathComparator);
 
   PathsCompletableWithinTimeWithSpeed(hikingPaths, length, hours, WALK_SPEED);
 
@@ -89,6 +89,19 @@ int main(int argc, char const *argv[])
     free(hikingPaths[i].name);
   }
 
+  return 0;
+}
+
+int PathComparator(const void *a, const void *b)
+{
+  struct HikingPath *pathA = (struct HikingPath *)a;
+  struct HikingPath *pathB = (struct HikingPath *)b;
+
+  // Compare the lengths of the paths and return the difference
+  if ((pathA->length) < (pathB->length))
+    return -1;
+  if ((pathA->length) > (pathB->length))
+    return 1;
   return 0;
 }
 
@@ -121,7 +134,8 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
     char *name = calloc(max_name_length, sizeof(char));
     scanf("%s %lf", name, &arr[i].length);
     arr[i].name = strdup(name);
-    if (arr[i].length < 0) {
+    if (arr[i].length < 0)
+    {
       fprintf(stderr, "\033[1;31mNegatiivne rajapikkus pole lubatud! Hetkel asendame absoluutväärtusega.\n\033[0m");
       arr[i].length = -arr[i].length;
     }
@@ -198,41 +212,5 @@ void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
       double time = arr[i].length / speed;
       fprintf(stdout, " [%.2lf h]\n", time);
     }
-  }
-}
-
-/** Quicksort implementation for sorting the trails by length
- * @link https://www.geeksforgeeks.org/quick-sort-in-c/
- */
-void qs(struct HikingPath *arr, int low, int high)
-{
-  if (low < high)
-  {
-    // Selecting the middle element as the pivot
-    double pivot = arr[(low + high) / 2].length;
-    int i = low;
-    int j = high;
-    struct HikingPath temp;
-
-    while (i <= j)
-    {
-      // printf("1");
-      while (arr[i].length < pivot)
-        i++; // Moving elements smaller than pivot to the left
-      while (arr[j].length > pivot)
-        j--; // Moving elements greater than pivot to the right
-      if (i <= j)
-      {
-        temp = arr[i]; // Swapping elements
-        arr[i] = arr[j];
-        arr[j] = temp;
-        i++;
-        j--;
-      }
-    }
-
-    // Recursively sort the two partitions
-    qs(arr, low, j);
-    qs(arr, i, high);
   }
 }
