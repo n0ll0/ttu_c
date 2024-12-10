@@ -43,8 +43,8 @@
 
 struct HikingPath
 {
-  char *nimi;
-  double pikkus;
+  char *name;
+  double length;
 };
 
 int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length);
@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
   printf("Rajad: ");
   for (int i = 0; i < length; i++)
   {
-    printf("%s", hikingPaths[i].nimi);
+    printf("%s", hikingPaths[i].name);
     if (i < length - 1)
       printf(", ");
   }
@@ -84,7 +84,7 @@ int main(int argc, char const *argv[])
   // free names memory
   for (size_t i = 0; i < length; i++)
   {
-    free(hikingPaths[i].nimi);
+    free(hikingPaths[i].name);
   }
 
   return 0;
@@ -113,16 +113,16 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
 
   for (int i = 0; i < n; ++i)
   {
-    char *nimi = calloc(max_name_length, sizeof(char));
-    scanf("%s %lf", nimi, &arr[i].pikkus);
-    arr[i].nimi = strdup(nimi);
+    char *name = calloc(max_name_length, sizeof(char));
+    scanf("%s %lf", name, &arr[i].length);
+    arr[i].name = strdup(name);
   }
   return n;
 }
 
 void PrintHikingPath(struct HikingPath rada)
 {
-  fprintf(stdout, "%s: %.2f", rada.nimi, rada.pikkus);
+  fprintf(stdout, "%s: %.2f", rada.name, rada.length);
 }
 
 /**
@@ -149,7 +149,7 @@ void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
   printf("\nAjaga %.1f h saab läbida:\n", hours);
   for (int i = 0; i < length; i++)
   {
-    if (arr[i].pikkus <= maxLength)
+    if (arr[i].length <= maxLength)
     {
       PrintHikingPath(arr[i]);
       fprintf(stdout, "\n");
@@ -165,7 +165,7 @@ void qs(struct HikingPath *arr, int low, int high)
   if (low < high)
   {
     // Selecting the middle element as the pivot
-    double pivot = arr[(low + high) / 2].pikkus;
+    double pivot = arr[(low + high) / 2].length;
     int i = low;
     int j = high;
     struct HikingPath temp;
@@ -173,9 +173,9 @@ void qs(struct HikingPath *arr, int low, int high)
     while (i <= j)
     {
       // printf("1");
-      while (arr[i].pikkus < pivot)
+      while (arr[i].length < pivot)
         i++; // Moving elements smaller than pivot to the left
-      while (arr[j].pikkus > pivot)
+      while (arr[j].length > pivot)
         j--; // Moving elements greater than pivot to the right
       if (i <= j)
       {
