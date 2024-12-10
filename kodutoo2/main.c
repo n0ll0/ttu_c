@@ -49,6 +49,7 @@ struct HikingPath
 
 int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length);
 void PrintHikingPath(struct HikingPath rada);
+void PrintAllHikingPaths(struct HikingPath *arr, int length);
 void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
                                          double hours, double speed);
 void qs(struct HikingPath *arr, int low, int high);
@@ -66,19 +67,19 @@ int main(int argc, char const *argv[])
       printf(", ");
   }
   printf("\n");
+  PrintAllHikingPaths(hikingPaths, length);
 
   double hours;
   printf("\nSisesta tundide arv: ");
   scanf("%lf", &hours);
   printf("%lf\n", hours);
+  if (hours <= 0) {
+    fprintf(stderr, "\033[1;31mTundide arv peab olema positiivne!\033[0m\n");
+    exit(EXIT_FAILURE);
+  }
 
   qs(hikingPaths, 0, length - 1);
 
-  for (int i = 0; i < length; ++i)
-  {
-    PrintHikingPath(hikingPaths[i]);
-    printf("\n");
-  }
 
   PathsCompletableWithinTimeWithSpeed(hikingPaths, length, hours, WALK_SPEED);
 
@@ -109,10 +110,10 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
   int n;
   fscanf(stdin, "%d", &n);
 
-  if (0 > n && n > max_paths)
+  if (0 > n || n > max_paths)
   {
     fprintf(stderr, "\033[1;31mRajade arv peab olema vahemikus 1 kuni %d.\033[0m\n", max_paths);
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   for (int i = 0; i < n; ++i)
@@ -124,6 +125,7 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
       fprintf(stderr, "\033[1;31mNegatiivne rajapikkus pole lubatud! Hetkel asendame absoluutväärtusega.\n\033[0m");
       arr[i].length = -arr[i].length;
     }
+    free(name);
   }
   return n;
 }
@@ -144,6 +146,27 @@ void PrintHikingPath(struct HikingPath rada)
   fprintf(stdout, "%10s (%.2lf km)", rada.name, rada.length);
 }
 
+/**
+ * @brief Prints all hiking paths in the given array.
+ *
+ * This function iterates through the array of HikingPath structures and prints
+ * each path's information using the PrintHikingPath function. It includes a
+ * header line before printing the paths.
+ *
+ * @param arr Pointer to an array of HikingPath structures containing the paths to be printed.
+ * @param length The number of elements in the arr array.
+ *
+ * @return This function does not return a value.
+ */
+void PrintAllHikingPaths(struct HikingPath *arr, int length)
+{
+  printf("\n");
+  for (int i = 0; i < length; ++i)
+  {
+    PrintHikingPath(arr[i]);
+    printf("\n");
+  }
+}
 /**
  * @brief Prints the hiking trails that can be completed within a given time.
  *
