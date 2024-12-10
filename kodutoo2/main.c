@@ -214,3 +214,47 @@ void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
     }
   }
 }
+
+/*
+@startuml
+|Andmete lugemine|
+start
+
+:Loeb matkaradade arvu;
+if (Kas rajad on õiges vahemikus?) then (jah)
+
+  :Algab matkaradade lugemise tsükkel;
+  while (Kas on veel radu lugeda?) is (jah)
+    :Loeb järgmise raja nime ja pikkuse;
+    :Kontrollib, kas pikkus on negatiivne;
+    if (Kas pikkus negatiivne?) then (jah)
+      :muutub iseenda absoluutväärtuseks;
+    endif
+  endwhile
+else (ei)
+  :Väljasta veateade ja lõpeta;
+  stop
+endif
+
+:Küsi kasutajalt tunni arv;
+if (Kas tunni arv on positiivne?) then (jah)
+  :Korruta tundide arv kiirusel 5 km/h,
+et arvutada läbitav kaugus;
+else (ei)
+  :Väljasta veateade ja lõpeta;
+  stop
+endif
+
+:Sorteeri kasutades **quicksort** algoritmi;
+:maksimaalne läbitav kaugus = kiirus * tunnid;
+while (Kas on veel radu, mida saab läbida?) is (jah)
+  if (Raja pikkus on lühem,
+kui maksimaalne läbitav kaugus) then (jah)
+    :Väljasta sobiv rada;
+  endif
+endwhile
+:Vabasta mälu;
+
+stop
+@enduml
+*/
