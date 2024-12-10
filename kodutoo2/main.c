@@ -131,15 +131,13 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
 
   for (int i = 0; i < n; ++i)
   {
-    char *name = calloc(max_name_length, sizeof(char));
-    scanf("%s %lf", name, &arr[i].length);
-    arr[i].name = strdup(name);
+    arr[i].name = calloc(max_name_length, sizeof(char));
+    scanf("%s %lf", arr[i].name, &arr[i].length);
     if (arr[i].length < 0)
     {
       fprintf(stderr, "\033[1;31mNegatiivne rajapikkus pole lubatud! Hetkel asendame absoluutväärtusega.\n\033[0m");
       arr[i].length = -arr[i].length;
     }
-    free(name);
   }
   return n;
 }
