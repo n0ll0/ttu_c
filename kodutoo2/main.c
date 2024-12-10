@@ -110,7 +110,10 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
   fscanf(stdin, "%d", &n);
 
   if (0 > n && n > max_paths)
+  {
+    fprintf(stderr, "\033[1;31mRajade arv peab olema vahemikus 1 kuni %d.\033[0m\n", max_paths);
     exit(1);
+  }
 
   for (int i = 0; i < n; ++i)
   {
