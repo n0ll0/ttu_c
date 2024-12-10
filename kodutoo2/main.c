@@ -74,10 +74,11 @@ int main(int argc, char const *argv[])
 
   qs(hikingPaths, 0, length - 1);
 
-  // for (int i = 0; i < length; ++i)
-  // {
-  //   PrintHikingPath(hikingPaths[i]);
-  // }
+  for (int i = 0; i < length; ++i)
+  {
+    PrintHikingPath(hikingPaths[i]);
+    printf("\n");
+  }
 
   PathsCompletableWithinTimeWithSpeed(hikingPaths, length, hours, WALK_SPEED);
 
@@ -116,13 +117,28 @@ int ReadHikingPaths(struct HikingPath *arr, int max_paths, int max_name_length)
     char *name = calloc(max_name_length, sizeof(char));
     scanf("%s %lf", name, &arr[i].length);
     arr[i].name = strdup(name);
+    if (arr[i].length < 0) {
+      fprintf(stderr, "\033[1;31mNegatiivne rajapikkus pole lubatud! Hetkel asendame absoluutväärtusega.\n\033[0m");
+      arr[i].length = -arr[i].length;
+    }
   }
   return n;
 }
 
+/**
+ * @brief Prints a single hiking path to standard output.
+ *
+ * This function takes a HikingPath structure and prints its name and length
+ * to the standard output in a formatted string.
+ *
+ * @param rada The HikingPath structure containing the path information to be printed.
+ *             It should have a 'name' field (string) and a 'length' field (double).
+ *
+ * @return This function does not return a value.
+ */
 void PrintHikingPath(struct HikingPath rada)
 {
-  fprintf(stdout, "%s: %.2f", rada.name, rada.length);
+  fprintf(stdout, "%10s (%.2lf km)", rada.name, rada.length);
 }
 
 /**
@@ -151,8 +167,10 @@ void PathsCompletableWithinTimeWithSpeed(struct HikingPath *arr, int length,
   {
     if (arr[i].length <= maxLength)
     {
+      fprintf(stdout, "-\t");
       PrintHikingPath(arr[i]);
-      fprintf(stdout, "\n");
+      double time = arr[i].length / speed;
+      fprintf(stdout, " [%.2lf h]\n", time);
     }
   }
 }
