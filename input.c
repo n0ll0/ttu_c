@@ -1,3 +1,4 @@
+#include "input.h"
 #include <stdio.h>
 
 int clearBuffer(int boolean, void (*ErrorFunction)())
@@ -11,6 +12,12 @@ int clearBuffer(int boolean, void (*ErrorFunction)())
   }
   return boolean;
 }
+void clear_buffer()
+{
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF)
+    ;
+}
 
 int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunction)())
 {
@@ -19,6 +26,20 @@ int read_int(void (*askFn)(), int (*validity_comparisson)(int), void (*ErrorFunc
   {
     askFn();
   } while (clearBuffer((scanf("%d", &i) != 1) || !validity_comparisson(i), ErrorFunction));
+
+  return i;
+}
+
+int read_int_2(void (*askFn)(), int (*validate)(void*), void (*ErrorFunction)())
+{
+  int i;
+  askFn();
+  while ((scanf("%d", &i) != 1) || !validate(i))
+  {
+    clear_buffer();
+    ErrorFunction();
+    askFn();
+  };
 
   return i;
 }

@@ -1,0 +1,10 @@
+SPEED1
+Piirkiirus: 90 km/h
+Mõõdetud kiirus: 231 km/h
+Ületus: 137 km/h
+
+648RQE
+Piirkiirus: 90 km/h
+Mõõdetud kiirus: 160 km/h
+Ületus: 66 km/h
+
