@@ -26,4 +26,4 @@
 # cd kodutoo2 && gcc main.c -lm && ./a.out < ./input && cd ..
 # cd 15_1 && gcc main.c && ./a.out input && cd ..
 # cd 15_1 && gcc main.c && ./a.out input -v && cd .. 
-cd 15_2 && gcc main.c && ./a.out  && cd ..
+cd 15_2 && gcc main.c && ./a.out -f 10 -m 300 -t 100 && cd ..
