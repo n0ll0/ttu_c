@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define ARG_COUNT 2
 #define ARG_POS_EXEC 0
@@ -73,16 +74,21 @@ int main(int argc, char *argv[])
 void ProcessContentsAndOutput(FILE *fp, FILE *outEven, FILE *outOdd)
 {
   int temp;
-  fseek(fp, 0, SEEK_END);
-  int *all = calloc(ftell(fp), sizeof(int));
-  fseek(fp, 0, 0);
-  int i = 0;
+  int count = 0;
+  int min = INT_MAX;
+  int max = INT_MIN;
+  int sum = 0;
 
   // printf("[i: %d, temp: %d]", i, temp);
   while (fscanf(fp, "%d", &temp) == 1)
   {
     // printf("[i: %d, temp: %d]", i, temp);
-    all[i++] = temp;
+    ++count;
+    sum += temp; 
+    if (max < temp) max = temp;
+    if (min > temp) min = temp;
+
+    if (temp <= 0) continue;
     if (temp % 2 == 0)
     {
       fprintf(outEven, "%d ", temp);
@@ -94,18 +100,10 @@ void ProcessContentsAndOutput(FILE *fp, FILE *outEven, FILE *outOdd)
       if (verbose) fprintf(stdout, "Write \"%d\" to "ODD_OUTPUT_FILE"\n", temp);
     }
   }
-  
-  int min = all[i];
-  int max = all[i];
-  int sum = 0;
-  int count = i+1;
-  for (;i>=0;--i)
-  {
-    sum += all[i];
-    if (max < all[i]) max = all[i];
-    if (min > all[i]) min = all[i];
+  if (count < 1) {
+    return;
   }
-
+  
   fprintf(stdout, "\nmin: %d\nmax: %d\nsum: %d\navg: %f\n", min, max, sum, (float)sum/(float)count);
 
   fprintf(stdout, "End of file\n");
