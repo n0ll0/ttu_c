@@ -5,88 +5,68 @@
 #define m22ramatus 4
 #define FLAG_COUNT 3
 
+#define INPUT_FILE "14_2_speeds.txt"
+#define OUT_FINE "trahvid"
+#define OUT_PROCEEDING "menetlused"
+#define CONFIG_FILE "config.toml"
+
 int main(int argc, char **argv)
 {
 	float fpkmph = 5.0;
 	float maxFine = 300.0;
-	int yldmenetlusePiir = 50;
-	int finePiir = 3;
+	float yldmenetlusePiir = 50;
+	float finePiir = 3;
 
-	FILE *kiirused = fopen("14_2_speeds.txt", "r");
+	FILE *kiirused = fopen(INPUT_FILE, "r");
 	if (kiirused == NULL)
 		return 1;
-	FILE *trahvid = fopen("trahvid", "w");
+	FILE *trahvid = fopen(OUT_FINE, "w");
 	if (trahvid == NULL)
 		return 1;
-	FILE *menetlused = fopen("menetlused", "w");
+	FILE *menetlused = fopen(OUT_PROCEEDING, "w");
 	if (menetlused == NULL)
 		return 1;
-	FILE *flags = fopen(".flags", "w");
-	if (flags == NULL)
+	FILE *config = fopen(CONFIG_FILE, "r");
+	if (config == NULL)
 		return 1;
 
-	while (fscanf(flags, "%s", flagname) == 3)
+	char *flagname = calloc(40, sizeof(char));
+	while (fscanf(config, "%s = ", flagname) == 1)
 	{
-		if (strcmp(flagname, "-t")==0) {
-			fscanf(flags, "")
-		};
-		if (diff >= yldmenetlusePiir)
-		{
-			fprintf(menetlused, "%s\nPiirkiirus: %d\nM66detud kiirus: %d\nYletus: %d\n\n",
-							reg, piir, moot, diff);
+		if (strcmp(flagname, "general_proceeding_threshold")==0) {
+			fscanf(config, "%f", &yldmenetlusePiir);
+			continue;
 		}
-		else if (diff >= finePiir)
-		{
-			fprintf(trahvid, "%s %d km/h %.2f EUR\n",
-							reg, diff, (float)(diff)*fpkmph <= maxFine ? (float)(diff)*fpkmph : maxFine);
+		if (strcmp(flagname, "fine_threshold")==0) {
+			fscanf(config, "%f", &finePiir);
+			continue;
+		}
+		if (strcmp(flagname, "max_fine")==0) {
+			fscanf(config, "%f", &maxFine);
+			continue;
+		}
+		if (strcmp(flagname, "fine_per_kmph")==0) {
+			fscanf(config, "%f", &fpkmph);
+			continue;
 		}
 	}
 
-	for (int i = 1; i < argc; i++)
-	{
-		printf("%s\n", argv[i]);
-		printf("%s\n", argv[i+1]);
-		if (strcmp(argv[i], "-f") == 0 && i + 1 < argc)
-		{
-			fpkmph = atof(argv[++i]);
-			fprintf(flags, "%f\n", fpkmph);
-		}
-		else if (strcmp(argv[i], "-m") == 0 && i + 1 < argc)
-		{
-			maxFine = atof(argv[++i]);
-			fprintf(flags, "%f\n", maxFine);
-		}
-		else if (strcmp(argv[i], "-t") == 0 && i + 1 < argc)
-		{
-			yldmenetlusePiir = atoi(argv[++i]);
-			fprintf(flags, "%d\n", yldmenetlusePiir);
-		}
-		else
-		{
-			printf("Usage:\n");
-			printf("Options:\n");
-			printf("\t-f <fine per km/h>       Set fine per km/h (default: 5)\n");
-			printf("\t-m <max trahv>           Set maximum fine (default: 300)\n");
-			printf("\t-t <Yldmenetluse piir>   (default: 50)\n");
-
-			return 0;
-		}
-	}
+	fclose(config);
 
 	char *reg = calloc(100, sizeof(char));
-	int moot;
-	int piir;
-	while (fscanf(kiirused, "%s %d %d", reg, &moot, &piir) == 3)
+	float moot;
+	float piir;
+	while (fscanf(kiirused, "%s %f %f", reg, &moot, &piir) == 3)
 	{
-		int diff = moot - piir - m22ramatus;
+		float diff = moot - piir - m22ramatus;
 		if (diff >= yldmenetlusePiir)
 		{
-			fprintf(menetlused, "%s\nPiirkiirus: %d\nM66detud kiirus: %d\nYletus: %d\n\n",
+			fprintf(menetlused, "%s\nPiirkiirus: %.0f\nM66detud kiirus: %.0f\nYletus: %.0f\n\n",
 							reg, piir, moot, diff);
 		}
 		else if (diff >= finePiir)
 		{
-			fprintf(trahvid, "%s %d km/h %.2f EUR\n",
+			fprintf(trahvid, "%s %.1f km/h %.2f EUR\n",
 							reg, diff, (float)(diff)*fpkmph <= maxFine ? (float)(diff)*fpkmph : maxFine);
 		}
 	}

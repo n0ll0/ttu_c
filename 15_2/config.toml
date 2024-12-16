@@ -1,0 +1,4 @@
+fine_per_kmph = 5
+max_fine = 300
+general_proceeding_threshold = 50
+fine_threshold = 3

@@ -27,4 +27,4 @@
 # cd 15_1 && gcc main.c && ./a.out input && cd ..
 # cd 15_1 && gcc main.c && ./a.out input -v && cd .. 
 # cd 15_2 && gcc main.c && ./a.out && cd ..
-cd 15_2 && gcc main2.c && ./a.out -t 20 && cd .. 
+cd 15_2 && gcc main2.c && ./a.out && cd .. 
