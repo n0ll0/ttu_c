@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define m22ramatus 4
+#define M22RAMATUS 4
 #define FLAG_COUNT 3
 
 #define INPUT_FILE "14_2_speeds.txt"
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	float piir;
 	while (fscanf(kiirused, "%s %f %f", reg, &moot, &piir) == 3)
 	{
-		float diff = moot - piir - m22ramatus;
+		float diff = moot - piir - M22RAMATUS;
 		if (diff >= yldmenetlusePiir)
 		{
 			fprintf(menetlused, "%s\nPiirkiirus: %.0f\nM66detud kiirus: %.0f\nYletus: %.0f\n\n",
