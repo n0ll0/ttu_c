@@ -20,9 +20,9 @@ enum CATEGORY {
 
 // TODO: Add enum declaration
 
-enum CATEGORY GetFileType(char *extension);
-void FixTrailingNewline(char *str);
-char *GetExtension(char *str);
+enum CATEGORY GetFileType(char* extension);
+void FixTrailingNewline(char* str);
+char* GetExtension(char* str);
 void PrintOut(int arr[COUNT]);
 
 int main(void) {
@@ -53,7 +53,7 @@ int main(void) {
   return EXIT_SUCCESS;
 }
 
-int in(const char **arr, int len, char *target) {
+int in(const char** arr, int len, char* target) {
   int i;
   for (i = 0; i < len; i++) {
     if (strncmp(arr[i], target, strlen(target)) == 0) {
@@ -63,23 +63,23 @@ int in(const char **arr, int len, char *target) {
   return 0;
 }
 
-enum CATEGORY GetFileType(char *extension) {
+enum CATEGORY GetFileType(char* extension) {
   if (strcmp(extension, "txt")) {
     return Text;
   }
-  if (in((const char **){"csv", "xls", "xlsx", "ods"}, 4, extension)) {
+  if (in((const char**){"csv", "xls", "xlsx", "ods"}, 4, extension)) {
     return Data;
   }
-  if (in((const char **){"zip", "rar", "7z", "tar", "gz"}, 5, extension)) {
+  if (in((const char**){"zip", "rar", "7z", "tar", "gz"}, 5, extension)) {
     return Archive;
   }
-  if (in((const char **){"pdf", "doc", "docx", "rtf", "odt"}, 5, extension)) {
+  if (in((const char**){"pdf", "doc", "docx", "rtf", "odt"}, 5, extension)) {
     return Document;
   }
-  if (in((const char **){"c", "h", "cpp", "hpp", "py"}, 5, extension)) {
+  if (in((const char**){"c", "h", "cpp", "hpp", "py"}, 5, extension)) {
     return Code;
   }
-  if (in((const char **){"jpg", "jpeg", "png", "svg"}, 4, extension)) {
+  if (in((const char**){"jpg", "jpeg", "png", "svg"}, 4, extension)) {
     return Image;
   }
   if (strlen(extension) > 0) {
@@ -89,7 +89,7 @@ enum CATEGORY GetFileType(char *extension) {
 }
 
 // Function to fix the trailing newline
-void FixTrailingNewline(char *str) {
+void FixTrailingNewline(char* str) {
   size_t len = strlen(str);
   if (len > 0 && str[len - 1] == '\n') {
     str[len - 1] = '\0';
@@ -97,34 +97,33 @@ void FixTrailingNewline(char *str) {
 }
 
 // Function to get the substring after the last point
-char *GetExtension(char *str) {
-  char *last_point = strrchr(str, '.');
+char* GetExtension(char* str) {
+  char* last_point = strrchr(str, '.');
   if (last_point != NULL) {
     return last_point + 1;
   }
   return NULL; // Return NULL if no point is found
 }
 
-const char *GetCategoryAsString(enum CATEGORY n) {
-  switch (n)
-  {
+const char* GetCategoryAsString(enum CATEGORY n) {
+  switch (n) {
   case Archive:
-    return (const char *) "Archives";
+    return (const char*)"Archives";
   case Data:
-    return (const char *) "Data";
+    return (const char*)"Data";
   case Document:
-    return (const char *) "Document";
+    return (const char*)"Document";
   case Code:
-    return (const char *) "Code";
+    return (const char*)"Code";
   case Text:
-    return (const char *) "Text";
+    return (const char*)"Text";
   case Image:
-    return (const char *) "Image";
+    return (const char*)"Image";
   case Other:
-    return (const char *) "Other";
+    return (const char*)"Other";
   case None:
   default:
-    return (const char *) "No extension";
+    return (const char*)"No extension";
   }
 }
 
