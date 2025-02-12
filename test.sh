@@ -1,3 +1,4 @@
+# cd i
 # cd kordamiskusimused && gcc main.c -lm && ./a.out
 # cd arvugen && gcc main.c -lm && ./a.out
 # cd cycles && gcc main.c -lm && ./a.out
@@ -28,5 +29,7 @@
 # cd 15_1 && gcc main.c && ./a.out input -v && cd .. 
 # cd 15_2 && gcc main.c && ./a.out && cd ..
 # cd 15_2 && gcc main2.c && ./a.out && cd .. 
-# cd ii-1-1 && gcc main.c && ./a.out && cd .. 
-cd ii-1-2-1 && gcc main.c -Wall && ./a.out && cd .. 
+cd ii
+# cd 1-1 && gcc main.c && ./a.out && cd .. 
+# cd 1-2 && gcc main.c && ./a.out && cd .. 
+# cd 2-1 && gcc main.c && ./a.out && cd .. 
