@@ -13,7 +13,7 @@
 
 #define DM_IN_KM 0.0001f
 #define  M_IN_KM 0.001f
-#define FT_IN_KM 304.8f
+#define FT_IN_KM 0.0003048f
 #define IN_IN_KM 0.0000254f
 #define YD_IN_KM 0.0009144f
 

@@ -33,4 +33,4 @@ cd ii;
 # cd 1-1 && gcc main.c && ./a.out && cd .. 
 # cd 1-2 && gcc main.c && ./a.out && cd .. 
 # cd 2-1 && gcc main.c && ./a.out && cd .. 
-cd 2-2 && gcc main.c && ./a.out task2_data4.txt "m" && ./a.out task2_data4.txt "km" && ./a.out task2_data4.txt "in" && ./a.out task2_data4.txt "ft" && ./a.out task2_data4.txt "yd";
+cd 2-2 && gcc main.c && ./a.out task2_data4.txt "m" && ./a.out task2_data4.txt "dm" && ./a.out task2_data4.txt "km" && ./a.out task2_data4.txt "in" && ./a.out task2_data4.txt "ft" && ./a.out task2_data4.txt "yd";
