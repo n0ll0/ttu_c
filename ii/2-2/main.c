@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "rates.h"
 
-#define M_IN_FT 0.3048f
-#define M_IN_KM 1000.00f
-#define FT_IN_M 1 / M_IN_FT
-#define FT_IN_KM 304.8f
-#define KM_IN_M 1 / M_IN_KM
-#define KM_IN_FT 1 / FT_IN_KM
+enum Units {
+  UNIT_DM,
+  UNIT_M,
+  UNIT_KM,
+  UNIT_IN,
+  UNIT_FT,
+  UNIT_YD,
+  UNIT_UNKNOWN
+};
 
-#define FT_IN_MI 5280.00f
-
-enum Units { UNIT_M, UNIT_FT, UNIT_KM, UNIT_UNKNOWN };
 enum Units GetDistanceUnitType(char* unit);
 const char* ReturnPrintableUnit(enum Units unit);
-double convert(double length, enum Units unit, enum Units desired_unit);
+double Convert(double length, enum Units unit, enum Units desired_unit);
 
 int main(int argc, char const** argv) {
   if (argc != 3) {
-    printf("nigga");
     return 1;
   }
   enum Units desired_unit = GetDistanceUnitType((char*)argv[2]);
@@ -30,8 +30,8 @@ int main(int argc, char const** argv) {
 
   while (fscanf(file, "%lf %s", &distance, unit_buffer) == 2) {
     enum Units unit = GetDistanceUnitType(unit_buffer);
-    printf("%.2f %s -> %.2f %s\n", distance, ReturnPrintableUnit(unit),
-           convert(distance, unit, desired_unit), argv[2]);
+    printf("%12.2f %2s -> %12.2f %2s\n", distance, ReturnPrintableUnit(unit),
+           Convert(distance, unit, desired_unit), argv[2]);
   }
 
   fclose(file);
@@ -39,51 +39,91 @@ int main(int argc, char const** argv) {
 }
 
 enum Units GetDistanceUnitType(char* unit) {
-  // printf("%s",unit);
-  if (strcmp(unit, "m")==0)
-    return UNIT_M;
-  if (strcmp(unit, "ft")==0)
-    return UNIT_FT;
-  if (strcmp(unit, "km")==0)
-    return UNIT_KM;
+  if (strcmp(unit, "m") == 0) return UNIT_M;
+  if (strcmp(unit, "dm") == 0) return UNIT_DM;
+  if (strcmp(unit, "km") == 0) return UNIT_KM;
+  if (strcmp(unit, "ft") == 0) return UNIT_FT;
+  if (strcmp(unit, "yd") == 0) return UNIT_YD;
+  if (strcmp(unit, "in") == 0) return UNIT_IN;
   return UNIT_UNKNOWN;
 }
 
 const char* ReturnPrintableUnit(enum Units unit) {
   switch (unit) {
-  case UNIT_M:
-    return (const char*) "m";
-  case UNIT_FT:
-    return (const char*) "ft";
-  case UNIT_KM:
-    return (const char*) "km";
-  default:
-    return (const char*) "??";
+  case UNIT_M: return (const char*)"m";
+  case UNIT_DM: return (const char*)"dm";
+  case UNIT_KM: return (const char*)"km";
+  case UNIT_FT: return (const char*)"ft";
+  case UNIT_YD: return (const char*)"yd";
+  case UNIT_IN: return (const char*)"in";
+  default: return (const char*)"??";
   }
 }
 
-double convert(double length, enum Units unit, enum Units desired_unit) {
-  // printf("[%lf-%s-%s]", length, ReturnPrintableUnit(unit),
-  //        ReturnPrintableUnit(desired_unit));
-  if (unit == desired_unit)
-    return length;
-  if (unit == UNIT_M) {
-    if (desired_unit == UNIT_FT)
-      return length * FT_IN_M;
-    if (desired_unit == UNIT_KM)
-      return length * KM_IN_M;
+/*
+m->ft 0.3048f
+m->km 1000.0f
+in->ft 12.0f
+ft->yd 3.0f
+*/
+double Convert(double length, enum Units unit, enum Units desired_unit) {
+  if (unit == desired_unit) return length;
+  switch (unit)
+  {
+  case UNIT_M:
+    switch (desired_unit)
+    {
+    case UNIT_DM: return length * M_IN_DM;
+    case UNIT_KM: return length * M_IN_KM;
+    case UNIT_FT: return length * M_IN_FT;
+    case UNIT_IN: return length * M_IN_IN;
+    case UNIT_YD: return length * M_IN_YD;
+    }
+  case UNIT_DM:
+  switch (desired_unit)
+  {
+  case UNIT_M:  return length * DM_IN_M;
+  case UNIT_KM: return length * DM_IN_KM;
+  case UNIT_FT: return length * DM_IN_FT;
+  case UNIT_IN: return length * DM_IN_IN;
+  case UNIT_YD: return length * DM_IN_YD;
   }
-  if (unit == UNIT_FT) {
-    if (desired_unit == UNIT_M)
-      return length * M_IN_FT;
-    if (desired_unit == UNIT_KM)
-      return length * KM_IN_FT;
-  }
-  if (unit == UNIT_KM) {
-    if (desired_unit == UNIT_M)
-      return length * M_IN_KM;
-    if (desired_unit == UNIT_FT)
-      return length * FT_IN_KM;
+  case UNIT_FT:
+    switch (desired_unit)
+    {
+    case UNIT_DM: return length * FT_IN_DM;
+    case UNIT_M:  return length * FT_IN_M;
+    case UNIT_KM: return length * FT_IN_KM;
+    case UNIT_IN: return length * FT_IN_IN;
+    case UNIT_YD: return length * FT_IN_YD;
+    }
+  case UNIT_KM:
+    switch (desired_unit)
+    {
+    case UNIT_DM: return length * KM_IN_DM;
+    case UNIT_M:  return length * KM_IN_M;
+    case UNIT_IN: return length * KM_IN_IN;
+    case UNIT_FT: return length * KM_IN_FT;
+    case UNIT_YD: return length * KM_IN_YD;
+    }
+  case UNIT_YD:
+    switch (desired_unit)
+    {
+    case UNIT_DM: return length * YD_IN_DM;
+    case UNIT_M:  return length * YD_IN_M;
+    case UNIT_KM: return length * YD_IN_KM;
+    case UNIT_FT: return length * YD_IN_FT;
+    case UNIT_IN: return length * YD_IN_IN;
+    }
+  case UNIT_IN:
+    switch (desired_unit)
+    {
+    case UNIT_DM: return length * IN_IN_DM;
+    case UNIT_M:  return length * IN_IN_M;
+    case UNIT_KM: return length * IN_IN_KM;
+    case UNIT_FT: return length * IN_IN_FT;
+    case UNIT_YD: return length * IN_IN_YD;
+    }
   }
   return 0;
 }
