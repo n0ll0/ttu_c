@@ -4,59 +4,74 @@
 
 // Maximum file name length in modern systems
 #define MAX_FILE_LEN 256
-
-// TODO: Define the number of categories for array declaration
-enum CATEGORY {
-  Archive,
-  Data,
-  Document,
-  Code,
-  Text,
-  Image,
-  Other,
-  None,
-  COUNT,
-};
+#define TYPES_PER_CATEGORY 8
 
 // TODO: Add enum declaration
+// TODO: Define the number of categories for array declaration
+enum CATEGORY {
+  CATEGORY_Archive,
+  CATEGORY_Data,
+  CATEGORY_Document,
+  CATEGORY_Code,
+  CATEGORY_Text,
+  CATEGORY_Image,
+  CATEGORY_Other,
+  CATEGORY_None,
+  CATEGORY_COUNT,
+};
+
+struct category_type {
+  size_t len;
+  const char* name;
+  const char** arr;
+};
+
+const char* text_ext[] = {"txt"};
+const char* data_ext[] = {"csv", "xls", "xlsx", "ods", "json"};
+const char* archive_ext[] = {"zip", "rar", "7z", "tar", "gz"};
+const char* document_ext[] = {"pdf", "doc", "docx", "rtf", "odt"};
+const char* code_ext[] = {"c", "h", "cpp", "hpp", "py", "js"};
+const char* image_ext[] = {"jpg", "jpeg", "png", "svg"};
+
+struct category_type CATEGORIES[CATEGORY_COUNT] = {
+  [CATEGORY_Text]       = (struct category_type){.name = "Archives", .len = 1, .arr = text_ext},
+  [CATEGORY_Data]       = (struct category_type){.name = "Data", .len = 5, .arr = data_ext},
+  [CATEGORY_Archive]    = (struct category_type){.name = "Document", .len = 5, .arr = archive_ext},
+  [CATEGORY_Document]   = (struct category_type){.name = "Code", .len = 5, .arr = document_ext},
+  [CATEGORY_Code]       = (struct category_type){.name = "Text", .len = 6, .arr = code_ext},
+  [CATEGORY_Image]      = (struct category_type){.name = "Image", .len = 4, .arr = image_ext},
+  [CATEGORY_Other]      = (struct category_type){.name = "Other", .len = 0, .arr = NULL},
+  [CATEGORY_None]       = (struct category_type){.name = "No extension", .len = 0, .arr = NULL}
+};
 
 enum CATEGORY GetFileType(char* extension);
 void FixTrailingNewline(char* str);
 char* GetExtension(char* str);
-void PrintOut(int arr[COUNT]);
+void PrintOut(int arr[CATEGORY_COUNT]);
+const char* GetCategoryAsString(enum CATEGORY category);
 
 int main(void) {
-  // Stores the name of the file
   char name[MAX_FILE_LEN];
 
-  // TODO: Declare the array to hold the a counter for each file category
-  int categories[COUNT] = {0};
+  int categories[CATEGORY_COUNT] = {0};
 
-  // Read in the name of a file with the extension until EOF occurs
   while (fgets(name, MAX_FILE_LEN, stdin) != NULL) {
-    // TODO: Call a function to fix the trailing newline
     FixTrailingNewline(name);
-    // TODO: Call a function to find the position of the last point
-    // Hint: think of what no point symbol in the string means!
-
-    // TODO: Call a function that returns the category type and store it.
-    // This is the predefined function from the requirements!
-
-    // TODO: Increase the appropriate category counter value
-
-    categories[GetFileType(GetExtension(name))]++;
+    ++categories[GetFileType(GetExtension(name))];
+    // char *ext = GetExtension(name);
+    // enum CATEGORY category = GetFileType(ext);
+    // ++categories[category];
   }
 
-  // TODO: Call a function to print the results
   PrintOut(categories);
 
   return EXIT_SUCCESS;
 }
 
-int in(const char** arr, int len, char* target) {
-  int i;
-  for (i = 0; i < len; i++) {
-    if (strncmp(arr[i], target, strlen(target)) == 0) {
+int ArrayIncludes(struct category_type arr, char* target) {
+  if (arr.len <= 0) return 0;
+  for (int i = 0; i < arr.len; i++) {
+    if (strcmp(arr.arr[i], target) == 0) {
       return 1;
     }
   }
@@ -64,28 +79,39 @@ int in(const char** arr, int len, char* target) {
 }
 
 enum CATEGORY GetFileType(char* extension) {
-  if (strcmp(extension, "txt")) {
-    return Text;
+  for (int category = 0; category < CATEGORY_COUNT; category++) {
+    // printf("%s %s\n", extension, GetCategoryAsString((enum CATEGORY)category));
+    if (category == CATEGORY_None) return category;
+    if (category == CATEGORY_Other && strlen(extension)>1) return category;
+    if (ArrayIncludes(CATEGORIES[category], extension)==1) {
+      printf("%d\n",category);
+      return (enum CATEGORY)category;
+    }
   }
-  if (in((const char**){"csv", "xls", "xlsx", "ods"}, 4, extension)) {
-    return Data;
-  }
-  if (in((const char**){"zip", "rar", "7z", "tar", "gz"}, 5, extension)) {
-    return Archive;
-  }
-  if (in((const char**){"pdf", "doc", "docx", "rtf", "odt"}, 5, extension)) {
-    return Document;
-  }
-  if (in((const char**){"c", "h", "cpp", "hpp", "py"}, 5, extension)) {
-    return Code;
-  }
-  if (in((const char**){"jpg", "jpeg", "png", "svg"}, 4, extension)) {
-    return Image;
-  }
-  if (strlen(extension) > 0) {
-    return Other;
-  }
-  return None;
+  return CATEGORY_None;
+
+  // if (strcmp(extension, "txt")==0) {
+  //   return CATEGORY_Text;
+  // }
+  // if (ArrayIncludes((const char*[4]){"csv", "xls", "xlsx", "ods"}, 4, extension)==0) {
+  //   return CATEGORY_Data;
+  // }
+  // if (ArrayIncludes((const char*[5]){"zip", "rar", "7z", "tar", "gz"}, 5, extension)==0) {
+  //   return CATEGORY_Archive;
+  // }
+  // if (ArrayIncludes((const char*[5]){"pdf", "doc", "docx", "rtf", "odt"}, 5, extension)==0) {
+  //   return CATEGORY_Document;
+  // }
+  // if (ArrayIncludes((const char*[5]){"c", "h", "cpp", "hpp", "py"}, 5, extension)==0) {
+  //   return CATEGORY_Code;
+  // }
+  // if (ArrayIncludes((const char*[4]){"jpg", "jpeg", "png", "svg"}, 4, extension)==0) {
+  //   return CATEGORY_Image;
+  // }
+  // if (strlen(extension) > 0) {
+  //   return CATEGORY_Other;
+  // }
+  // return CATEGORY_None;
 }
 
 // Function to fix the trailing newline
@@ -102,34 +128,35 @@ char* GetExtension(char* str) {
   if (last_point != NULL) {
     return last_point + 1;
   }
-  return NULL; // Return NULL if no point is found
+  return "?"; // Return NULL if no point is found
 }
 
-const char* GetCategoryAsString(enum CATEGORY n) {
-  switch (n) {
-  case Archive:
-    return (const char*)"Archives";
-  case Data:
-    return (const char*)"Data";
-  case Document:
-    return (const char*)"Document";
-  case Code:
-    return (const char*)"Code";
-  case Text:
-    return (const char*)"Text";
-  case Image:
-    return (const char*)"Image";
-  case Other:
-    return (const char*)"Other";
-  case None:
-  default:
-    return (const char*)"No extension";
-  }
+const char* GetCategoryAsString(enum CATEGORY category) {
+  return CATEGORIES[category].name;
+  // switch (category) {
+  // case CATEGORY_Archive:
+  //   return (const char*)"Archives";
+  // case CATEGORY_Data:
+  //   return (const char*)"Data";
+  // case CATEGORY_Document:
+  //   return (const char*)"Document";
+  // case CATEGORY_Code:
+  //   return (const char*)"Code";
+  // case CATEGORY_Text:
+  //   return (const char*)"Text";
+  // case CATEGORY_Image:
+  //   return (const char*)"Image";
+  // case CATEGORY_Other:
+  //   return (const char*)"Other";
+  // case CATEGORY_None:
+  // default:
+  //   return (const char*)"No extension";
+  // }
 }
 
-void PrintOut(int arr[COUNT]) {
+void PrintOut(int arr[CATEGORY_COUNT]) {
   printf("\n");
-  for (size_t i = 0; i < COUNT; ++i) {
+  for (size_t i = 0; i < CATEGORY_COUNT; ++i) {
     printf("%12s %9d\n", GetCategoryAsString(i), arr[i]);
   }
   printf("\n");

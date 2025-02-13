@@ -13,7 +13,9 @@ enum Units {
   UNIT_UNKNOWN
 };
 
-const char* UNITS[UNIT_UNKNOWN] = {"dm", "m", "km", "in", "ft", "yd"};
+const char* UNITS[UNIT_UNKNOWN] = {
+    [UNIT_DM] = "dm", [UNIT_M] = "m",   [UNIT_KM] = "km",
+    [UNIT_IN] = "in", [UNIT_FT] = "ft", [UNIT_YD] = "yd"};
 
 enum Units GetDistanceUnitType(char* unit);
 const char* ReturnPrintableUnit(enum Units unit);
@@ -26,10 +28,12 @@ int main(int argc, char const** argv) {
   enum Units desired_unit = GetDistanceUnitType((char*)argv[2]);
 
   FILE* file = fopen(argv[1], "r");
+  if (file != NULL)
+    return 1;
 
   double total = 0;
 
-  char unit_buffer[2];
+  char unit_buffer[8];
   double distance = 0;
   size_t count = 0;
 
@@ -41,6 +45,8 @@ int main(int argc, char const** argv) {
     printf("%12.2lf %2s -> %12.2lf %2s\n", distance, ReturnPrintableUnit(unit),
            convertedDistance, argv[2]);
   }
+  if (count == 0)
+    return 1;
   printf("\nTotal: %.2lf.2 %s\nAverage: %.2lf %s\n", total, argv[2],
          total / (double)count, argv[2]);
 
@@ -50,8 +56,8 @@ int main(int argc, char const** argv) {
 
 enum Units GetDistanceUnitType(char* unit) {
   for (int i = 0; i < UNIT_UNKNOWN; ++i) {
-    if (strcmp(UNITS[i], unit)==0) {
-      return (enum Units) i;
+    if (strcmp(UNITS[i], unit) == 0) {
+      return (enum Units)i;
     }
   }
   return UNIT_UNKNOWN;
