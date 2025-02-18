@@ -18,13 +18,14 @@
  * Tudengikood (vastavalt TalTech nimetamisreeglitele 6 numbrit + õppekava kood)
  * Hinded (kokku 6 tk)
  */
+#include <stdio.h>
+#include <stdlib.h>
+
 #define NAME_LENGTH 256
 #define CODE_LENGTH 10
 #define GRADES_LENGTH 6
 #define GRADES_BUFFER 256
 
-#include <stdio.h>
-#include <stdlib.h>
 struct Array {
   size_t length;
   void* values;
@@ -42,18 +43,23 @@ struct Student {
   char studentCode[CODE_LENGTH];
   int grades[GRADES_LENGTH];
 };
-struct StudentArray ReadData(const char* fileName);
+
+struct StudentArray* ReadData(const char* fileName);
 void PrintStudent(struct Student* student);
+
 int main(int argc, char const* argv[]) {
-  struct StudentArray students = ReadData(argv[1]);
-  free(students.values);
+  struct StudentArray* students = ReadData(argv[1]);
+  for (int i = 0; i < students->length; ++i) {
+    PrintStudent(&(struct Student)students->values[i]);
+  }
+  free(students->values);
   return 0;
 }
 
-struct StudentArray ReadData(const char* fileName) {
+struct StudentArray* ReadData(const char* fileName) {
   FILE* file = fopen(fileName, "r");
   struct StudentArray students = {
-      .length = 0, .values = calloc(1024, sizeof(struct Student))};
+      .length = 0, .values = {0}};
   struct Student student;
   char* grades_buffer = calloc(GRADES_BUFFER, sizeof(char));
   int grade = -1;
@@ -71,7 +77,7 @@ struct StudentArray ReadData(const char* fileName) {
   }
   free(grades_buffer);
   fclose(file);
-  return students;
+  return &students;
 }
 
 void PrintStudent(struct Student* student) {

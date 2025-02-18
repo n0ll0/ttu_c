@@ -30,16 +30,16 @@ const char* text_ext[] = {"txt"};
 const char* data_ext[] = {"csv", "xls", "xlsx", "ods", "json"};
 const char* archive_ext[] = {"zip", "rar", "7z", "tar", "gz"};
 const char* document_ext[] = {"pdf", "doc", "docx", "rtf", "odt"};
-const char* code_ext[] = {"c", "h", "cpp", "hpp", "py", "js"};
+const char* code_ext[] = {"c", "h", "cpp", "hpp", "py", "js", "ejs", "ts"};
 const char* image_ext[] = {"jpg", "jpeg", "png", "svg"};
 
 struct category_type CATEGORIES[CATEGORY_COUNT] = {
-  [CATEGORY_Text]       = (struct category_type){.name = "Archives", .len = 1, .arr = text_ext},
-  [CATEGORY_Data]       = (struct category_type){.name = "Data", .len = 5, .arr = data_ext},
-  [CATEGORY_Archive]    = (struct category_type){.name = "Document", .len = 5, .arr = archive_ext},
-  [CATEGORY_Document]   = (struct category_type){.name = "Code", .len = 5, .arr = document_ext},
-  [CATEGORY_Code]       = (struct category_type){.name = "Text", .len = 6, .arr = code_ext},
-  [CATEGORY_Image]      = (struct category_type){.name = "Image", .len = 4, .arr = image_ext},
+  [CATEGORY_Text]       = (struct category_type){.name = "Archives", .len = sizeof(text_ext)/sizeof(char*), .arr = text_ext},
+  [CATEGORY_Data]       = (struct category_type){.name = "Data", .len = sizeof(data_ext)/sizeof(char*), .arr = data_ext},
+  [CATEGORY_Archive]    = (struct category_type){.name = "Document", .len = sizeof(archive_ext)/sizeof(char*), .arr = archive_ext},
+  [CATEGORY_Document]   = (struct category_type){.name = "Code", .len = sizeof(document_ext)/sizeof(char*), .arr = document_ext},
+  [CATEGORY_Code]       = (struct category_type){.name = "Text", .len = sizeof(code_ext)/sizeof(char*), .arr = code_ext},
+  [CATEGORY_Image]      = (struct category_type){.name = "Image", .len = sizeof(image_ext)/sizeof(char*), .arr = image_ext},
   [CATEGORY_Other]      = (struct category_type){.name = "Other", .len = 0, .arr = NULL},
   [CATEGORY_None]       = (struct category_type){.name = "No extension", .len = 0, .arr = NULL}
 };
@@ -84,7 +84,7 @@ enum CATEGORY GetFileType(char* extension) {
     if (category == CATEGORY_None) return category;
     if (category == CATEGORY_Other && strlen(extension)>1) return category;
     if (ArrayIncludes(CATEGORIES[category], extension)==1) {
-      printf("%d\n",category);
+      // printf("%d\n",category);
       return (enum CATEGORY)category;
     }
   }
