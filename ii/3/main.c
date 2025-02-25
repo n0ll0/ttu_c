@@ -1,11 +1,10 @@
-#include <inttypes.h>
+#include <ctype.h> // For tolower
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h> // For tolower
 
-#define MAX_PERSONS 100
-#define MAX_VEHICLES 200
+#define MAX_PERSONS 127
+#define MAX_VEHICLES 255
 #define TAX_WARNING_THRESHOLD 10.0
 
 struct Person {
@@ -23,46 +22,37 @@ struct Vehicle {
   char reg_nr[20];
 };
 
-// Function prototypes for file reading
 int ReadPersons(struct Person* persons, int max_persons, const char* filename);
-int ReadVehicles(struct Vehicle* vehicles, int max_vehicles, const char* filename);
+int ReadVehicles(struct Vehicle* vehicles, int max_vehicles,
+                 const char* filename);
 
-// Function prototype for sorting
 void SortPersons(struct Person* persons, int person_count);
 
-// Function prototypes for displaying data
-void DisplayDataPart1(struct Person* persons, int person_count, struct Vehicle* vehicles, int vehicle_count);
-void DisplayDataPart2(struct Person* persons, int person_count, struct Vehicle* vehicles, int vehicle_count);
+void DisplayDataPart(struct Person* persons, int person_count,
+                     struct Vehicle* vehicles, int vehicle_count);
 
-// Function prototype for tax calculation
-void CalculateTaxes(struct Vehicle* vehicles, int vehicle_count, struct Person* persons, int person_count);
-
+void CalculateTaxes(struct Vehicle* vehicles, int vehicle_count,
+                    struct Person* persons, int person_count);
 
 int main() {
   struct Person persons[MAX_PERSONS] = {0};
   struct Vehicle vehicles[MAX_VEHICLES] = {0};
-  int person_count, vehicle_count;
 
-  person_count = ReadPersons(persons, MAX_PERSONS, "person.txt");
+  int person_count = ReadPersons(persons, MAX_PERSONS, "person.txt");
   if (person_count == -1)
     return 1;
-  vehicle_count = ReadVehicles(vehicles, MAX_VEHICLES, "vehicles.txt");
+  int vehicle_count = ReadVehicles(vehicles, MAX_VEHICLES, "vehicles.txt");
   if (vehicle_count == -1)
     return 1;
 
   SortPersons(persons, person_count);
 
-  printf("--- Part 1 Output ---\n");
-  DisplayDataPart1(persons, person_count, vehicles, vehicle_count);
-
   CalculateTaxes(vehicles, vehicle_count, persons, person_count);
 
-  printf("\n--- Part 2 Output ---\n");
-  DisplayDataPart2(persons, person_count, vehicles, vehicle_count);
+  DisplayDataPart(persons, person_count, vehicles, vehicle_count);
 
   return 0;
 }
-
 
 // Function to read person data from file
 int ReadPersons(struct Person* persons, int max_persons, const char* filename) {
@@ -88,7 +78,8 @@ int ReadPersons(struct Person* persons, int max_persons, const char* filename) {
 }
 
 // Function to read vehicle data from file
-int ReadVehicles(struct Vehicle* vehicles, int max_vehicles, const char* filename) {
+int ReadVehicles(struct Vehicle* vehicles, int max_vehicles,
+                 const char* filename) {
   FILE* file = fopen(filename, "r");
   if (file == NULL) {
     perror("Failed to open vehicle file");
@@ -109,53 +100,19 @@ int ReadVehicles(struct Vehicle* vehicles, int max_vehicles, const char* filenam
   return vehicle_count;
 }
 
-int compareFirstNames(const char* name1, const char* name2) {
-  while (*name1 && *name2) {
-    int diff = tolower((unsigned char)*name1) - tolower((unsigned char)*name2);
-    if (diff != 0) {
-      return diff;
-    }
-    name1++;
-    name2++;
-  }
-  return tolower((unsigned char)*name1) - tolower((unsigned char)*name2);
-}
-
-int compare_persons(const void *a, const void *b) {
+int compare_persons(const void* a, const void* b) {
   struct Person* p1 = (struct Person*)a;
   struct Person* p2 = (struct Person*)b;
-  return compareFirstNames(p1->firstname, p2->firstname);
+  return strcmp(p1->firstname, p2->firstname);
 }
 
 void SortPersons(struct Person* persons, int person_count) {
   qsort(persons, person_count, sizeof(struct Person), compare_persons);
 }
 
-// Function to display data for Part 1
-void DisplayDataPart1(struct Person* persons, int person_count, struct Vehicle* vehicles, int vehicle_count) {
-  for (struct Person* current_person = persons;
-       current_person < persons + person_count; ++current_person) {
-    printf("%lld %s %s (income: %.2f)\n", current_person->person_id,
-           current_person->firstname, current_person->lastname,
-           current_person->income);
-
-    int vehicle_found = 0;
-    for (struct Vehicle* current_vehicle = vehicles;
-         current_vehicle < vehicles + vehicle_count; ++current_vehicle) {
-      if (current_vehicle->person_id == current_person->person_id) {
-        printf("        car %d: %s (tax: %.2f)\n", ++vehicle_found,
-               current_vehicle->reg_nr, current_vehicle->tax);
-      }
-    }
-    if (vehicle_found == 0) {
-      printf("        *** No registered cars ***\n");
-    }
-    printf("\n");
-  }
-}
-
 // Function to calculate taxes for Part 2
-void CalculateTaxes(struct Vehicle* vehicles, int vehicle_count, struct Person* persons, int person_count) {
+void CalculateTaxes(struct Vehicle* vehicles, int vehicle_count,
+                    struct Person* persons, int person_count) {
   for (struct Person* current_person = persons;
        current_person < persons + person_count; ++current_person) {
     double total_tax = 0.0;
@@ -176,8 +133,27 @@ void CalculateTaxes(struct Vehicle* vehicles, int vehicle_count, struct Person* 
 }
 
 // Function to display data for Part 2 with tax calculations
-void DisplayDataPart2(struct Person* persons, int person_count, struct Vehicle* vehicles, int vehicle_count) {
-  DisplayDataPart1(persons, person_count, vehicles, vehicle_count); // Part 1 output
+void DisplayDataPart(struct Person* persons, int person_count,
+                     struct Vehicle* vehicles, int vehicle_count) {
+  for (struct Person* current_person = persons;
+       current_person < persons + person_count; ++current_person) {
+    printf("%lld %s %s (income: %.2f)\n", current_person->person_id,
+           current_person->firstname, current_person->lastname,
+           current_person->income);
+
+    int vehicle_found = 0;
+    for (struct Vehicle* current_vehicle = vehicles;
+         current_vehicle < vehicles + vehicle_count; ++current_vehicle) {
+      if (current_vehicle->person_id == current_person->person_id) {
+        printf("        car %d: %s (tax: %.2f)\n", ++vehicle_found,
+               current_vehicle->reg_nr, current_vehicle->tax);
+      }
+    }
+    if (vehicle_found == 0) {
+      printf("        *** No registered cars ***\n");
+    }
+    printf("\n");
+  }
 
   printf("\n\n"); // Separator for Part 2 output
 
