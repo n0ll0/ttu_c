@@ -1,2 +1,3 @@
-Uko Poschlin,244508IACB,5 5 5 3 3 5;
-Risto HEinsar,194508IAAB,0 0 0 0 0 0;
+Uko Poschlin,244508IACB,5,5,5,3,3,5;
+Risto Heinsar,194508IAAB,0,0,0,0,0,0;
+Uko Poschlin 2,254508IACB,5,5,5,4,4,5;
