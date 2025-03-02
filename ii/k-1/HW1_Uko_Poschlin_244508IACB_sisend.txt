@@ -1,9 +1,9 @@
 Risto Heinsar,194508IAAB,0,0,0,0,0,0;
 Uko Poschlin,244508IACB,5,5,5,5,3,3;
-Uko Poschlin 3,224508IACB,5,5,5,5,5,5;
+Uko Poschlin 1,224508IACB,5,5,5,5,5,5;
 Uko Poschlin 2,254508IACB,5,5,5,5,5,4;
-Uko Poschlin 2,254518IACB,5,5,5,5,4,4;
-Uko Poschlin 2,254528IACB,5,5,5,5,4,3;
-Uko Poschlin 2,254538IACB,5,5,5,4,4,4;
-Uko Poschlin 2,254558IACB,5,4,4,4,4,4;
-Uko Poschlin 2,254548IACB,5,5,4,4,4,4;
+Uko Poschlin 3,254518IACB,5,5,5,5,4,4;
+Uko Poschlin 4,254528IACB,5,5,5,5,4,3;
+Uko Poschlin 5,254538IACB,5,5,5,4,4,4;
+Uko Poschlin 6,254558IACB,5,4,4,4,4,4;
+Uko Poschlin 7,254548IACB,5,5,4,4,4,4;

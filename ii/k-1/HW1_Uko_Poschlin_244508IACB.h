@@ -11,16 +11,6 @@
 #define MAX_PERSONS_COUNT 256
 #define LINE_BUFFER_SIZE 256
 
-struct Array {
-  size_t capacity;
-  size_t length;
-  void* values;
-};
-struct IntArray {
-  size_t capacity;
-  size_t length;
-  int* values;
-};
 struct StudentArray {
   size_t capacity;
   size_t length;

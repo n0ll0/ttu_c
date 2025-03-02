@@ -21,6 +21,11 @@
 #include "HW1_Uko_Poschlin_244508IACB.h"
 
 int main(int argc, char const* argv[]) {
+
+  if (argc < 2) {
+    fprintf(stderr, "missing argument at position 1 ($file_name)\n");
+    return EXIT_FAILURE;
+  }
   
   struct StudentArray students = ReadStudents(argv[1]);
 
