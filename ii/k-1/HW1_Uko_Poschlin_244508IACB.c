@@ -18,71 +18,69 @@
  * Tudengikood (vastavalt TalTech nimetamisreeglitele 6 numbrit + õppekava kood)
  * Hinded (kokku 6 tk)
  */
-#include <stdio.h>
-#include <stdlib.h>
-
-#define NAME_LENGTH 256
-#define CODE_LENGTH 10
-#define GRADES_LENGTH 6
-#define GRADES_BUFFER 256
-
-struct Array {
-  size_t length;
-  void* values;
-};
-struct IntArray {
-  size_t length;
-  int* values;
-};
-struct StudentArray {
-  size_t length;
-  struct Student* values;
-};
-struct Student {
-  char name[NAME_LENGTH];
-  char studentCode[CODE_LENGTH];
-  int grades[GRADES_LENGTH];
-};
-
-struct StudentArray ReadStudents(const char* fileName);
-void PrintStudent(struct Student* student);
-int CalculateStudentStipendium(struct Student* student);
-int GetStudentYear(struct Student* student);
-void FreeStudentArray(struct StudentArray students);
-int compare_students(const void* a, const void* b) {
-  int a_ = GetStudentYear((struct Student*)a);
-  int b_ = GetStudentYear((struct Student*)b);
-  return a_ > b_;
-}
+#include "HW1_Uko_Poschlin_244508IACB.h"
 
 int main(int argc, char const* argv[]) {
+  
   struct StudentArray students = ReadStudents(argv[1]);
-  // for (int i = 0; i < students.length; ++i) {
-  //   PrintStudent(&(students.values[i]));
-  //   puts("");
-  // }
 
-  qsort(students.values, students.length, sizeof(struct Student),
-        compare_students);
+  qsort(students.values, students.length, sizeof(struct Student), compare_students);
 
-  for (int i = 0; i < students.length; ++i) {
-    int stip = CalculateStudentStipendium(&(students.values[i]));
-    if (stip != -1) {
-      PrintStudent(&(students.values[i]));
-      printf(" [stip] = %d\n", stip);
-    }
-  }
+  PrintAllStudentsStipendiums(&students);
 
   FreeStudentArray(students);
   return 0;
 }
 
+/* this function can exit */
 struct StudentArray ReadStudents(const char* fileName) {
   FILE* file = fopen(fileName, "r");
-  struct StudentArray students = {
-      .length = 0, .values = calloc(255, sizeof(struct Student))};
-  char buffer[NAME_LENGTH + CODE_LENGTH + GRADES_BUFFER];
-  while (fgets(buffer, sizeof(buffer), file)) {
+  struct StudentArray students;
+  students.capacity = MAX_PERSONS_COUNT;
+  students.length = 0;
+  students.values = calloc(students.capacity, sizeof(struct Student));
+  if (!students.values) {
+    fprintf(stderr, "Couldn't allocate memory (students)\n");
+    exit(EXIT_FAILURE);
+  }
+
+  size_t buffer_size = LINE_BUFFER_SIZE;
+  char* buffer = calloc(buffer_size, sizeof(char));
+  if (!buffer) {
+    perror("Failed to allocate buffer");
+    exit(EXIT_FAILURE);
+  }
+  while (1) {
+    if (fgets(buffer, buffer_size, file) == NULL)
+      break;
+
+    while (strchr(buffer, '\n') == NULL && !feof(file)) {
+      buffer_size *= 2;
+      char* new_buffer = realloc(buffer, buffer_size);
+      if (!new_buffer) {
+        perror("Failed to reallocate buffer");
+        fclose(file);
+        free(buffer);
+        free(students.values);
+        exit(EXIT_FAILURE);
+      }
+      buffer = new_buffer;
+      fgets(buffer + strlen(buffer), buffer_size - strlen(buffer), file);
+    }
+
+    if (students.length >= students.capacity) {
+      students.capacity *= 2;
+      struct Student* new_values = realloc(students.values, students.capacity * sizeof(struct Student));
+      if (!new_values) {
+        perror("Failed to reallocate students array");
+        fclose(file);
+        free(buffer);
+        free(students.values);
+        exit(EXIT_FAILURE);
+      }
+      students.values = new_values;
+    }
+
     struct Student* student = &students.values[students.length];
     sscanf(buffer, "%[^,],%[^,],%d,%d,%d,%d,%d,%d", student->name,
            student->studentCode, &student->grades[0], &student->grades[1],
@@ -90,8 +88,21 @@ struct StudentArray ReadStudents(const char* fileName) {
            &student->grades[5]);
     students.length++;
   }
+
+  free(buffer);
   fclose(file);
   return students;
+
+  // while (fgets(buffer, sizeof(buffer), file)) {
+  //   struct Student* student = &students.values[students.length];
+  //   sscanf(buffer, "%[^,],%[^,],%d,%d,%d,%d,%d,%d", student->name,
+  //          student->studentCode, &student->grades[0], &student->grades[1],
+  //          &student->grades[2], &student->grades[3], &student->grades[4],
+  //          &student->grades[5]);
+  //   students.length++;
+  // }
+  // fclose(file);
+  // return students;
 }
 
 void PrintStudent(struct Student* student) {
@@ -137,4 +148,14 @@ int CalculateStudentStipendium(struct Student* student) {
   if (count4 <= 4)
     return 50;
   return -1;
+}
+
+void PrintAllStudentsStipendiums(struct StudentArray* students) {
+  for (int i = 0; i < students->length; ++i) {
+    int stip = CalculateStudentStipendium(&(students->values[i]));
+    if (stip != -1) {
+      PrintStudent(&(students->values[i]));
+      printf(" [stip] = %d\n", stip);
+    }
+  }
 }
