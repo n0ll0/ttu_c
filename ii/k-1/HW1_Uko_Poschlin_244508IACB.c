@@ -3,7 +3,7 @@
 int main(int argc, char const* argv[]) {
 
   if (argc < 2) {
-    fprintf(stderr, "missing argument at position 1 ($file_name)\n");
+    fprintf(stderr, "ERROR! Missing argument at position 1 ($file_name)!\n");
     return EXIT_FAILURE;
   }
 
@@ -82,17 +82,6 @@ struct StudentArray ReadStudents(const char* fileName) {
   free(buffer);
   fclose(file);
   return students;
-
-  // while (fgets(buffer, sizeof(buffer), file)) {
-  //   struct Student* student = &students.values[students.length];
-  //   sscanf(buffer, "%[^,],%[^,],%d,%d,%d,%d,%d,%d", student->name,
-  //          student->studentCode, &student->grades[0], &student->grades[1],
-  //          &student->grades[2], &student->grades[3], &student->grades[4],
-  //          &student->grades[5]);
-  //   students.length++;
-  // }
-  // fclose(file);
-  // return students;
 }
 
 void PrintStudent(struct Student* student, FILE* out) {
