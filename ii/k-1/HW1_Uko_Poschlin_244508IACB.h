@@ -69,7 +69,7 @@ StudentArray ReadStudents(const char*);
 void PrintStudent(Student*, ConfigState*);
 int CalculateStudentStipendium(Student*);
 int GetStudentYear(Student*);
-void FreeStudentArray(StudentArray);
+void FreeStudentArray(StudentArray*);
 void PrintAllStudentsStipendiums(StudentArray*, ConfigState*);
 int gt(const void* a, const void* b) {
   int a_ = GetStudentYear((Student*)a);

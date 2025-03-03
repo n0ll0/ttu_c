@@ -12,7 +12,7 @@ int main(int argc, char* const* argv) {
   if (config.flags.file_output)
     fclose(config.out_file);
 
-  FreeStudentArray(students);
+  FreeStudentArray(&students);
   return 0;
 }
 
@@ -256,11 +256,11 @@ void PrintStudent(Student* student, ConfigState* config) {
   MyPrint(config, "]");
 }
 
-void FreeStudentArray(StudentArray students) {
+void FreeStudentArray(StudentArray* students) {
   // for (; students.length > 0; --students.length) {
   //   free(students.values[students.length].name);
   // }
-  free(students.values);
+  free(students->values);
 }
 
 /// @brief gets the year part from the student code
