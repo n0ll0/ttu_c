@@ -34,7 +34,8 @@ cd ii;
 # cd 1-2 && gcc main.c && ./a.out && cd .. 
 # cd 2-1 && gcc main.c && find ~/ -type f -printf '%f\n' | ./a.out
 # cd 2-2 && gcc main.c && ./a.out task2_data4.txt "m" && ./a.out task2_data4.txt "dm" && ./a.out task2_data4.txt "km" && ./a.out task2_data4.txt "in" && ./a.out task2_data4.txt "ft" && ./a.out task2_data4.txt "yd";
-cd k-1 && gcc HW1_Uko_Poschlin_244508IACB.c -std=c99 && valgrind --leak-check=full ./a.out HW1_Uko_Poschlin_244508IACB_sisend.txt && cd ..;
+cd k-1 && gcc HW1_Uko_Poschlin_244508IACB.c && valgrind --leak-check=full ./a.out && cd ..;
+cd k-1 && gcc HW1_Uko_Poschlin_244508IACB.c && valgrind --leak-check=full ./a.out HW1_Uko_Poschlin_244508IACB_sisend.txt && cd ..;
 # cd 3 && gcc main.c && ./a.out
 # cd 3 && gcc main1.c && ./a.out
 # cd 4-1 && gcc main.c && ./a.out

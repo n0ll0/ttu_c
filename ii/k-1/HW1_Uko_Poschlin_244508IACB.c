@@ -1,23 +1,34 @@
 #include "HW1_Uko_Poschlin_244508IACB.h"
 
 int main(int argc, char const* argv[]) {
-
-  ConfigState config = UseConfig(CONFIG_FILE);
+  ConfigState config = {
+      .flags.console_output = TRUE,
+      .flags.file_output = TRUE,
+      .flags.input_file = DEFAULT_INPUT_FILE,
+      .flags.output_file = DEFAULT_OUTPUT_FILE,
+  };
+  if (argc < 2) {
+    config = UseConfig(CONFIG_FILE);
+  }
 
   struct StudentArray students = ReadStudents(config.flags.input_file);
 
   qsort(students.values, students.length, sizeof(struct Student), gt);
 
-  config.out_file = fopen(config.flags.output_file, "w");
+  if (config.flags.file_output)
+    config.out_file = fopen(config.flags.output_file, "w");
 
   PrintAllStudentsStipendiums(&students, &config);
 
-  fclose(config.out_file);
+  if (config.flags.file_output)
+    fclose(config.out_file);
 
   FreeStudentArray(students);
   return 0;
 }
 
+/// @brief For given configuration, functions like printf
+/// @param config config has the flags and the out file to print to depending on config
 void MyPrint(ConfigState* config, const char* __restrict__ __format, ...) {
   va_list args;
 
@@ -57,7 +68,7 @@ void _HandleConsoleOutputFlag(CustomFlags* config_state, const char* str) {
   if (strstr(str, flag_name) == NULL)
     return;
   if (sscanf(str, "console_output %hhd", &config_state->console_output) != 1) {
-    config_state->console_output = 1;
+    config_state->console_output = TRUE;
   }
 };
 
@@ -66,10 +77,11 @@ void _HandleFileOutputFlag(CustomFlags* config_state, const char* str) {
   if (strstr(str, flag_name) == NULL)
     return;
   if (sscanf(str, "file_output %hhd", &config_state->file_output) != 1) {
-    config_state->file_output = 1;
+    config_state->file_output = TRUE;
   }
 };
 
+/* this function can exit */
 ConfigState UseConfig(const char* config_file_name) {
   ConfigState config = {0};
   FILE* configFile = fopen(config_file_name, "r");
@@ -237,7 +249,8 @@ int CalculateStudentStipendium(struct Student* student) {
   return -1;
 }
 
-void PrintAllStudentsStipendiums(struct StudentArray* students, ConfigState* config) {
+void PrintAllStudentsStipendiums(struct StudentArray* students,
+                                 ConfigState* config) {
   for (int i = 0; i < students->length; ++i) {
     int stip = CalculateStudentStipendium(&(students->values[i]));
     if (stip != -1) {

@@ -21,6 +21,11 @@
  */
 #define CONFIG_FILE "config.ini"
 
+#define DEFAULT_OUTPUT_FILE "HW1_Uko_Poschlin_244508IACB_sisend.txt"
+#define DEFAULT_INPUT_FILE argv[1]
+
+#define TRUE 1
+
 #include <inttypes.h>
 #include <stdarg.h>
 #include <stdio.h>
