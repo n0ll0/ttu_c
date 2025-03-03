@@ -80,21 +80,31 @@ void _HandleFileOutputFlag(CustomFlags* config_state, const char* str) {
   }
 };
 
-/// @brief (this function can exit)
-/// @param config_file_name "config.ini"
-/// @return State of program
+/** 
+ * @brief
+ * Here's a breakdown of the key parts of the UseConfig function:
+ *  1. The function initializes a ConfigState structure and checks if command-line arguments are provided. If so, it sets the appropriate configuration flags and returns the ConfigState.
+ *  2. If no command-line arguments are provided, the function attempts to open the configuration file. If the file does not exist, it creates a new configuration file with default values and returns the ConfigState.
+ *  3. The function defines an array of function pointers, handlers, which correspond to the different configuration flags. Each handler function is responsible for parsing a specific line from the configuration file and updating the corresponding configuration flag.
+ *  4. The function reads lines from the configuration file and calls the appropriate handler function for each line. It continues to read lines until the end of the file is reached.
+ *  5. After processing all the lines from the configuration file, the function checks if any required configuration flags are missing and sets default values if necessary.
+ *  6. Finally, the function opens the output file (if enabled) and returns the updated ConfigState.
+ *
+ * @param config_file_name "config.ini"
+ * @return State of program
+ */
 ConfigState UseConfig(const char* config_file_name, int argc,
                       char* const* argv) {
   ConfigState config = {0};
-  if (argc >= 2) {
+  if (argc > 1) {
     config.flags.console_output = TRUE;
     config.flags.file_output = TRUE;
-    config.flags.input_file = DEFAULT_INPUT_FILE;
+    config.flags.input_file = argv[1];
     config.flags.output_file = DEFAULT_OUTPUT_FILE;
     if (config.flags.file_output) {
       config.out_file = fopen(config.flags.output_file, "w");
       if (!config.out_file) {
-        fprintf(stderr, "Error opening output file.\n");
+        fprintf(stderr, "Error opening output file.2\n");
         exit(EXIT_FAILURE);
       }
     }
@@ -102,21 +112,23 @@ ConfigState UseConfig(const char* config_file_name, int argc,
   }
   FILE* configFile = fopen(config_file_name, "r");
   if (configFile == NULL) { // default files
-    config.flags.input_file = "HW1_Uko_Poschlin_244508IACB_sisend.txt";
-    config.flags.output_file = "HW1_Uko_Poschlin_244508IACB_valjund.txt";
+    config.flags.input_file = DEFAULT_INPUT_FILE;
+    config.flags.output_file = DEFAULT_OUTPUT_FILE;
+    
+    if (config.flags.file_output) {
+      config.out_file = fopen(config.flags.output_file, "w");
+      if (!config.out_file) {
+        fprintf(stderr, "Error opening output file.3\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+
     FILE* _configFile = fopen(config_file_name, "w");
     fprintf(_configFile, "input_file %s\n", config.flags.input_file);
     fprintf(_configFile, "output_file %s\n", config.flags.output_file);
     fprintf(_configFile, "console_output %d\n", config.flags.console_output);
     fprintf(_configFile, "file_output %d\n", config.flags.file_output);
     fclose(_configFile);
-    if (config.flags.file_output) {
-      config.out_file = fopen(config.flags.output_file, "w");
-      if (!config.out_file) {
-        fprintf(stderr, "Error opening output file.\n");
-        exit(EXIT_FAILURE);
-      }
-    }
     return config;
   }
 
@@ -133,6 +145,7 @@ ConfigState UseConfig(const char* config_file_name, int argc,
   char* line = calloc(line_buffer_size, sizeof(char));
   if (line == NULL) {
     fprintf(stderr, "Failed to allocate config line buffer");
+    fclose(configFile);
     exit(EXIT_FAILURE);
   }
 
@@ -162,10 +175,17 @@ ConfigState UseConfig(const char* config_file_name, int argc,
   free(line);
   fclose(configFile);
 
+  if (config.flags.input_file == NULL) {
+    config.flags.input_file = DEFAULT_INPUT_FILE;
+  }
+  if (config.flags.output_file == NULL) {
+    config.flags.output_file = DEFAULT_OUTPUT_FILE;
+  }
+
   if (config.flags.file_output) {
     config.out_file = fopen(config.flags.output_file, "w");
     if (!config.out_file) {
-      fprintf(stderr, "Error opening output file.\n");
+      fprintf(stderr, "Error opening output file.5\n");
       exit(EXIT_FAILURE);
     }
   }
@@ -173,9 +193,11 @@ ConfigState UseConfig(const char* config_file_name, int argc,
   return config;
 }
 
-/// @brief Reads all the students in the input file (this function can exit)
-/// @param fileName the file path to read from
-/// @return array of students
+/**
+ * @brief Reads all the students in the input file (this function can exit)
+ * @param fileName the file path to read from
+ * @return array of students
+ */
 StudentArray ReadStudents(const char* fileName) {
   FILE* file = fopen(fileName, "r");
   if (file == NULL) {
