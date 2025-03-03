@@ -1,0 +1,113 @@
+@startuml
+start
+
+if (Are command line arguments less than 2?) then (yes)
+:config = UseConfig(CONFIG_FILE);
+
+else (no)
+:config = default settings;
+endif
+
+
+
+:Sort students by admission year (qsort);
+
+if (config.flags.file_output) then (yes)
+    :config.out_file = fopen(config.flags.output_file, "w");
+endif
+
+:PrintAllStudentsStipendiums(&students, &config);
+
+
+if (config.flags.file_output) then (yes)
+:fclose(config.out_file);
+endif
+
+:FreeStudentArray(students);
+
+stop
+start
+:ReadStudents(fileName) function begins;
+:file = fopen(fileName, "r");
+:Initialize students array (capacity, length, values);
+while (Line is not end of file)
+    :Read line from file;
+    if (Is students array full (length >= capacity)?) then (yes)
+        :Reallocate students.values array (increase capacity);
+    endif
+    :student = &students.values[students.length];
+    :Parse student data from buffer (sscanf);
+    :Increment students.length;
+endwhile
+:fclose(file);
+:ReadStudents(fileName) function ends;
+stop
+start
+:CalculateStudentStipendium(student) function begins;
+:Count grades '5' and '4';
+if (Is count5 + count4 != GRADES_LENGTH?) then (yes)
+    :return -1;
+elseif (Is count4 == 0?) then (yes)
+    :return 200;
+elseif (Is count4 <= 2?) then (yes)
+    :return 100;
+elseif (Is count4 <= 4?) then (yes)
+    :return 50;
+else (no)
+    :return -1;
+endif
+:CalculateStudentStipendium(student) function ends;
+stop
+start
+:MyPrint(config, format, ...) function begins;
+  if (config->flags.file_output) then (yes)
+    :vfprintf(config->out_file, format, args);
+  endif
+  if (config->flags.console_output) then (yes)
+    :vfprintf(stdout, format, args);
+  endif
+  :MyPrint(config, format, ...) function ends;
+stop
+start
+:PrintAllStudentsStipendiums(&students, &config) function begins;
+while (more students?)
+    :Iterate through students array;
+    :stip = CalculateStudentStipendium(&(students->values[i]));
+    
+
+    if (Is stipendium != -1?) then (yes)
+        :PrintStudent(&(students->values[i]), &config);
+        :PrintStudent(student, config) function begins;
+        :MyPrint(config, "%s %s [", student->name, student->studentCode);
+        
+        while (more grades?)
+            :Iterate through grades;
+            :MyPrint(config, "%d", student->grades[i]);
+            if (Is it not the last grade (i + 1 < GRADES_LENGTH)?) then (yes)
+                :MyPrint(config, ", ");
+            endif
+        endwhile
+        :MyPrint(config, "]");
+        :PrintStudent(student, config) function ends;
+        :MyPrint(config, " [stip] = %d\\n", stip);
+    endif
+endwhile
+
+:PrintAllStudentsStipendiums(&students, &config) function ends;
+stop
+start
+:UseConfig(config_file_name) function begins;
+    if (Is configFile = fopen(config_file_name, "r") == NULL?) then (yes)
+        :Create default configuration and file;
+    else (no)
+        :Read configuration file line by line;
+        while (Line is not empty or end of file)
+            :Read a line;
+            :Find handler function based on line content;
+            :Apply handler function to set configuration;
+        endwhile (Line is empty or end of file)
+        :fclose(configFile);
+    endif
+    :UseConfig(config_file_name) function ends;
+stop
+@enduml
