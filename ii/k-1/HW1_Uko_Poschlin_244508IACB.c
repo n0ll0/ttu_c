@@ -7,15 +7,6 @@ int main(int argc, char* const* argv) {
 
   qsort(students.values, students.length, sizeof(Student), gt);
 
-  if (config.flags.file_output) {
-    config.out_file = fopen(config.flags.output_file, "w");
-    if (config.out_file == NULL) {
-      fprintf(stderr, "Error opening output file.\n");
-      FreeStudentArray(students);
-      exit(EXIT_FAILURE);
-    }
-  }
-
   PrintAllStudentsStipendiums(&students, &config);
 
   if (config.flags.file_output)
@@ -100,6 +91,13 @@ ConfigState UseConfig(const char* config_file_name, int argc,
     config.flags.file_output = TRUE;
     config.flags.input_file = DEFAULT_INPUT_FILE;
     config.flags.output_file = DEFAULT_OUTPUT_FILE;
+    if (config.flags.file_output) {
+      config.out_file = fopen(config.flags.output_file, "w");
+      if (!config.out_file) {
+        fprintf(stderr, "Error opening output file.\n");
+        exit(EXIT_FAILURE);
+      }
+    }
     return config;
   }
   FILE* configFile = fopen(config_file_name, "r");
@@ -112,6 +110,13 @@ ConfigState UseConfig(const char* config_file_name, int argc,
     fprintf(_configFile, "console_output %d\n", config.flags.console_output);
     fprintf(_configFile, "file_output %d\n", config.flags.file_output);
     fclose(_configFile);
+    if (config.flags.file_output) {
+      config.out_file = fopen(config.flags.output_file, "w");
+      if (!config.out_file) {
+        fprintf(stderr, "Error opening output file.\n");
+        exit(EXIT_FAILURE);
+      }
+    }
     return config;
   }
 
@@ -156,6 +161,14 @@ ConfigState UseConfig(const char* config_file_name, int argc,
 
   free(line);
   fclose(configFile);
+
+  if (config.flags.file_output) {
+    config.out_file = fopen(config.flags.output_file, "w");
+    if (!config.out_file) {
+      fprintf(stderr, "Error opening output file.\n");
+      exit(EXIT_FAILURE);
+    }
+  }
 
   return config;
 }
