@@ -1,23 +1,3 @@
-/**
- * Teema: Stipendiumid
- * Rakenduse eesmärk on määrata tudengitele vastavalt nende hinnetele
- * stipendiumid.
- *
- * Ülesanne
- * Määra tudengitele stipendiumid. Väljastuses esitatakse ainult tudengid,
- * kellele määrati stipendiumid. Loetle kasvavas järjekorras vastavalt
- * stipendiumi summale: Tudengitele, kelle kõik hinded olid '5', määratakse
- * stipendium 200€ Tudengitele, kellel oli kuni kaks '4', määratakse stipendium
- * 100€ Tudengitele, kellel oli kuni neli '4', määratakse stipendium 50€
- * Stipendiumi saavate tudengite väljastamisel peavad tudengid olema järjestatud
- * sisseastumisaasta alusel, mille määravad esimesed kaks numbrit
- * tudengikoodist.
- *
- * Andmefaili väljad
- * Nimi
- * Tudengikood (vastavalt TalTech nimetamisreeglitele 6 numbrit + õppekava kood)
- * Hinded (kokku 6 tk)
- */
 #include "HW1_Uko_Poschlin_244508IACB.h"
 
 int main(int argc, char const* argv[]) {
@@ -29,9 +9,13 @@ int main(int argc, char const* argv[]) {
   
   struct StudentArray students = ReadStudents(argv[1]);
 
-  qsort(students.values, students.length, sizeof(struct Student), compare_students);
+  qsort(students.values, students.length, sizeof(struct Student), gt);
 
-  PrintAllStudentsStipendiums(&students);
+  FILE* out = fopen(OUTPUT_FILE, "w");
+
+  PrintAllStudentsStipendiums(&students, out);
+
+  fclose(out);
 
   FreeStudentArray(students);
   return 0;
@@ -110,14 +94,18 @@ struct StudentArray ReadStudents(const char* fileName) {
   // return students;
 }
 
-void PrintStudent(struct Student* student) {
-  printf("%s %s [", student->name, student->studentCode);
+void PrintStudent(struct Student* student, FILE* out) {
+  fprintf(stdout, "%s %s [", student->name, student->studentCode);
+  fprintf(out, "%s %s [", student->name, student->studentCode);
   for (int i = 0; i < GRADES_LENGTH; ++i) {
-    printf("%d", student->grades[i]);
+    fprintf(stdout, "%d", student->grades[i]);
+    fprintf(out, "%d", student->grades[i]);
     if (i + 1 < GRADES_LENGTH)
-      printf(", ");
+      fprintf(stdout, ", ");
+      fprintf(out, ", ");
   }
-  printf("]");
+  fprintf(stdout, "]");
+  fprintf(out, "]");
 }
 
 void FreeStudentArray(struct StudentArray students) {
@@ -155,12 +143,13 @@ int CalculateStudentStipendium(struct Student* student) {
   return -1;
 }
 
-void PrintAllStudentsStipendiums(struct StudentArray* students) {
+void PrintAllStudentsStipendiums(struct StudentArray* students, FILE* out) {
   for (int i = 0; i < students->length; ++i) {
     int stip = CalculateStudentStipendium(&(students->values[i]));
     if (stip != -1) {
-      PrintStudent(&(students->values[i]));
-      printf(" [stip] = %d\n", stip);
+      PrintStudent(&(students->values[i]), out);
+      fprintf(stdout, " [stip] = %d\n", stip);
+      fprintf(out, " [stip] = %d\n", stip);
     }
   }
 }

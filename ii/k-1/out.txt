@@ -1,0 +1,5 @@
+Uko Poschlin 1 224508IACB [5, 5, 5, 5, 5, 5, ] [stip] = 200
+Uko Poschlin 2 254508IACB [5, 5, 5, 5, 5, 4, ] [stip] = 100
+Uko Poschlin 3 254518IACB [5, 5, 5, 5, 4, 4, ] [stip] = 100
+Uko Poschlin 5 254538IACB [5, 5, 5, 4, 4, 4, ] [stip] = 50
+Uko Poschlin 7 254548IACB [5, 5, 4, 4, 4, 4, ] [stip] = 50
