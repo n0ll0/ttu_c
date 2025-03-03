@@ -80,4 +80,4 @@ int gt(const void* a, const void* b) {
   return a_ > b_;
 };
 
-ConfigState UseConfig(const char*);
+ConfigState UseConfig(const char*, int, char* const*);

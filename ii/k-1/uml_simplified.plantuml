@@ -1,0 +1,68 @@
+@startuml
+start
+if (Are command line arguments less than 2?) then (yes)
+:config = UseConfig(CONFIG_FILE);
+partition UseConfig(config_file_name) {
+    if (Does config file exist?) then (yes)
+        :Create default configuration
+ and file;
+    else (no)
+        :Read configuration file
+ line by line;
+        while (Line is not empty or end of file)
+            :Read a line;
+            :Loop over line handlers,
+they should know what they do;
+        endwhile
+    endif
+}
+
+else (no)
+:config = default settings;
+endif
+
+partition ReadStudents {
+:file = fopen(input file, "r");
+:Initialize students array (capacity, length, values);
+while (Line is not end of file)
+    :Read line from file;
+    if (Is students array full (length >= capacity)?) then (yes)
+        :Reallocate students.values array (increase capacity);
+    endif
+    
+    :create and parse student data from buffer (sscanf);
+    :Increment students.length;
+endwhile
+}
+
+:Sort students by admission year (qsort);
+
+partition PrintAllStudentsStipendiums() {
+while (more students?)
+    :Iterate through students array;
+    :stip = CalculateStudentStipendium();
+partition CalculateStudentStipendium {
+:Count grades '5' and '4';
+if (Is count5 + count4
+!= GRADES_LENGTH?) then (yes)
+    :return -1;
+elseif (Is count4
+ == 0?) then (yes)
+    :return 200;
+elseif (Is count4
+ <= 2?) then (yes)
+    :return 100;
+elseif (Is count4
+ <= 4?) then (yes)
+    :return 50;
+else (no)
+    :return -1;
+endif
+}
+    if (Is stipendium != -1?) then (yes)
+        :Print Student with their grades and the stipendium;
+    endif
+endwhile
+}
+stop
+@enduml

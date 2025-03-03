@@ -1,31 +1,21 @@
 @startuml
 start
-
 if (Are command line arguments less than 2?) then (yes)
 :config = UseConfig(CONFIG_FILE);
-
 else (no)
 :config = default settings;
 endif
-
-
-
 :Sort students by admission year (qsort);
-
 if (config.flags.file_output) then (yes)
     :config.out_file = fopen(config.flags.output_file, "w");
 endif
-
 :PrintAllStudentsStipendiums(&students, &config);
-
-
 if (config.flags.file_output) then (yes)
 :fclose(config.out_file);
 endif
-
 :FreeStudentArray(students);
-
 stop
+
 start
 :ReadStudents(fileName) function begins;
 :file = fopen(fileName, "r");
@@ -42,6 +32,18 @@ endwhile
 :fclose(file);
 :ReadStudents(fileName) function ends;
 stop
+
+start
+:MyPrint(config, format, ...) function begins;
+  if (config->flags.file_output) then (yes)
+    :vfprintf(config->out_file, format, args);
+  endif
+  if (config->flags.console_output) then (yes)
+    :vfprintf(stdout, format, args);
+  endif
+  :MyPrint(config, format, ...) function ends;
+stop
+
 start
 :CalculateStudentStipendium(student) function begins;
 :Count grades '5' and '4';
@@ -58,16 +60,7 @@ else (no)
 endif
 :CalculateStudentStipendium(student) function ends;
 stop
-start
-:MyPrint(config, format, ...) function begins;
-  if (config->flags.file_output) then (yes)
-    :vfprintf(config->out_file, format, args);
-  endif
-  if (config->flags.console_output) then (yes)
-    :vfprintf(stdout, format, args);
-  endif
-  :MyPrint(config, format, ...) function ends;
-stop
+
 start
 :PrintAllStudentsStipendiums(&students, &config) function begins;
 while (more students?)
@@ -95,19 +88,25 @@ endwhile
 
 :PrintAllStudentsStipendiums(&students, &config) function ends;
 stop
-start
-:UseConfig(config_file_name) function begins;
-    if (Is configFile = fopen(config_file_name, "r") == NULL?) then (yes)
-        :Create default configuration and file;
+
+partition UseConfig(config_file_name) {
+    start
+    if (Is configFile = 
+fopen(config_file_name, "r") == NULL?) then (yes)
+        :Create default configuration
+ and file;
     else (no)
-        :Read configuration file line by line;
+        :Read configuration file
+ line by line;
         while (Line is not empty or end of file)
             :Read a line;
-            :Find handler function based on line content;
-            :Apply handler function to set configuration;
+            :Find handler function
+ based on line content;
+            :Apply handler function
+ to set configuration;
         endwhile (Line is empty or end of file)
         :fclose(configFile);
     endif
-    :UseConfig(config_file_name) function ends;
-stop
+    stop
+}
 @enduml

@@ -1,22 +1,20 @@
 #include "HW1_Uko_Poschlin_244508IACB.h"
 
-int main(int argc, char const* argv[]) {
-  ConfigState config = {
-      .flags.console_output = TRUE,
-      .flags.file_output = TRUE,
-      .flags.input_file = DEFAULT_INPUT_FILE,
-      .flags.output_file = DEFAULT_OUTPUT_FILE,
-  };
-  if (argc < 2) {
-    config = UseConfig(CONFIG_FILE);
-  }
+int main(int argc, char* const* argv) {
+  ConfigState config = UseConfig(CONFIG_FILE, argc, argv);
 
   struct StudentArray students = ReadStudents(config.flags.input_file);
 
   qsort(students.values, students.length, sizeof(struct Student), gt);
 
-  if (config.flags.file_output)
+  if (config.flags.file_output) {
     config.out_file = fopen(config.flags.output_file, "w");
+    if (config.out_file == NULL) {
+      fprintf(stderr, "Error opening output file.\n");
+      FreeStudentArray(students);
+      exit(EXIT_FAILURE);
+    }
+  }
 
   PrintAllStudentsStipendiums(&students, &config);
 
@@ -28,7 +26,8 @@ int main(int argc, char const* argv[]) {
 }
 
 /// @brief For given configuration, functions like printf
-/// @param config config has the flags and the out file to print to depending on config
+/// @param config config has the flags and the out file to print to depending on
+/// config
 void MyPrint(ConfigState* config, const char* __restrict__ __format, ...) {
   va_list args;
 
@@ -45,6 +44,9 @@ void MyPrint(ConfigState* config, const char* __restrict__ __format, ...) {
   }
 }
 
+/// @brief Sets the configuration for input_file
+/// @param config_state state of program
+/// @param str line from "config.ini" file
 void _HandleInputFileFlag(CustomFlags* config_state, const char* str) {
   const char* flag_name = "input_file";
   if (strstr(str, flag_name) == NULL)
@@ -53,7 +55,9 @@ void _HandleInputFileFlag(CustomFlags* config_state, const char* str) {
     config_state->input_file = "HW1_Uko_Poschlin_244508IACB_sisend.txt";
   }
 };
-
+/// @brief Sets the configuration for output_file
+/// @param config_state state of program
+/// @param str line from "config.ini" file
 void _HandleOutputFileFlag(CustomFlags* config_state, const char* str) {
   const char* flag_name = "output_file";
   if (strstr(str, flag_name) == NULL)
@@ -62,7 +66,9 @@ void _HandleOutputFileFlag(CustomFlags* config_state, const char* str) {
     config_state->output_file = "HW1_Uko_Poschlin_244508IACB_valjund.txt";
   }
 };
-
+/// @brief Sets the configuration for console_output
+/// @param config_state state of program
+/// @param str line from "config.ini" file
 void _HandleConsoleOutputFlag(CustomFlags* config_state, const char* str) {
   const char* flag_name = "console_output";
   if (strstr(str, flag_name) == NULL)
@@ -71,7 +77,9 @@ void _HandleConsoleOutputFlag(CustomFlags* config_state, const char* str) {
     config_state->console_output = TRUE;
   }
 };
-
+/// @brief Sets the configuration for file_output
+/// @param config_state state of program
+/// @param str line from "config.ini" file
 void _HandleFileOutputFlag(CustomFlags* config_state, const char* str) {
   const char* flag_name = "file_output";
   if (strstr(str, flag_name) == NULL)
@@ -81,9 +89,19 @@ void _HandleFileOutputFlag(CustomFlags* config_state, const char* str) {
   }
 };
 
-/* this function can exit */
-ConfigState UseConfig(const char* config_file_name) {
+/// @brief (this function can exit)
+/// @param config_file_name "config.ini"
+/// @return State of program
+ConfigState UseConfig(const char* config_file_name, int argc,
+                      char* const* argv) {
   ConfigState config = {0};
+  if (argc >= 2) {
+    config.flags.console_output = TRUE;
+    config.flags.file_output = TRUE;
+    config.flags.input_file = DEFAULT_INPUT_FILE;
+    config.flags.output_file = DEFAULT_OUTPUT_FILE;
+    return config;
+  }
   FILE* configFile = fopen(config_file_name, "r");
   if (configFile == NULL) { // default files
     config.flags.input_file = "HW1_Uko_Poschlin_244508IACB_sisend.txt";
@@ -140,9 +158,15 @@ ConfigState UseConfig(const char* config_file_name) {
   return config;
 }
 
-/* this function can exit */
+/// @brief Reads all the students in the input file (this function can exit)
+/// @param fileName the file path to read from
+/// @return array of students
 struct StudentArray ReadStudents(const char* fileName) {
   FILE* file = fopen(fileName, "r");
+  if (file == NULL) {
+    fprintf(stderr, "Error opening input file.\n");
+    exit(EXIT_FAILURE);
+  }
   struct StudentArray students;
   students.capacity = MAX_PERSONS_COUNT;
   students.length = 0;
@@ -203,6 +227,9 @@ struct StudentArray ReadStudents(const char* fileName) {
   return students;
 }
 
+/// @brief Prints the student name, code and grades
+/// @param student
+/// @param config state of program
 void PrintStudent(struct Student* student, ConfigState* config) {
   MyPrint(config, "%s %s [", student->name, student->studentCode);
   for (int i = 0; i < GRADES_LENGTH; ++i) {
@@ -221,10 +248,17 @@ void FreeStudentArray(struct StudentArray students) {
   free(students.values);
 }
 
+/// @brief gets the year part from the student code
+/// @param student
+/// @return years last 2 digits
 int GetStudentYear(struct Student* student) {
   return (student->studentCode[0] - '0') * 10 + (student->studentCode[1] - '0');
 }
 
+/// @brief counts the number of 4s and 5s and based on rules grants stipendium
+/// (-1 if no stipendium)
+/// @param student
+/// @return stipendium amount
 int CalculateStudentStipendium(struct Student* student) {
   int count5 = 0;
   int count4 = 0;
@@ -249,6 +283,9 @@ int CalculateStudentStipendium(struct Student* student) {
   return -1;
 }
 
+/// @brief
+/// @param students
+/// @param config
 void PrintAllStudentsStipendiums(struct StudentArray* students,
                                  ConfigState* config) {
   for (int i = 0; i < students->length; ++i) {
