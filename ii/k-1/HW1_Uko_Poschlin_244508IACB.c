@@ -6,7 +6,7 @@ int main(int argc, char const* argv[]) {
     fprintf(stderr, "missing argument at position 1 ($file_name)\n");
     return EXIT_FAILURE;
   }
-  
+
   struct StudentArray students = ReadStudents(argv[1]);
 
   qsort(students.values, students.length, sizeof(struct Student), gt);
@@ -59,7 +59,8 @@ struct StudentArray ReadStudents(const char* fileName) {
 
     if (students.length >= students.capacity) {
       students.capacity *= 2;
-      struct Student* new_values = realloc(students.values, students.capacity * sizeof(struct Student));
+      struct Student* new_values =
+          realloc(students.values, students.capacity * sizeof(struct Student));
       if (!new_values) {
         perror("Failed to reallocate students array");
         fclose(file);
@@ -100,9 +101,10 @@ void PrintStudent(struct Student* student, FILE* out) {
   for (int i = 0; i < GRADES_LENGTH; ++i) {
     fprintf(stdout, "%d", student->grades[i]);
     fprintf(out, "%d", student->grades[i]);
-    if (i + 1 < GRADES_LENGTH)
+    if (i + 1 < GRADES_LENGTH) {
       fprintf(stdout, ", ");
       fprintf(out, ", ");
+    }
   }
   fprintf(stdout, "]");
   fprintf(out, "]");
