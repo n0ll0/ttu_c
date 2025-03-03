@@ -3,9 +3,9 @@
 int main(int argc, char* const* argv) {
   ConfigState config = UseConfig(CONFIG_FILE, argc, argv);
 
-  struct StudentArray students = ReadStudents(config.flags.input_file);
+  StudentArray students = ReadStudents(config.flags.input_file);
 
-  qsort(students.values, students.length, sizeof(struct Student), gt);
+  qsort(students.values, students.length, sizeof(Student), gt);
 
   if (config.flags.file_output) {
     config.out_file = fopen(config.flags.output_file, "w");
@@ -115,10 +115,12 @@ ConfigState UseConfig(const char* config_file_name, int argc,
     return config;
   }
 
-  config.handlers[0] = _HandleInputFileFlag;
-  config.handlers[1] = _HandleOutputFileFlag;
-  config.handlers[2] = _HandleConsoleOutputFlag;
-  config.handlers[3] = _HandleFileOutputFlag;
+  void (*handlers[CONFIG_HANDLERS_LENGTH])(CustomFlags*, const char*);
+
+  handlers[0] = _HandleInputFileFlag;
+  handlers[1] = _HandleOutputFileFlag;
+  handlers[2] = _HandleConsoleOutputFlag;
+  handlers[3] = _HandleFileOutputFlag;
 
   int handlers_length = CONFIG_HANDLERS_LENGTH;
 
@@ -148,7 +150,7 @@ ConfigState UseConfig(const char* config_file_name, int argc,
     for (int i = 0; i < handlers_length; ++i) {
       if (line[0] == ';')
         continue;
-      (config.handlers[i])(&config.flags, line);
+      (handlers[i])(&config.flags, line);
     }
   }
 
@@ -161,16 +163,16 @@ ConfigState UseConfig(const char* config_file_name, int argc,
 /// @brief Reads all the students in the input file (this function can exit)
 /// @param fileName the file path to read from
 /// @return array of students
-struct StudentArray ReadStudents(const char* fileName) {
+StudentArray ReadStudents(const char* fileName) {
   FILE* file = fopen(fileName, "r");
   if (file == NULL) {
     fprintf(stderr, "Error opening input file.\n");
     exit(EXIT_FAILURE);
   }
-  struct StudentArray students;
+  StudentArray students;
   students.capacity = MAX_PERSONS_COUNT;
   students.length = 0;
-  students.values = calloc(students.capacity, sizeof(struct Student));
+  students.values = calloc(students.capacity, sizeof(Student));
   if (!students.values) {
     fprintf(stderr, "Couldn't allocate memory (students)\n");
     exit(EXIT_FAILURE);
@@ -202,8 +204,8 @@ struct StudentArray ReadStudents(const char* fileName) {
 
     if (students.length >= students.capacity) {
       students.capacity *= REALLOCATE_CONSTANT;
-      struct Student* new_values =
-          realloc(students.values, students.capacity * sizeof(struct Student));
+      Student* new_values =
+          realloc(students.values, students.capacity * sizeof(Student));
       if (!new_values) {
         fprintf(stderr, "Failed to reallocate students array");
         fclose(file);
@@ -214,7 +216,7 @@ struct StudentArray ReadStudents(const char* fileName) {
       students.values = new_values;
     }
 
-    struct Student* student = &students.values[students.length];
+    Student* student = &students.values[students.length];
     sscanf(buffer, "%[^,],%[^,],%d,%d,%d,%d,%d,%d", student->name,
            student->studentCode, &student->grades[0], &student->grades[1],
            &student->grades[2], &student->grades[3], &student->grades[4],
@@ -230,7 +232,7 @@ struct StudentArray ReadStudents(const char* fileName) {
 /// @brief Prints the student name, code and grades
 /// @param student
 /// @param config state of program
-void PrintStudent(struct Student* student, ConfigState* config) {
+void PrintStudent(Student* student, ConfigState* config) {
   MyPrint(config, "%s %s [", student->name, student->studentCode);
   for (int i = 0; i < GRADES_LENGTH; ++i) {
     MyPrint(config, "%d", student->grades[i]);
@@ -241,7 +243,7 @@ void PrintStudent(struct Student* student, ConfigState* config) {
   MyPrint(config, "]");
 }
 
-void FreeStudentArray(struct StudentArray students) {
+void FreeStudentArray(StudentArray students) {
   // for (; students.length > 0; --students.length) {
   //   free(students.values[students.length].name);
   // }
@@ -251,7 +253,7 @@ void FreeStudentArray(struct StudentArray students) {
 /// @brief gets the year part from the student code
 /// @param student
 /// @return years last 2 digits
-int GetStudentYear(struct Student* student) {
+int GetStudentYear(Student* student) {
   return (student->studentCode[0] - '0') * 10 + (student->studentCode[1] - '0');
 }
 
@@ -259,7 +261,7 @@ int GetStudentYear(struct Student* student) {
 /// (-1 if no stipendium)
 /// @param student
 /// @return stipendium amount
-int CalculateStudentStipendium(struct Student* student) {
+int CalculateStudentStipendium(Student* student) {
   int count5 = 0;
   int count4 = 0;
   for (int i = 0; i < GRADES_LENGTH; ++i) {
@@ -286,8 +288,7 @@ int CalculateStudentStipendium(struct Student* student) {
 /// @brief
 /// @param students
 /// @param config
-void PrintAllStudentsStipendiums(struct StudentArray* students,
-                                 ConfigState* config) {
+void PrintAllStudentsStipendiums(StudentArray* students, ConfigState* config) {
   for (int i = 0; i < students->length; ++i) {
     int stip = CalculateStudentStipendium(&(students->values[i]));
     if (stip != -1) {

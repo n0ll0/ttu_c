@@ -41,17 +41,17 @@
 #define CONFIG_HANDLERS_LENGTH 4
 #define REALLOCATE_CONSTANT 2
 
-struct StudentArray {
-  size_t capacity;
-  size_t length;
-  struct Student* values;
-};
-
-struct Student {
+typedef struct {
   char name[NAME_LENGTH];
   char studentCode[CODE_LENGTH];
   int grades[GRADES_LENGTH];
-};
+} Student;
+
+typedef struct {
+  size_t capacity;
+  size_t length;
+  Student* values;
+} StudentArray;
 
 typedef struct {
   char* input_file;
@@ -62,21 +62,18 @@ typedef struct {
 
 typedef struct {
   CustomFlags flags;
-
   FILE* out_file;
-
-  void (*handlers[CONFIG_HANDLERS_LENGTH])(CustomFlags*, const char*);
 } ConfigState;
 
-struct StudentArray ReadStudents(const char*);
-void PrintStudent(struct Student*, ConfigState*);
-int CalculateStudentStipendium(struct Student*);
-int GetStudentYear(struct Student*);
-void FreeStudentArray(struct StudentArray);
-void PrintAllStudentsStipendiums(struct StudentArray*, ConfigState*);
+StudentArray ReadStudents(const char*);
+void PrintStudent(Student*, ConfigState*);
+int CalculateStudentStipendium(Student*);
+int GetStudentYear(Student*);
+void FreeStudentArray(StudentArray);
+void PrintAllStudentsStipendiums(StudentArray*, ConfigState*);
 int gt(const void* a, const void* b) {
-  int a_ = GetStudentYear((struct Student*)a);
-  int b_ = GetStudentYear((struct Student*)b);
+  int a_ = GetStudentYear((Student*)a);
+  int b_ = GetStudentYear((Student*)b);
   return a_ > b_;
 };
 
