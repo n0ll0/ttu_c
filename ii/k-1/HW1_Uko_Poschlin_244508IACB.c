@@ -2,23 +2,130 @@
 
 int main(int argc, char const* argv[]) {
 
-  if (argc < 2) {
-    fprintf(stderr, "ERROR! Missing argument at position 1 ($file_name)!\n");
-    return EXIT_FAILURE;
-  }
+  ConfigState config = UseConfig(CONFIG_FILE);
 
-  struct StudentArray students = ReadStudents(argv[1]);
+  struct StudentArray students = ReadStudents(config.flags.input_file);
 
   qsort(students.values, students.length, sizeof(struct Student), gt);
 
-  FILE* out = fopen(OUTPUT_FILE, "w");
+  config.out_file = fopen(config.flags.output_file, "w");
 
-  PrintAllStudentsStipendiums(&students, out);
+  PrintAllStudentsStipendiums(&students, &config);
 
-  fclose(out);
+  fclose(config.out_file);
 
   FreeStudentArray(students);
   return 0;
+}
+
+void MyPrint(ConfigState* config, const char* __restrict__ __format, ...) {
+  va_list args;
+
+  if (config->flags.file_output) {
+    va_start(args, __format);
+    vfprintf(config->out_file, __format, args);
+    va_end(args);
+  }
+
+  if (config->flags.console_output) {
+    va_start(args, __format);
+    vfprintf(stdout, __format, args);
+    va_end(args);
+  }
+}
+
+void _HandleInputFileFlag(CustomFlags* config_state, const char* str) {
+  const char* flag_name = "input_file";
+  if (strstr(str, flag_name) == NULL)
+    return;
+  if (sscanf(str, "input_file %s", config_state->input_file) != 1) {
+    config_state->input_file = "HW1_Uko_Poschlin_244508IACB_sisend.txt";
+  }
+};
+
+void _HandleOutputFileFlag(CustomFlags* config_state, const char* str) {
+  const char* flag_name = "output_file";
+  if (strstr(str, flag_name) == NULL)
+    return;
+  if (sscanf(str, "output_file %s", config_state->output_file) != 1) {
+    config_state->output_file = "HW1_Uko_Poschlin_244508IACB_valjund.txt";
+  }
+};
+
+void _HandleConsoleOutputFlag(CustomFlags* config_state, const char* str) {
+  const char* flag_name = "console_output";
+  if (strstr(str, flag_name) == NULL)
+    return;
+  if (sscanf(str, "console_output %hhd", &config_state->console_output) != 1) {
+    config_state->console_output = 1;
+  }
+};
+
+void _HandleFileOutputFlag(CustomFlags* config_state, const char* str) {
+  const char* flag_name = "file_output";
+  if (strstr(str, flag_name) == NULL)
+    return;
+  if (sscanf(str, "file_output %hhd", &config_state->file_output) != 1) {
+    config_state->file_output = 1;
+  }
+};
+
+ConfigState UseConfig(const char* config_file_name) {
+  ConfigState config = {0};
+  FILE* configFile = fopen(config_file_name, "r");
+  if (configFile == NULL) { // default files
+    config.flags.input_file = "HW1_Uko_Poschlin_244508IACB_sisend.txt";
+    config.flags.output_file = "HW1_Uko_Poschlin_244508IACB_valjund.txt";
+    FILE* _configFile = fopen(config_file_name, "w");
+    fprintf(_configFile, "input_file %s\n", config.flags.input_file);
+    fprintf(_configFile, "output_file %s\n", config.flags.output_file);
+    fprintf(_configFile, "console_output %d\n", config.flags.console_output);
+    fprintf(_configFile, "file_output %d\n", config.flags.file_output);
+    fclose(_configFile);
+    return config;
+  }
+
+  config.handlers[0] = _HandleInputFileFlag;
+  config.handlers[1] = _HandleOutputFileFlag;
+  config.handlers[2] = _HandleConsoleOutputFlag;
+  config.handlers[3] = _HandleFileOutputFlag;
+
+  int handlers_length = CONFIG_HANDLERS_LENGTH;
+
+  size_t line_buffer_size = LINE_BUFFER_SIZE;
+  char* line = calloc(line_buffer_size, sizeof(char));
+  if (line == NULL) {
+    fprintf(stderr, "Failed to allocate config line buffer");
+    exit(EXIT_FAILURE);
+  }
+
+  while (1) {
+    if (fgets(line, line_buffer_size, configFile) == NULL) {
+      break;
+    }
+    while (strchr(line, '\n') == NULL && !feof(configFile)) {
+      line_buffer_size *= REALLOCATE_CONSTANT;
+      char* new_buffer = realloc(line, line_buffer_size);
+      if (!new_buffer) {
+        fprintf(stderr, "Failed to reallocate buffer");
+        fclose(configFile);
+        free(line);
+        exit(EXIT_FAILURE);
+      }
+      line = new_buffer;
+      fgets(line + strlen(line), line_buffer_size - strlen(line), configFile);
+    }
+    for (int i = 0; i < handlers_length; ++i) {
+      if (line[0] == ';')
+        continue;
+      (config.handlers[i])(&config.flags, line);
+    }
+  }
+
+  free(line);
+  fclose(configFile);
+
+  return config;
 }
 
 /* this function can exit */
@@ -36,7 +143,7 @@ struct StudentArray ReadStudents(const char* fileName) {
   size_t buffer_size = LINE_BUFFER_SIZE;
   char* buffer = calloc(buffer_size, sizeof(char));
   if (!buffer) {
-    perror("Failed to allocate buffer");
+    fprintf(stderr, "Failed to allocate buffer");
     exit(EXIT_FAILURE);
   }
   while (1) {
@@ -44,10 +151,10 @@ struct StudentArray ReadStudents(const char* fileName) {
       break;
 
     while (strchr(buffer, '\n') == NULL && !feof(file)) {
-      buffer_size *= 2;
+      buffer_size *= REALLOCATE_CONSTANT;
       char* new_buffer = realloc(buffer, buffer_size);
       if (!new_buffer) {
-        perror("Failed to reallocate buffer");
+        fprintf(stderr, "Failed to reallocate buffer");
         fclose(file);
         free(buffer);
         free(students.values);
@@ -58,11 +165,11 @@ struct StudentArray ReadStudents(const char* fileName) {
     }
 
     if (students.length >= students.capacity) {
-      students.capacity *= 2;
+      students.capacity *= REALLOCATE_CONSTANT;
       struct Student* new_values =
           realloc(students.values, students.capacity * sizeof(struct Student));
       if (!new_values) {
-        perror("Failed to reallocate students array");
+        fprintf(stderr, "Failed to reallocate students array");
         fclose(file);
         free(buffer);
         free(students.values);
@@ -84,19 +191,15 @@ struct StudentArray ReadStudents(const char* fileName) {
   return students;
 }
 
-void PrintStudent(struct Student* student, FILE* out) {
-  fprintf(stdout, "%s %s [", student->name, student->studentCode);
-  fprintf(out, "%s %s [", student->name, student->studentCode);
+void PrintStudent(struct Student* student, ConfigState* config) {
+  MyPrint(config, "%s %s [", student->name, student->studentCode);
   for (int i = 0; i < GRADES_LENGTH; ++i) {
-    fprintf(stdout, "%d", student->grades[i]);
-    fprintf(out, "%d", student->grades[i]);
+    MyPrint(config, "%d", student->grades[i]);
     if (i + 1 < GRADES_LENGTH) {
-      fprintf(stdout, ", ");
-      fprintf(out, ", ");
+      MyPrint(config, ", ");
     }
   }
-  fprintf(stdout, "]");
-  fprintf(out, "]");
+  MyPrint(config, "]");
 }
 
 void FreeStudentArray(struct StudentArray students) {
@@ -134,13 +237,12 @@ int CalculateStudentStipendium(struct Student* student) {
   return -1;
 }
 
-void PrintAllStudentsStipendiums(struct StudentArray* students, FILE* out) {
+void PrintAllStudentsStipendiums(struct StudentArray* students, ConfigState* config) {
   for (int i = 0; i < students->length; ++i) {
     int stip = CalculateStudentStipendium(&(students->values[i]));
     if (stip != -1) {
-      PrintStudent(&(students->values[i]), out);
-      fprintf(stdout, " [stip] = %d\n", stip);
-      fprintf(out, " [stip] = %d\n", stip);
+      PrintStudent(&(students->values[i]), config);
+      MyPrint(config, " [stip] = %d\n", stip);
     }
   }
 }
