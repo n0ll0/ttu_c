@@ -7,28 +7,37 @@
  * Description:  Library to work with employee struct
  */
 #include "employee_db.h"
-
+#include <string.h>
+#include <stdio.h>
 // TODO: implement the functions in the header
-void PrintStructArray(employee *staff, int len) {
+void PrintStructArray(employee* staff, int len) {
   for (int i = 0; i < len; i++) {
-    printf("%s %s, %.2f, %d\n", staff[i].fName, staff[i].lName, staff[i].wage, staff[i].yearsEmployed);
+    printf("%s %s, %.2f, %d\n", staff[i].fName, staff[i].lName, staff[i].wage,
+           staff[i].yearsEmployed);
   }
 }
 
-int ComparFuncStructEmploymentLength(const void *x, const void *y) {
-  employee* a = x;
-  employee* b = y;
+int ComparFuncStructEmploymentLength(const void* x, const void* y) {
+  const employee* a = x;
+  const employee* b = y;
   return b->yearsEmployed - a->yearsEmployed;
 }
 
-int ComparFuncStructFirstName(const void *x, const void *y) {
-  employee* a = x;
-  employee* b = y;
-  return b->fName - a->fName;
+int ComparFuncStructFirstName(const void* x, const void* y) {
+  const employee* a = x;
+  const employee* b = y;
+  return strcmp(b->fName, a->fName);
 }
 
-int ComparFuncStructLastFirstName(const void *x, const void *y) {
-  employee* a = x;
-  employee* b = y;
-  return a->lName < b->lName && a->fName < b->fName;
+int ComparFuncStructLastFirstName(const void* x, const void* y) {
+  const employee* a = x;
+  const employee* b = y;
+  const int lN = strcmp(b->lName, a->lName);
+
+  if (lN == 0) {
+    return strcmp(b->fName, a->fName);
+  }
+
+  return lN;
+
 }

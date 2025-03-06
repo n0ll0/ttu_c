@@ -14,8 +14,7 @@
 
 void PrintIntegerArray(int *numbers, int len)
 {
-    int i;
-    for (i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
         printf("%d ", numbers[i]);
     }
@@ -25,8 +24,7 @@ void PrintIntegerArray(int *numbers, int len)
 
 void PrintFloatArray(float *numbers, int len)
 {
-    int i;
-    for (i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
         printf("%.2f ", numbers[i]);
     }
@@ -37,13 +35,11 @@ void PrintFloatArray(float *numbers, int len)
 // TODO: implement the rest of the functions in the header
 
 int ComparFuncInt(const void *x, const void *y) {
-    int *a = x;
-    int *b = y;
-    return a - b;
+    return (*(int*)x) - (*(int*)y);
 }
 
 int ComparFuncFloat(const void *x, const void *y) {
-    float *a = x;
-    float *b = y;
-    return a - b;
+    if ((*(float*)x) < (*(float*)y)) return -1;
+    if ((*(float*)x) > (*(float*)y)) return 1;
+    return 0;
 }

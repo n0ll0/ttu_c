@@ -15,17 +15,17 @@
 int main(void)
 {
     int intArr[] = {15, 25, 3, 19, 22, 17, -54, 0, 9};
-    size_t nInts = sizeof(intArr) / sizeof(int);
+    int nInts = sizeof(intArr) / sizeof(int);
     
     float floatArr[] = {76.60f, 11.2f, 76.40f, 235.4f, 76.50f, 341.6f};
-    size_t nFloats = sizeof(intArr) / sizeof(float);
+    int nFloats = sizeof(floatArr) / sizeof(float);
 
     employee workForce[] = {{"Sirje",  "Vakra",  15.4f,  0},
                             {"Mark",   "Rebane", 10.3f,  5},
                             {"Doris",  "Rebane", 10.2f,  3},
                             {"Anneli", "Oja",     7.3f,  0},
                             {"Andres", "Rebane", 22.5f, 10}};
-    size_t nWorkForce = sizeof(workForce) / sizeof(employee);
+    int nWorkForce = sizeof(workForce) / sizeof(employee);
 
     while (1)
     {
@@ -34,12 +34,15 @@ int main(void)
             case 1:
                 //~ Sort and print the integer array
                 //~ Base task part 1
+                qsort(intArr, nInts, sizeof(int), ComparFuncInt);
+                //~ Base task part 1
                 puts("Integer array: ");
                 PrintIntegerArray(intArr, nInts);
 
                 break;
             case 2:
                 //~ Sort and print the decimal array
+                qsort(floatArr, nFloats, sizeof(float), ComparFuncFloat);
                 //~ Base task part 1
                 puts("Decimal array: ");
                 PrintFloatArray(floatArr, nFloats);
@@ -50,6 +53,7 @@ int main(void)
                 //~ Base task part 2
                 puts("Employees sorted by employment length: ");
                 qsort(workForce, nWorkForce, sizeof(employee), ComparFuncStructEmploymentLength);
+                PrintStructArray(workForce, nWorkForce);
 
                 break;
             case 4:
@@ -57,6 +61,7 @@ int main(void)
                 //~ Base task part 2
                 puts("Employees sorted by employment first name: ");
                 qsort(workForce, nWorkForce, sizeof(employee), ComparFuncStructFirstName);
+                PrintStructArray(workForce, nWorkForce);
 
                 break;
             case 5:
@@ -65,6 +70,7 @@ int main(void)
                 //~ Advanced task
                 puts("Employees sorted by employment last and first name: ");
                 qsort(workForce, nWorkForce, sizeof(employee), ComparFuncStructLastFirstName);
+                PrintStructArray(workForce, nWorkForce);
 
                 break;
             case 0:
