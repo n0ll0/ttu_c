@@ -1,16 +1,16 @@
 #include "../include/data_read.h"
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #define INITIAL_LENGTH 2048
 
 void FreeData(Data* data) {
   if (data->lines != NULL) {
-      for (size_t i = 0; i < data->count; ++i) {
-          free(data->lines[i].title);
-          free(data->lines[i].grades);
-      }
-      free(data->lines);
+    for (size_t i = 0; i < data->count; ++i) {
+      free(data->lines[i].title);
+      free(data->lines[i].grades);
+    }
+    free(data->lines);
   }
 }
 
@@ -58,7 +58,8 @@ void ReadFileByLine(const char* filename, int (*handleLine)(char*, void*),
   char* line = calloc(INITIAL_LENGTH, sizeof(char));
   size_t line_size = INITIAL_LENGTH;
   while (getLine(&line, &line_size, file) != -1) {
-    handleLine(line, dest);
+    if (!handleLine(line, dest))
+      break;
   }
   free(line);
   fclose(file);
@@ -104,6 +105,16 @@ int HandleLine(char* line, void* _dest, const char* delimiter) {
     }
   }
 
+  if (dest->capacity <= dest->count) {
+    dest->lines = realloc(dest->lines, dest->capacity * 2);
+    if (dest->lines == NULL) {
+      perror("Couldn't reallocate datalines\n");
+      free(lineData.grades);
+      free(lineData.title);
+      return 0;
+    }
+  }
+
   dest->lines[dest->count] = lineData;
   dest->count++;
   return 1;
@@ -118,6 +129,7 @@ int HandleLineSPACE(char* line, void* _data) {
 Data ReadData(const char* filename, enum FileType fileType) {
   Data data;
   data.lines = calloc(INITIAL_LENGTH, sizeof(LineData));
+  data.capacity = INITIAL_LENGTH * sizeof(LineData);
   data.count = 0;
 
   switch (fileType) {

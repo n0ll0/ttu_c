@@ -14,6 +14,7 @@ typedef struct {
 
 typedef struct {
   LineData* lines;
+  size_t capacity;
   size_t count;
 } Data;
 
