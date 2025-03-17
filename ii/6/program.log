@@ -1,0 +1,24 @@
+[2025-03-17 11:12:17] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-17 11:55:37] : Starting to read data from ./data/data_grades.txt (type: TXT)
+[2025-03-17 11:55:37] : Starting to read file: ./data/data_grades.txt
+[2025-03-17 11:55:37] [32m[SUCCESS]: Successfully read 0 lines from file
+[2025-03-17 11:55:37] [33m[WARNING]: No data was read from file
+[2025-03-17 11:55:37] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-17 11:56:56] : Starting to read data from ./data/data_grades.txt (type: TXT)
+[2025-03-17 11:56:56] : Starting to read file: ./data/data_grades.txt
+[2025-03-17 11:56:56] [32m[SUCCESS]: Successfully read 0 lines from file
+[2025-03-17 11:56:56] [33m[WARNING]: No data was read from file
+[2025-03-17 11:56:56] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-17 12:00:03] : Starting to read data from ./data/data_grades.txt (type: TXT)
+[2025-03-17 12:00:03] : Starting to read file: ./data/data_grades.txt
+[2025-03-17 12:00:03] [33m[WARNING]: Empty line encountered
+[2025-03-17 12:00:03] [32m[SUCCESS]: Successfully read 7 lines from file
+[2025-03-17 12:00:03] [32m[SUCCESS]: Successfully read 7 records
+[2025-03-17 12:00:51] : Starting to read data from ./data/data_grades.csv (type: CSV)
+[2025-03-17 12:00:51] : Starting to read file: ./data/data_grades.csv
+[2025-03-17 12:00:51] [33m[WARNING]: Empty line encountered
+[2025-03-17 12:00:51] [32m[SUCCESS]: Successfully read 9 lines from file
+[2025-03-17 12:00:51] [32m[SUCCESS]: Successfully read 9 records

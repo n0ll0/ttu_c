@@ -1,6 +1,6 @@
 # Compiler settings
 CC := gcc
-CFLAGS := -Wall -Wextra -pedantic -std=c11 -g
+CFLAGS := -Wall -Wextra -pedantic -g
 LDFLAGS := 
 
 # Directories
