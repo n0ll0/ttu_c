@@ -22,3 +22,33 @@
 [2025-03-17 12:00:51] [33m[WARNING]: Empty line encountered
 [2025-03-17 12:00:51] [32m[SUCCESS]: Successfully read 9 lines from file
 [2025-03-17 12:00:51] [32m[SUCCESS]: Successfully read 9 records
+[2025-03-20 11:39:01] : Starting to read data from csv (type: TXT)
+[2025-03-20 11:39:01] [31m[ERROR]: Unknown file type specified
+[2025-03-20 11:39:01] [33m[WARNING]: No data was read from file
+[2025-03-20 11:39:01] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-20 11:39:21] : Starting to read data from ./data/data_grades. (type: TXT)
+[2025-03-20 11:39:21] [31m[ERROR]: Unknown file type specified
+[2025-03-20 11:39:21] [33m[WARNING]: No data was read from file
+[2025-03-20 11:39:21] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-20 11:39:24] : Starting to read data from ./data/data_grades.csv (type: CSV)
+[2025-03-20 11:39:24] : Starting to read file: ./data/data_grades.csv
+[2025-03-20 11:39:24] [33m[WARNING]: Empty line encountered
+[2025-03-20 11:39:24] [32m[SUCCESS]: Successfully read 9 lines from file
+[2025-03-20 11:39:24] [32m[SUCCESS]: Successfully read 9 records
+[2025-03-20 11:40:11] : Starting to read data from ./data/data_grades.csv (type: CSV)
+[2025-03-20 11:40:11] : Starting to read file: ./data/data_grades.csv
+[2025-03-20 11:40:11] [33m[WARNING]: Empty line encountered
+[2025-03-20 11:40:11] [32m[SUCCESS]: Successfully read 9 lines from file
+[2025-03-20 11:40:11] [32m[SUCCESS]: Successfully read 9 records
+[2025-03-20 11:40:15] : Starting to read data from ./data/data_grades.ˇt (type: TXT)
+[2025-03-20 11:40:15] [31m[ERROR]: Unknown file type specified
+[2025-03-20 11:40:15] [33m[WARNING]: No data was read from file
+[2025-03-20 11:40:15] [31m[ERROR]: No data read or error occurred.
+
+[2025-03-20 11:40:18] : Starting to read data from ./data/data_grades.txt (type: TXT)
+[2025-03-20 11:40:18] : Starting to read file: ./data/data_grades.txt
+[2025-03-20 11:40:18] [33m[WARNING]: Empty line encountered
+[2025-03-20 11:40:18] [32m[SUCCESS]: Successfully read 7 lines from file
+[2025-03-20 11:40:18] [32m[SUCCESS]: Successfully read 7 records
