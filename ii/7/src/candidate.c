@@ -1,6 +1,6 @@
 #include "candidate.h"
 
-int ComparCandidate(const void* a, const void* b) {
+int ComparePersonNames(const void* a, const void* b) {
   // Get comparison for last names
   int ret = strcmp(((Candidate*)a)->lastName, ((Candidate*)b)->lastName);
 

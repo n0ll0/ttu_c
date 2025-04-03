@@ -10,7 +10,7 @@
 #define GENERATOR_H
 #include "candidate.h"
 int GetRand(int numMin, int numMax);
-int ComparCandidate(const void* a, const void* b);
+int ComparePersonNames(const void* a, const void* b);
 
 void GenerateCandidates(int numCandidates, Candidate* candidates,
                         const char* firstNames[], int firstNamePoolSize,

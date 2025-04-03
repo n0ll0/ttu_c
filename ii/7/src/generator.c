@@ -64,7 +64,7 @@ int main(void) {
                      lastNames, lastNamePoolSize, curriculumCodes,
                      curriculumCodePoolSize);
 
-  qsort(candidates, numCandidates, sizeof(Candidate), ComparCandidate);
+  qsort(candidates, numCandidates, sizeof(Candidate), ComparePersonNames);
 
   FILE* outputFile = fopen(outFileName, "w");
   if (outputFile == NULL) {
