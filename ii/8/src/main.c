@@ -89,13 +89,13 @@ void PrintMvps(People* people, FILE* file) {
   SortPeoplePoints(&IACBcandidates);
   SortPeoplePoints(&EARBcandidates);
   SortPeoplePoints(&MVEBcandidates);
-  fprintf(file, "IACB stipendiumi saajate nimekiri:\n");
+  fprintf(file, "\nIACB stipendiumi saajate nimekiri:\n");
   PrintPeople("%lu %s %s %s %.1f\n", file, &IACBcandidates);
   fprintf(file, "IACB stipendiumi saajate arv: %zu\n", IACBcandidates.count);
-  fprintf(file, "EARB stipendiumi saajate nimekiri:\n");
+  fprintf(file, "\nEARB stipendiumi saajate nimekiri:\n");
   PrintPeople("%lu %s %s %s %.1f\n", file, &EARBcandidates);
   fprintf(file, "EARB stipendiumi saajate arv: %zu\n", EARBcandidates.count);
-  fprintf(file, "MVEB stipendiumi saajate nimekiri:\n");
+  fprintf(file, "\nMVEB stipendiumi saajate nimekiri:\n");
   PrintPeople("%lu %s %s %s %.1f\n", file, &MVEBcandidates);
   fprintf(file, "MVEB stipendiumi saajate arv: %zu\n", MVEBcandidates.count);
 

@@ -38,7 +38,7 @@ int main(void) {
     while(1)
     {
         //Write your code here
-
+        LED0 = !LED0;
         DelayForAproxmSeconds(DELAY_IN_MSEC_100);
     }
     return 0;
