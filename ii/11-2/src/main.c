@@ -1,18 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "../include/stack.h"
 #include "../libs/debug_stack.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-enum OPTION { OPTION_NOOP, OPTION_PUSH, OPTION_POP, OPTION_COUNT };
+enum OPTION {
+  OPTION_NOOP,
+  OPTION_SWAP,
+  OPTION_DUP,
+  OPTION_PUSH,
+  OPTION_POP,
+  OPTION_COUNT
+};
 
 typedef struct {
   char* preview;
   char* prompt;
 } MenuOption;
 #define OPTIONS                                                                \
-  {[OPTION_NOOP] = {.preview = "No op", .prompt = NULL},                                                    \
-   [OPTION_PUSH] = {.preview = "Push", .prompt = "%d"},                                                     \
-   [OPTION_POP] =  {.preview = "Pop", .prompt = NULL}}
+  {                                                                            \
+    [OPTION_NOOP] = {.preview = "No op", .prompt = NULL},                      \
+    [OPTION_SWAP] = {.preview = "Swap", .prompt = NULL},                       \
+    [OPTION_DUP] = {.preview = "Duplicate", .prompt = NULL},                   \
+    [OPTION_PUSH] = {.preview = "Push", .prompt = "%d"}, [OPTION_POP] = {      \
+      .preview = "Pop",                                                        \
+      .prompt = NULL                                                           \
+    }                                                                          \
+  }
 
 typedef struct {
   enum OPTION option;
@@ -29,11 +42,18 @@ int main() {
 
   while ((menu.option = mainLoop(&menu)) != OPTION_COUNT) {
     if (menu.menu_options[menu.option].prompt != NULL) {
+      printf("(user input)");
       scanf(menu.menu_options[menu.option].prompt, &input);
     }
-    switch (menu.option)
-    {
-    case OPTION_NOOP: break;
+    switch (menu.option) {
+    case OPTION_NOOP:
+      break;
+    case OPTION_SWAP:
+      Swap(&s);
+      break;
+    case OPTION_DUP:
+      Duplicate(&s);
+      break;
     case OPTION_PUSH:
       Push(&s, input);
       break;
@@ -47,13 +67,9 @@ int main() {
   }
 
   // Free stack memory if any left
-  while (s.size > 0) {
-    Pop(&s);
-  }
+  Stack_Destroy(&s);
   return 0;
 }
-
-
 
 enum OPTION mainLoop(Menu* m) {
   printf("\nProgram menu:\n");
@@ -61,7 +77,7 @@ enum OPTION mainLoop(Menu* m) {
     printf("\t%d - %s\n", i, m->menu_options[i].preview);
   }
   int opt;
-  while (scanf("%d", &opt)!=1 || opt < 0 || opt > OPTION_COUNT);
-
+  while (scanf("%d", &opt) != 1 || opt < 0 || opt > OPTION_COUNT)
+    ;
   return opt;
 }
