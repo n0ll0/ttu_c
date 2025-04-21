@@ -3,13 +3,14 @@
 #include <stdlib.h>
 
 FUNCTION_STATUS MenuPrompt(Menu* m) {
-  printf("\nProgram menu:\n");
-  for (int i = 0; i < OPTION_COUNT; ++i) {
+  printf("\n%s\n", m->title);
+  for (int i = 0; i < m->count; ++i) {
     printf("\t%d - %s\n", i, m->menu_options[i].preview);
   }
+  printf("\t%d - Close menu (%s)\n", m->count, m->title);
   do {
-    printf("Select an option (0-%d): ", OPTION_COUNT - 1);
-    if (scanf("%d", &m->option) != 1 || m->option < 0 || m->option >= OPTION_COUNT) {
+    printf("Select an option (0-%d): ", m->count - 1);
+    if (scanf("%d", &m->option) != 1 || m->option < 0 || m->option > m->count) {
       printf("Invalid choice. Please try again.\n");
       while (getchar() != '\n');
     } else {
@@ -17,8 +18,7 @@ FUNCTION_STATUS MenuPrompt(Menu* m) {
     }
   } while (1);
 
-  
-  if (m->option == OPTION_COUNT) {
+  if (m->option == m->count) {
     return Error;
   }
 

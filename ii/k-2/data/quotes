@@ -1,0 +1,5 @@
+Q001 P001 AppleStore 899.99 in_stock
+Q002 P001 Telia 879.00 order
+Q003 P002 SamsungShop 799.99 in_stock
+Q004 P003 Elisa 699.00 in_stock
+Q005 P002 Telia 820.00 order

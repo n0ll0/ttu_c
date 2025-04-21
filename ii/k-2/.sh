@@ -1,0 +1,1 @@
+git rm ii/k-2/bin/my_program ii/k-2/bin/program ii/k-2/build/cmenu.o ii/k-2/build/dynamicarray.o ii/k-2/build/main.d ii/k-2/build/main.o ii/k-2/build/menuoption/display_all.d ii/k-2/build/menuoption/search_phones.d ii/k-2/build/menuoptions.d ii/k-2/build/menuoptions.o ii/k-2/build/phone.d -f

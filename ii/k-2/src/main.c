@@ -1,16 +1,14 @@
+#include "../include/main.h"
 #include "../include/cmenu.h"
+#include "../include/menuoptions.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/menuoptions.h"
-
-#define OPTIONS                                                                \
-  {{.preview = "Display all"},                                                 \
-   {.preview = "Edit product (more commands)"},                                \
-   {.preview = "Search phones"}}
-
 int main() {
-  Menu menu = {.option = OPTION_DISPLAY_ALL, .menu_options = OPTIONS};
+  Menu menu = {.title = "Main program menu",
+               .option = OPTION_DISPLAY_ALL,
+               .menu_options = OPTIONS,
+               .count = OPTION_COUNT};
 
   while (MenuPrompt(&menu) == Ok) {
     switch (menu.option) {
