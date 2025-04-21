@@ -1,6 +1,10 @@
 #include "../include/main.h"
 #include "../include/cmenu.h"
-#include "../include/menuoptions.h"
+
+#include "../include/menuoption/display_all.h"
+#include "../include/menuoption/search_phones.h"
+#include "../include/menuoption/edit_product.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 

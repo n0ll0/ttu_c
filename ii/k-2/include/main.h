@@ -9,7 +9,6 @@ enum OPTION {
 
 #define OPTIONS                                                                \
   {[OPTION_DISPLAY_ALL] = {.preview = "Display all"},                          \
-   [OPTION_EDIT_PRODUCT] = {.preview = "Edit product (more commands)"},        \
-   [OPTION_SEARCH] = {.preview = "Search phones"}}
+   [OPTION_EDIT_PRODUCT] = {.preview = "Edit product"},        \
+   [OPTION_SEARCH] = {.preview = "Search phones (more commands)"}}
 
-	 

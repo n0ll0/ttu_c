@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Iinclude -Wall -Wextra -Werror
+CFLAGS = -Iinclude -Wall -Wextra
 
 # Directories
 SRC_DIR = src
@@ -11,7 +11,7 @@ BIN_DIR = bin
 
 # Source files
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c) \
-            $(wildcard $(SRC_DIR)/*/*.c)
+            $(wildcard $(SRC_DIR)/**/*.c)
 
 # Object files
 OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
