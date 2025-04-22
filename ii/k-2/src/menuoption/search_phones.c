@@ -70,7 +70,7 @@ void search_phones() {
     Product* p = (Product*)products.data[i];
 
     if (product_has_stock(p, &quotes) &&
-        (useMenuOptionField(menu1.option, search_term_1, p) ||
+        (useMenuOptionField(menu1.option, search_term_1, p) &&
          useMenuOptionField(menu2.option, search_term_2, p))) {
       printf("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
              p->code, p->ram_mb, p->screen_size, p->os);
