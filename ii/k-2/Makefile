@@ -4,6 +4,9 @@ CC = gcc
 # Compiler flags
 CFLAGS = -Iinclude -Wall -Wextra
 
+DEBUG_FLAGS = -g
+RELEASE_FLAGS = -O2
+
 # Directories
 SRC_DIR = src
 LIBS_DIR = libs
@@ -37,6 +40,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # Clean
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+run: all
+	./$(TARGET)
 
 # Phony targets
 .PHONY: all clean
