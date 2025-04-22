@@ -10,6 +10,9 @@
 
 int useMenuOptionField(enum OPTION_PHONE option, char* search_term,
                        Product* p) {
+  if (search_term == NULL) {
+    return 1;
+  }
   int res = 0;
   if (option == OPTION_PHONE_NAME || option == OPTION_PHONE_OS) {
     switch (option) {
@@ -50,20 +53,20 @@ void search_phones() {
                 .menu_options = OPTIONS_PHONE,
                 .count = OPTION_PHONE_COUNT};
 
-  if (MenuPrompt(&menu1) == Error) {
-    return;
+  char* search_term_1 = NULL;
+  if (MenuPrompt(&menu1) == Ok) {
+    printf("Enter search term (%d)\n", menu1.option);
+    scanf("%ms", &search_term_1);
+    // return;
   }
-  char* search_term_1;
-  printf("Enter search term (%d)\n", menu1.option);
-  scanf("%ms", &search_term_1);
-  if (MenuPrompt(&menu2) == Error) {
-    return;
+  char* search_term_2 = NULL;
+  if (MenuPrompt(&menu2) == Ok) {
+    printf("Enter search term (%d)\n", menu2.option);
+    scanf("%ms", &search_term_2);
+    // return;
   }
-  char* search_term_2;
-  printf("Enter search term (%d)\n", menu2.option);
-  scanf("%ms", &search_term_2);
 
-    int found = 0;
+  int found = 0;
   printf("Search results:\n");
   for (size_t i = 0; i < products.count; ++i) {
     Product* p = (Product*)products.data[i];
