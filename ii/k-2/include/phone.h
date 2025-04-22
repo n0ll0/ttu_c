@@ -25,3 +25,4 @@ typedef struct {
 int load_products(const char*, DynamicPtrArray*);
 int load_quotes(const char*, DynamicPtrArray*);
 int save_products(const char* filename, DynamicPtrArray*);
+int save_quotes(const char* filename, DynamicPtrArray*);

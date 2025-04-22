@@ -4,7 +4,7 @@
 #include "../include/waitForUser.h"
 
 #include "../include/menuoption/display_all.h"
-#include "../include/menuoption/edit_product.h"
+#include "../include/menuoption/edit.h"
 #include "../include/menuoption/search_phones.h"
 
 #include <stdio.h>
@@ -22,7 +22,7 @@ int main() {
       display_all();
       break;
     case OPTION_EDIT_PRODUCT:
-      edit_product();
+      edit();
       break;
     case OPTION_SEARCH:
       search_phones();

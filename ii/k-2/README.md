@@ -1,4 +1,4 @@
-# Kodutöö 2
+# Homework 2
 Topic:
 
 	Price watch
