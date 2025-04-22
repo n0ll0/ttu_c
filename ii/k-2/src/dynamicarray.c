@@ -5,9 +5,9 @@
 
 FUNCTION_STATUS DynamicPtrArrayPush(DynamicPtrArray* dpa, void** ptr) {
   // printf("push %p\n", ptr);
-	if (ptr == NULL) {
-		return Error;
-	}
+  if (ptr == NULL) {
+    return Error;
+  }
   if (dpa->data == NULL) {
     dpa->capacity = 1;
     dpa->data = calloc(dpa->capacity, sizeof(void*));
@@ -19,7 +19,7 @@ FUNCTION_STATUS DynamicPtrArrayPush(DynamicPtrArray* dpa, void** ptr) {
 
   dpa->data[dpa->count++] = *ptr;
 
-	return Ok;
+  return Ok;
 }
 
 FUNCTION_STATUS DynamicPtrArrayPop(DynamicPtrArray* dpa) {

@@ -63,8 +63,7 @@ void search_phones() {
   printf("Enter search term (%d)\n", menu2.option);
   scanf("%ms", &search_term_2);
 
-  
-  int found = 0;
+    int found = 0;
   printf("Search results:\n");
   for (size_t i = 0; i < products.count; ++i) {
     Product* p = (Product*)products.data[i];

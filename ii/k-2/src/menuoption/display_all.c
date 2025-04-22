@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 void display_product_and_quotes(Product* p, DynamicPtrArray* quotes) {
   printf("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
          p->code, p->ram_mb, p->screen_size, p->os);
@@ -22,7 +21,8 @@ void display_product_and_quotes(Product* p, DynamicPtrArray* quotes) {
 int product_has_stock(Product* p, DynamicPtrArray* quotes) {
   for (size_t j = 0; j < quotes->count; ++j) {
     Quote* q = (Quote*)quotes->data[j];
-    if (strcmp(p->code, q->product_code) == 0 && strcmp(q->availability, "in_stock") == 0) {
+    if (strcmp(p->code, q->product_code) == 0 &&
+        strcmp(q->availability, "in_stock") == 0) {
       return 1; // Product has stock
     }
   }

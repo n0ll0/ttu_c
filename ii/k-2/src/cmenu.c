@@ -12,7 +12,8 @@ FUNCTION_STATUS MenuPrompt(Menu* m) {
     printf("Select an option (0-%d): ", m->count - 1);
     if (scanf("%d", &m->option) != 1 || m->option < 0 || m->option > m->count) {
       printf("Invalid choice. Please try again.\n");
-      while (getchar() != '\n');
+      while (getchar() != '\n')
+        ;
     } else {
       break;
     }

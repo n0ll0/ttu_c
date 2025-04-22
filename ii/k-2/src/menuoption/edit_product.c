@@ -25,8 +25,7 @@ void edit_product() {
       printf("Current entry: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n",
              p->name, p->code, p->ram_mb, p->screen_size, p->os);
       printf("Enter new details (name ram_mb screen_size os): ");
-      scanf("%s %d %f %s", p->name, &p->ram_mb, &p->screen_size,
-            p->os);
+      scanf("%s %d %f %s", p->name, &p->ram_mb, &p->screen_size, p->os);
       save_products("./data/products", &products);
       printf("Product updated successfully.\n");
       DynamicPtrArrayFree(&products);
