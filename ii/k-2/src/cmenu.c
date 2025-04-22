@@ -4,11 +4,11 @@
 #include <stdlib.h>
 
 FUNCTION_STATUS MenuPrompt(Menu* m) {
-  log_event("\n%s\n", m->title);
+  log_event("%s", m->title);
   for (int i = 0; i < m->count; ++i) {
-    log_event("\t%d - %s\n", i, m->menu_options[i].preview);
+    log_event("\t%d - %s", i, m->menu_options[i].preview);
   }
-  log_event("\t%d - Close menu (%s)\n", m->count, m->title);
+  log_event("\t%d - Close menu (%s)", m->count, m->title);
   do {
     log_event("Select an option (0-%d): ", m->count - 1);
     if (scanf("%d", &m->option) != 1 || m->option < 0 || m->option > m->count) {

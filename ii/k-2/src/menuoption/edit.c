@@ -8,9 +8,9 @@
 
 void edit() {
   DynamicPtrArray products = {0};
-  load_products("./data/products", &products);
+  load_products("./data/products.csv", &products);
   DynamicPtrArray quotes = {0};
-  load_quotes("./data/quotes", &quotes);
+  load_quotes("./data/quotes.csv", &quotes);
 
   if (products.count == 0 || quotes.count == 0) {
     log_error("No products found.\n");
@@ -33,7 +33,7 @@ void edit() {
              p->name, p->code, p->ram_mb, p->screen_size, p->os);
       log_event("Enter new details (<name> <ram_mb> <screen_size> <os>): ");
       scanf("%s %d %f %s", p->name, &p->ram_mb, &p->screen_size, p->os);
-      save_products("./data/products", &products);
+      save_products("./data/products.csv", &products);
       log_event("Product updated successfully.\n");
       found = 1;
       break;
@@ -48,7 +48,7 @@ void edit() {
              q->quote_id, q->retailer, q->price, q->availability);
       log_event("Enter edited quote (<retailer> <price> <availability>): ");
       scanf("%63s %f %15s", q->retailer, &q->price, q->availability);
-      save_quotes("./data/quotes", &quotes);
+      save_quotes("./data/quotes.csv", &quotes);
       log_event("Quote updated successfully.\n");
       found = 1;
       break;

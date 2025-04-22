@@ -8,12 +8,12 @@
 #include <string.h>
 
 void display_product_and_quotes(Product* p, DynamicPtrArray* quotes) {
-  log_event("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
+  log_event("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s", p->name,
          p->code, p->ram_mb, p->screen_size, p->os);
   for (size_t j = 0; j < quotes->count; ++j) {
     Quote* q = (Quote*)quotes->data[j];
     if (strcmp(p->code, q->product_code) == 0) {
-      log_event("  Quote: %s, Retailer: %s, Price: %.2f, Availability: %s\n",
+      log_event("  Quote: %s, Retailer: %s, Price: %.2f, Availability: %s",
              q->quote_id, q->retailer, q->price, q->availability);
     }
   }
@@ -34,8 +34,8 @@ void display_all() {
   DynamicPtrArray products = {0};
   DynamicPtrArray quotes = {0};
 
-  load_products("./data/products", &products);
-  load_quotes("./data/quotes", &quotes);
+  load_products("./data/products.csv", &products);
+  load_quotes("./data/quotes.csv", &quotes);
 
   if (products.count == 0) {
     log_event("No products found.\n");
