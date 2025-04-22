@@ -64,7 +64,7 @@ int save_products(const char* filename, DynamicPtrArray* arr) {
   }
   for (size_t i = 0; i < arr->count; ++i) {
     Product* p = (Product*)arr->data[i];
-    fprintf(file, "%s,%s,%d,%.1f,%s;\n", p->code, p->name, p->ram_mb,
+    fprintf(file, "%s,%s,%d,%.1f,%s,\n", p->code, p->name, p->ram_mb,
             p->screen_size, p->os);
   }
   fclose(file);
@@ -80,7 +80,7 @@ int save_quotes(const char* filename, DynamicPtrArray* arr) {
   }
   for (size_t i = 0; i < arr->count; ++i) {
     Quote* q = (Quote*)arr->data[i];
-    fprintf(file, "%s,%s,%s,%.2f,%s;\n", q->quote_id, q->product_code,
+    fprintf(file, "%s,%s,%s,%.2f,%s,\n", q->quote_id, q->product_code,
             q->retailer, q->price, q->availability);
   }
   fclose(file);

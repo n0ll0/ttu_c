@@ -25,6 +25,7 @@ void edit() {
 
   int found = 0;
 
+  // Check if it's a product
   for (size_t i = 0; i < products.count; ++i) {
     Product* p = (Product*)products.data[i];
 
@@ -32,7 +33,7 @@ void edit() {
       log_event("Current entry: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n",
              p->name, p->code, p->ram_mb, p->screen_size, p->os);
       log_event("Enter new details (<name> <ram_mb> <screen_size> <os>): ");
-      scanf("%s %d %f %s", p->name, &p->ram_mb, &p->screen_size, p->os);
+      scanf(" \"%127[^\"]\" %d %f %s", p->name, &p->ram_mb, &p->screen_size, p->os);
       save_products("./data/products.csv", &products);
       log_event("Product updated successfully.\n");
       found = 1;
