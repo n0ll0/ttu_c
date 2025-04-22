@@ -28,7 +28,7 @@ int useMenuOptionField(enum OPTION_PHONE option, char* search_term,
     res = p->ram_mb >= atoi(search_term);
     break;
   case OPTION_PHONE_SCREEN:
-    res = fabs(p->screen_size - atof(search_term)) <= 0.01;
+    res = p->screen_size > atof(search_term);
     break;
   }
   return res;
