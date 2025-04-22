@@ -2,17 +2,18 @@
 #include "../../include/cmenu.h"
 #include "../../include/dynamicarray.h"
 #include "../../include/phone.h"
+#include "../../include/logger.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 void display_product_and_quotes(Product* p, DynamicPtrArray* quotes) {
-  printf("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
+  log_event("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
          p->code, p->ram_mb, p->screen_size, p->os);
   for (size_t j = 0; j < quotes->count; ++j) {
     Quote* q = (Quote*)quotes->data[j];
     if (strcmp(p->code, q->product_code) == 0) {
-      printf("  Quote: %s, Retailer: %s, Price: %.2f, Availability: %s\n",
+      log_event("  Quote: %s, Retailer: %s, Price: %.2f, Availability: %s\n",
              q->quote_id, q->retailer, q->price, q->availability);
     }
   }
@@ -37,7 +38,7 @@ void display_all() {
   load_quotes("./data/quotes", &quotes);
 
   if (products.count == 0) {
-    printf("No products found.\n");
+    log_event("No products found.\n");
     DynamicPtrArrayFree(&products);
     DynamicPtrArrayFree(&quotes);
     return;

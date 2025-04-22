@@ -1,0 +1,599 @@
+[2025-04-22 16:24:29] EVENT: 
+Main program menu
+
+[2025-04-22 16:24:29] EVENT: 	0 - Display all
+
+[2025-04-22 16:24:29] EVENT: 	1 - Edit product
+
+[2025-04-22 16:24:29] EVENT: 	2 - Search phones (more commands)
+
+[2025-04-22 16:24:29] EVENT: 	3 - Close menu (Main program menu)
+
+[2025-04-22 16:24:29] EVENT: Select an option (0-2): 
+[2025-04-22 16:24:35] EVENT: Invalid choice. Please try again.
+
+[2025-04-22 16:24:35] EVENT: Select an option (0-2): 
+[2025-04-22 16:24:41] EVENT: 
+Main program menu
+
+[2025-04-22 16:24:41] EVENT: 	0 - Display all
+
+[2025-04-22 16:24:41] EVENT: 	1 - Edit product
+
+[2025-04-22 16:24:41] EVENT: 	2 - Search phones (more commands)
+
+[2025-04-22 16:24:41] EVENT: 	3 - Close menu (Main program menu)
+
+[2025-04-22 16:24:41] EVENT: Select an option (0-2): 
+[2025-04-22 16:26:17] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:16] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:18] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:19] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:19] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:19] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:20] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:20] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:21] EVENT: 
+Main program menu
+
+[2025-04-22 16:28:21] EVENT: 
+Main program menu
+
+[2025-04-22 16:30:15] EVENT: 
+Main program menu
+
+[2025-04-22 16:30:15] EVENT: 	0 - Display all
+
+[2025-04-22 16:30:15] EVENT: 	1 - Edit product
+
+[2025-04-22 16:30:15] EVENT: 	2 - Search phones (more commands)
+
+[2025-04-22 16:30:15] EVENT: 	3 - Close menu (Main program menu)
+
+[2025-04-22 16:30:15] EVENT: Select an option (0-2): 
+[2025-04-22 16:30:20] EVENT: Product: iPhone_13 (P001), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q001, Retailer: AppleStore, Price: 899.99, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q002, Retailer: Telia, Price: 879.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_S21 (P002), RAM: 8192MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q003, Retailer: SamsungShop, Price: 799.99, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q005, Retailer: Telia, Price: 820.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Pixel_6 (P003), RAM: 8192MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q004, Retailer: Elisa, Price: 699.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q012, Retailer: Telia, Price: 689.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Xperia_5 (P004), RAM: 6144MB, Screen: 6.1", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q006, Retailer: SonyCenter, Price: 950.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q013, Retailer: Elisa, Price: 940.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: OnePlus_9 (P005), RAM: 12288MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q007, Retailer: OnePlusStore, Price: 729.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q014, Retailer: Telia, Price: 739.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Moto_G100 (P006), RAM: 8192MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q008, Retailer: Euronics, Price: 499.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q015, Retailer: Elisa, Price: 489.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_12 (P007), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q009, Retailer: AppleStore, Price: 799.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A52 (P008), RAM: 6144MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q010, Retailer: Telia, Price: 349.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q011, Retailer: Elisa, Price: 359.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_Note10 (P009), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q016, Retailer: MiStore, Price: 199.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q017, Retailer: Elisa, Price: 205.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_8 (P010), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q018, Retailer: RealmeShop, Price: 210.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_X3 (P011), RAM: 6144MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q019, Retailer: PocoShop, Price: 250.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_5.4 (P012), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q020, Retailer: Telia, Price: 180.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_A74 (P013), RAM: 6144MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q021, Retailer: Elisa, Price: 220.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_V21 (P014), RAM: 8192MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q022, Retailer: VivoStore, Price: 330.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_Zenfone8 (P015), RAM: 8192MB, Screen: 5.9", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q023, Retailer: AsusShop, Price: 600.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_V60 (P016), RAM: 8192MB, Screen: 6.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q024, Retailer: LGShop, Price: 400.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Huawei_P40 (P017), RAM: 8192MB, Screen: 6.1", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q025, Retailer: HuaweiStore, Price: 450.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Honor_50 (P018), RAM: 6144MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q026, Retailer: HonorShop, Price: 320.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_13_Pro (P019), RAM: 6144MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q027, Retailer: AppleStore, Price: 1099.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_13_ProMax (P020), RAM: 8192MB, Screen: 6.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q028, Retailer: AppleStore, Price: 1299.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_S21_Plus (P021), RAM: 8192MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q029, Retailer: SamsungShop, Price: 950.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_S20_FE (P022), RAM: 6144MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q030, Retailer: SamsungShop, Price: 700.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Pixel_5 (P023), RAM: 8192MB, Screen: 6.0", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q031, Retailer: Elisa, Price: 600.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Xperia_1_III (P024), RAM: 12288MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q032, Retailer: SonyCenter, Price: 1200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: OnePlus_8T (P025), RAM: 8192MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q033, Retailer: OnePlusStore, Price: 550.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Moto_E7 (P026), RAM: 2048MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q034, Retailer: Euronics, Price: 120.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_SE (P027), RAM: 3072MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q035, Retailer: AppleStore, Price: 399.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A32 (P028), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q036, Retailer: Telia, Price: 250.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_9 (P029), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q037, Retailer: MiStore, Price: 150.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_7 (P030), RAM: 6144MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q038, Retailer: RealmeShop, Price: 180.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_M3 (P031), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q039, Retailer: PocoShop, Price: 170.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_3.4 (P032), RAM: 3072MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q040, Retailer: Elisa, Price: 120.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_A54 (P033), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q041, Retailer: OppoStore, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_Y20 (P034), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q042, Retailer: VivoStore, Price: 210.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_Rog5 (P035), RAM: 16384MB, Screen: 6.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q043, Retailer: AsusShop, Price: 900.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_G8X (P036), RAM: 6144MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q044, Retailer: LGShop, Price: 350.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Huawei_Mate40 (P037), RAM: 8192MB, Screen: 6.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q045, Retailer: HuaweiStore, Price: 800.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Honor_20 (P038), RAM: 6144MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q046, Retailer: HonorShop, Price: 250.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_11 (P039), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q047, Retailer: AppleStore, Price: 699.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_11_Pro (P040), RAM: 6144MB, Screen: 5.8", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q048, Retailer: AppleStore, Price: 799.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_Note20 (P041), RAM: 8192MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q049, Retailer: SamsungShop, Price: 850.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A72 (P042), RAM: 6144MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q050, Retailer: SamsungShop, Price: 400.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Pixel_4a (P043), RAM: 6144MB, Screen: 5.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q051, Retailer: Elisa, Price: 350.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Xperia_10_III (P044), RAM: 6144MB, Screen: 6.0", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q052, Retailer: SonyCenter, Price: 600.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: OnePlus_Nord (P045), RAM: 8192MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q053, Retailer: OnePlusStore, Price: 400.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Moto_G60 (P046), RAM: 6144MB, Screen: 6.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q054, Retailer: Euronics, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_XR (P047), RAM: 3072MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q055, Retailer: AppleStore, Price: 499.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_M31 (P048), RAM: 6144MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q056, Retailer: Telia, Price: 220.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_Note9 (P049), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q057, Retailer: MiStore, Price: 130.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_6 (P050), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q058, Retailer: RealmeShop, Price: 140.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_F3 (P051), RAM: 6144MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q059, Retailer: PocoShop, Price: 160.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_7.2 (P052), RAM: 4096MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q060, Retailer: Elisa, Price: 110.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_Reno5 (P053), RAM: 8192MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q061, Retailer: OppoStore, Price: 180.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_X60 (P054), RAM: 8192MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q062, Retailer: VivoStore, Price: 190.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_Zenfone7 (P055), RAM: 8192MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q063, Retailer: AsusShop, Price: 800.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_K52 (P056), RAM: 4096MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q064, Retailer: LGShop, Price: 300.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Huawei_P30 (P057), RAM: 6144MB, Screen: 6.1", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q065, Retailer: HuaweiStore, Price: 700.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Honor_9X (P058), RAM: 6144MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q066, Retailer: HonorShop, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_XS (P059), RAM: 4096MB, Screen: 5.8", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q067, Retailer: AppleStore, Price: 599.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_XS_Max (P060), RAM: 4096MB, Screen: 6.5", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q068, Retailer: AppleStore, Price: 699.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_S10 (P061), RAM: 8192MB, Screen: 6.1", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q069, Retailer: SamsungShop, Price: 750.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_S10e (P062), RAM: 6144MB, Screen: 5.8", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q070, Retailer: SamsungShop, Price: 350.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Pixel_3a (P063), RAM: 4096MB, Screen: 5.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q071, Retailer: Elisa, Price: 250.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Xperia_5_II (P064), RAM: 8192MB, Screen: 6.1", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q072, Retailer: SonyCenter, Price: 500.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: OnePlus_7T (P065), RAM: 8192MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q073, Retailer: OnePlusStore, Price: 300.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Moto_G9 (P066), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q074, Retailer: Euronics, Price: 100.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_8 (P067), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q075, Retailer: AppleStore, Price: 299.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A51 (P068), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q076, Retailer: Telia, Price: 200.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_8 (P069), RAM: 4096MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q077, Retailer: MiStore, Price: 120.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_C15 (P070), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q078, Retailer: RealmeShop, Price: 130.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_X2 (P071), RAM: 6144MB, Screen: 6.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q079, Retailer: PocoShop, Price: 140.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_2.4 (P072), RAM: 2048MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q080, Retailer: Elisa, Price: 90.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_A15 (P073), RAM: 3072MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q081, Retailer: OppoStore, Price: 110.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_Y12s (P074), RAM: 3072MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q082, Retailer: VivoStore, Price: 120.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_MaxProM2 (P075), RAM: 4096MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q083, Retailer: AsusShop, Price: 700.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_W41 (P076), RAM: 4096MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q084, Retailer: LGShop, Price: 250.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Huawei_Y9s (P077), RAM: 6144MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q085, Retailer: HuaweiStore, Price: 600.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Honor_8X (P078), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q086, Retailer: HonorShop, Price: 150.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_7 (P079), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q087, Retailer: AppleStore, Price: 199.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_7_Plus (P080), RAM: 3072MB, Screen: 5.5", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q088, Retailer: AppleStore, Price: 299.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A21s (P081), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q089, Retailer: SamsungShop, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_M21 (P082), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q090, Retailer: SamsungShop, Price: 100.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Pixel_2 (P083), RAM: 4096MB, Screen: 5.0", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q091, Retailer: Elisa, Price: 150.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Xperia_L4 (P084), RAM: 3072MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q092, Retailer: SonyCenter, Price: 400.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: OnePlus_6T (P085), RAM: 8192MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q093, Retailer: OnePlusStore, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Moto_G8 (P086), RAM: 4096MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q094, Retailer: Euronics, Price: 80.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_6S (P087), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q095, Retailer: AppleStore, Price: 99.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_J6 (P088), RAM: 3072MB, Screen: 5.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q096, Retailer: Telia, Price: 70.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_7 (P089), RAM: 3072MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q097, Retailer: MiStore, Price: 60.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_5 (P090), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q098, Retailer: RealmeShop, Price: 70.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_C3 (P091), RAM: 3072MB, Screen: 6.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q099, Retailer: PocoShop, Price: 80.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_1.4 (P092), RAM: 2048MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q100, Retailer: Elisa, Price: 50.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_A12 (P093), RAM: 3072MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q101, Retailer: OppoStore, Price: 60.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_Y11 (P094), RAM: 3072MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q102, Retailer: VivoStore, Price: 70.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_Lite_L1 (P095), RAM: 2048MB, Screen: 5.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q103, Retailer: AsusShop, Price: 300.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_K42 (P096), RAM: 3072MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q104, Retailer: LGShop, Price: 150.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Huawei_Y7 (P097), RAM: 3072MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q105, Retailer: HuaweiStore, Price: 200.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Honor_7A (P098), RAM: 2048MB, Screen: 5.7", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q106, Retailer: HonorShop, Price: 100.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: iPhone_6 (P099), RAM: 1024MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q107, Retailer: AppleStore, Price: 49.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Galaxy_A10 (P100), RAM: 2048MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q108, Retailer: SamsungShop, Price: 60.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Redmi_6 (P101), RAM: 3072MB, Screen: 5.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q109, Retailer: MiStore, Price: 55.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Realme_C3 (P102), RAM: 3072MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q110, Retailer: RealmeShop, Price: 65.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Poco_M2 (P103), RAM: 6144MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q111, Retailer: PocoShop, Price: 75.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Product: Nokia_5.3 (P104), RAM: 4096MB, Screen: 6.6", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q112, Retailer: Elisa, Price: 85.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Oppo_A31 (P105), RAM: 4096MB, Screen: 6.5", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q113, Retailer: OppoStore, Price: 95.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Vivo_Y91 (P106), RAM: 3072MB, Screen: 6.2", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q114, Retailer: VivoStore, Price: 105.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: Asus_ZenfoneMax (P107), RAM: 4096MB, Screen: 6.3", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q115, Retailer: AsusShop, Price: 205.00, Availability: in_stock
+
+[2025-04-22 16:30:20] EVENT: Product: LG_K30 (P108), RAM: 2048MB, Screen: 5.4", OS: Android
+
+[2025-04-22 16:30:20] EVENT:   Quote: Q116, Retailer: LGShop, Price: 120.00, Availability: order
+
+[2025-04-22 16:30:20] EVENT: Press any key to continue
+
+[2025-04-22 16:30:22] EVENT: 
+Main program menu
+
+[2025-04-22 16:30:22] EVENT: 	0 - Display all
+
+[2025-04-22 16:30:22] EVENT: 	1 - Edit product
+
+[2025-04-22 16:30:22] EVENT: 	2 - Search phones (more commands)
+
+[2025-04-22 16:30:22] EVENT: 	3 - Close menu (Main program menu)
+
+[2025-04-22 16:30:22] EVENT: Select an option (0-2): 
+[2025-04-22 16:30:24] EVENT: 
+program sub menu 1
+
+[2025-04-22 16:30:24] EVENT: 	0 - OS
+
+[2025-04-22 16:30:24] EVENT: 	1 - RAM (minimum MB)
+
+[2025-04-22 16:30:24] EVENT: 	2 - Screen size (minimum inches)
+
+[2025-04-22 16:30:24] EVENT: 	3 - Name contains
+
+[2025-04-22 16:30:24] EVENT: 	4 - Close menu (program sub menu 1)
+
+[2025-04-22 16:30:24] EVENT: Select an option (0-3): 
+[2025-04-22 16:30:25] EVENT: Enter search term (3)
+
+[2025-04-22 16:30:27] EVENT: 
+program sub menu 2
+
+[2025-04-22 16:30:27] EVENT: 	0 - OS
+
+[2025-04-22 16:30:27] EVENT: 	1 - RAM (minimum MB)
+
+[2025-04-22 16:30:27] EVENT: 	2 - Screen size (minimum inches)
+
+[2025-04-22 16:30:27] EVENT: 	3 - Name contains
+
+[2025-04-22 16:30:27] EVENT: 	4 - Close menu (program sub menu 2)
+
+[2025-04-22 16:30:27] EVENT: Select an option (0-3): 
+[2025-04-22 16:30:28] EVENT: Search results:
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_13 (P001), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_12 (P007), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_13_Pro (P019), RAM: 6144MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_SE (P027), RAM: 3072MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_11 (P039), RAM: 4096MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_XR (P047), RAM: 3072MB, Screen: 6.1", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_XS (P059), RAM: 4096MB, Screen: 5.8", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_8 (P067), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_7 (P079), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_6S (P087), RAM: 2048MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Product: iPhone_6 (P099), RAM: 1024MB, Screen: 4.7", OS: iOS
+
+[2025-04-22 16:30:28] EVENT: Press any key to continue
+
+[2025-04-22 16:30:32] EVENT: 
+Main program menu
+
+[2025-04-22 16:30:32] EVENT: 	0 - Display all
+
+[2025-04-22 16:30:32] EVENT: 	1 - Edit product
+
+[2025-04-22 16:30:32] EVENT: 	2 - Search phones (more commands)
+
+[2025-04-22 16:30:32] EVENT: 	3 - Close menu (Main program menu)
+
+[2025-04-22 16:30:32] EVENT: Select an option (0-2): 

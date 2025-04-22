@@ -3,6 +3,7 @@
 #include "../../include/dynamicarray.h"
 #include "../../include/menuoption/display_all.h"
 #include "../../include/phone.h"
+#include "../../include/logger.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,32 +56,32 @@ void search_phones() {
 
   char* search_term_1 = NULL;
   if (MenuPrompt(&menu1) == Ok) {
-    printf("Enter search term (%d)\n", menu1.option);
+    log_event("Enter search term (%d)\n", menu1.option);
     scanf("%ms", &search_term_1);
     // return;
   }
   char* search_term_2 = NULL;
   if (MenuPrompt(&menu2) == Ok) {
-    printf("Enter search term (%d)\n", menu2.option);
+    log_event("Enter search term (%d)\n", menu2.option);
     scanf("%ms", &search_term_2);
     // return;
   }
 
   int found = 0;
-  printf("Search results:\n");
+  log_event("Search results:\n");
   for (size_t i = 0; i < products.count; ++i) {
     Product* p = (Product*)products.data[i];
 
     if (product_has_stock(p, &quotes) &&
         (useMenuOptionField(menu1.option, search_term_1, p) &&
          useMenuOptionField(menu2.option, search_term_2, p))) {
-      printf("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
+      log_event("Product: %s (%s), RAM: %dMB, Screen: %.1f\", OS: %s\n", p->name,
              p->code, p->ram_mb, p->screen_size, p->os);
       found = 1;
     }
   }
   if (!found) {
-    printf("No matching products found.\n");
+    log_event("No matching products found.\n");
   }
   free(search_term_1);
   free(search_term_2);

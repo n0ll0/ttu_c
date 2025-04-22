@@ -1,8 +1,9 @@
 #include "waitForUser.h"
+#include "../include/logger.h"
 #include <stdio.h>
 
 void waitForUser() {
-	printf("Press any key to continue\n");
+	log_event("Press any key to continue\n");
 	getchar();
 	while (getchar() != 10);
 }

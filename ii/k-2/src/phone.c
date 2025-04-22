@@ -1,5 +1,6 @@
 #include "../include/phone.h"
 #include "../include/dynamicarray.h"
+#include "../include/logger.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,7 +51,7 @@ int load_quotes(const char* filename, DynamicPtrArray* arr) {
 int save_products(const char* filename, DynamicPtrArray* arr) {
   FILE* file = fopen(filename, "w");
   if (!file) {
-    printf("Error: Could not open %s for writing.\n", filename);
+    log_error("Error: Could not open %s for writing.\n", filename);
     return 0;
   }
   for (size_t i = 0; i < arr->count; ++i) {
@@ -66,7 +67,7 @@ int save_products(const char* filename, DynamicPtrArray* arr) {
 int save_quotes(const char* filename, DynamicPtrArray* arr) {
   FILE* file = fopen(filename, "w");
   if (!file) {
-    printf("Error: Could not open %s for writing.\n", filename);
+    log_error("Error: Could not open %s for writing.\n", filename);
     return 0;
   }
   for (size_t i = 0; i < arr->count; ++i) {
