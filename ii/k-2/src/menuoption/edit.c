@@ -19,9 +19,9 @@ void edit() {
     return;
   }
 
-  char id[256];
+  char id[16];
   log_event("Enter the id of the product or quote to edit: ");
-  scanf("%255s", id);
+  scanf("%15s", id);
 
   int found = 0;
 
@@ -61,6 +61,6 @@ void edit() {
   }
 
 
-  DynamicPtrArrayFree(&products);
   DynamicPtrArrayFree(&quotes);
+  DynamicPtrArrayFree(&products);
 }

@@ -39,8 +39,8 @@ void display_all() {
 
   if (products.count == 0) {
     log_event("No products found.\n");
-    DynamicPtrArrayFree(&products);
     DynamicPtrArrayFree(&quotes);
+    DynamicPtrArrayFree(&products);
     return;
   }
 
