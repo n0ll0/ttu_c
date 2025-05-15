@@ -1,2 +1,2 @@
--- Leia kõik õppeaineid, milles on eksam. Järjesta tulemused EAPde arvu alusel vähimast suurimani.
-SELECT name_et, credits, assesment_type FROM subjects WHERE assesment_type = 'exam' ORDER BY credits ASC;
+-- Leia kõik eksamiga õppeained, järjestatuna EAP järgi
+SELECT name_en, name_et, code, credits, assesment_type FROM subjects WHERE assesment_type = 'EXAM' ORDER BY credits ASC;

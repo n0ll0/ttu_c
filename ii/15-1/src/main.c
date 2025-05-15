@@ -66,13 +66,16 @@ int main(int argc, char* argv[]) {
     }
 
     // Lisa uus õppeaine (muuda väärtused enda ainele!)
-    const char* my_subject = "Elektroonika";
-    int my_eap = 6;
-    const char* my_exam = "idk"; // 1 = eksam, 0 = arvestus
+    // Uue mudeli järgi:
+    const char* my_name_en = "Electronics";
+    const char* my_name_et = "Elektroonika";
+    const char* my_code = "ELKT123";
+    int my_credits = 6;
+    const char* my_assesment_type = "EXAM";
     char* insert_subject_sql = read_sql_from_file(SQL_INSERT_SUBJECT);
     if (insert_subject_sql) {
-        char query[512];
-        snprintf(query, sizeof(query), insert_subject_sql, my_subject, my_eap, my_exam, my_subject);
+        char query[1024];
+        snprintf(query, sizeof(query), insert_subject_sql, my_name_en, my_name_et, my_code, my_credits, my_assesment_type, my_code);
         char* errMsg = 0;
         if (sqlite3_exec(db, query, 0, 0, &errMsg) != SQLITE_OK) {
             fprintf(stderr, "SQL error: %s\n", errMsg);
@@ -82,16 +85,16 @@ int main(int argc, char* argv[]) {
     }
 
     // Lisa endale 3 deklaratsiooni (üks enda ainele, kaks olemasolevatele)
-    struct { const char* subject; int grade; } decls[] = {
-        { my_subject, 5 },
-        { "Matemaatika", 4 }, // olemasolev aine
-        { "Andmebaasid", 3 }  // olemasolev aine
+    struct { const char* subject_code; int grade; } decls[] = {
+        { my_code, 5 },
+        { "MAT123", 4 }, // olemasolev aine kood
+        { "DBAS123", 3 }  // olemasolev aine kood
     };
     for (int i = 0; i < 3; ++i) {
         char* insert_decl_sql = read_sql_from_file(SQL_INSERT_DECLARATION);
         if (insert_decl_sql) {
             char query[512];
-            snprintf(query, sizeof(query), insert_decl_sql, decls[i].grade, my_eid, decls[i].subject);
+            snprintf(query, sizeof(query), insert_decl_sql, decls[i].grade, my_eid, decls[i].subject_code);
             char* errMsg = 0;
             if (sqlite3_exec(db, query, 0, 0, &errMsg) != SQLITE_OK) {
                 fprintf(stderr, "SQL error: %s\n", errMsg);
