@@ -4,13 +4,13 @@
 #include <sqlite3.h>
 #include "db_utils.h"
 
-#define SQL_INSERT_STUDENT "d:/Code/c/ttu-c/ii/15-1/db_querys/insert/student.sql"
-#define SQL_INSERT_SUBJECT "d:/Code/c/ttu-c/ii/15-1/db_querys/insert/subjects.sql"
-#define SQL_INSERT_DECLARATION "d:/Code/c/ttu-c/ii/15-1/db_querys/insert/declarations.sql"
-#define SQL_SELECT_STUDENTS "d:/Code/c/ttu-c/ii/15-1/db_querys/select/students.sql"
-#define SQL_SELECT_SUBJECTS "d:/Code/c/ttu-c/ii/15-1/db_querys/select/subjects.sql"
-#define SQL_SELECT_DECLARATIONS "d:/Code/c/ttu-c/ii/15-1/db_querys/select/declarations.sql"
-#define SQL_SELECT_JOINED "d:/Code/c/ttu-c/ii/15-1/db_querys/other/selectJOINED.sql"
+#define SQL_INSERT_STUDENT "db_querys/insert/student.sql"
+#define SQL_INSERT_SUBJECT "db_querys/insert/subjects.sql"
+#define SQL_INSERT_DECLARATION "db_querys/insert/declarations.sql"
+#define SQL_SELECT_STUDENTS "db_querys/select/students.sql"
+#define SQL_SELECT_SUBJECTS "db_querys/select/subjects.sql"
+#define SQL_SELECT_DECLARATIONS "db_querys/select/declarations.sql"
+#define SQL_SELECT_JOINED "db_querys/other/selectJOINED.sql"
 
 int print_callback(void* NotUsed, int argc, char** argv, char** azColName) {
     for (int i = 0; i < argc; i++) {
@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 1;
     }
-    printf("\nwe work yes\n");
+    printf("\nwe work yes 2\n");
 
     // Example: SELECT all students
     char* sql = read_sql_from_file(SQL_SELECT_STUDENTS);
@@ -66,9 +66,9 @@ int main(int argc, char* argv[]) {
     }
 
     // Lisa uus õppeaine (muuda väärtused enda ainele!)
-    const char* my_subject = "SINU_AINE";
+    const char* my_subject = "Elektroonika";
     int my_eap = 6;
-    int my_exam = 1; // 1 = eksam, 0 = arvestus
+    const char* my_exam = "idk"; // 1 = eksam, 0 = arvestus
     char* insert_subject_sql = read_sql_from_file(SQL_INSERT_SUBJECT);
     if (insert_subject_sql) {
         char query[512];
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 
     // --- Ülesanne 2: Andmete pärimine ---
     // 2.1 Päring 1: Leia kõik õppeained, mis on vähem kui 6 EAPd
-    char* sql1 = read_sql_from_file("d:/Code/c/ttu-c/ii/15-1/db_querys/select/subjects_less_than_6_eap.sql");
+    char* sql1 = read_sql_from_file("db_querys/select/subjects_less_than_6_eap.sql");
     if (sql1) {
         printf("\nÕppeained < 6 EAP:\n");
         char* errMsg = 0;
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
         free(sql1);
     }
     // 2.1 Päring 2: Leia kõik eksamiga õppeained, järjestatud EAP järgi
-    char* sql2 = read_sql_from_file("d:/Code/c/ttu-c/ii/15-1/db_querys/select/subjects_with_exam_ordered.sql");
+    char* sql2 = read_sql_from_file("db_querys/select/subjects_with_exam_ordered.sql");
     if (sql2) {
         printf("\nÕppeained eksamiga (EAP järgi):\n");
         char* errMsg = 0;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
         free(sql2);
     }
     // 2.2 Päring 1: Leia õppuri 'Marko' kõik hinded
-    char* sql3 = read_sql_from_file("d:/Code/c/ttu-c/ii/15-1/db_querys/select/marko_grades.sql");
+    char* sql3 = read_sql_from_file("db_querys/select/marko_grades.sql");
     if (sql3) {
         printf("\nMarko hinded:\n");
         char* errMsg = 0;
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
         free(sql3);
     }
     // 2.2 Päring 2: Leia kõik õppeained, mis sa oled sooritanud (enda eID)
-    char* sql4 = read_sql_from_file("d:/Code/c/ttu-c/ii/15-1/db_querys/select/my_subjects_with_grades.sql");
+    char* sql4 = read_sql_from_file("db_querys/select/my_subjects_with_grades.sql");
     if (sql4) {
         char query[512];
         snprintf(query, sizeof(query), sql4, my_eid);
@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
         free(sql4);
     }
     // 2.3: Leia iga tudengi poolt teenitud EAP ja keskmine hinne
-    char* sql5 = read_sql_from_file("d:/Code/c/ttu-c/ii/15-1/db_querys/select/students_eap_and_avg_grade.sql");
+    char* sql5 = read_sql_from_file("db_querys/select/students_eap_and_avg_grade.sql");
     if (sql5) {
         printf("\nTudengite EAP ja keskmine hinne:\n");
         char* errMsg = 0;
