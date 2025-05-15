@@ -1,8 +1,8 @@
 # Compiler
-CC = gcc
+CC = gcc -lsqlite3
 
 # Compiler flags
-CFLAGS = -Iinclude -Wall -Wextra -O3 -lsqlite3
+CFLAGS = -Iinclude -Wall -Wextra -O3
 
 DEBUG_FLAGS = -g
 RELEASE_FLAGS = -O2

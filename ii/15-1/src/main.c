@@ -12,11 +12,12 @@
 #define SQL_SELECT_DECLARATIONS "d:/Code/c/ttu-c/ii/15-1/db_querys/select/declarations.sql"
 #define SQL_SELECT_JOINED "d:/Code/c/ttu-c/ii/15-1/db_querys/other/selectJOINED.sql"
 
-void print_callback(void* NotUsed, int argc, char** argv, char** azColName) {
+int print_callback(void* NotUsed, int argc, char** argv, char** azColName) {
     for (int i = 0; i < argc; i++) {
         printf("%s: %s\t", azColName[i], argv[i] ? argv[i] : "NULL");
     }
     printf("\n");
+    return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -24,12 +25,14 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Usage: %s <database_path>\n", argv[0]);
         return 1;
     }
+    printf("\nwe work yes\n");
     const char* db_path = argv[1];
     sqlite3* db;
     if (sqlite3_open(db_path, &db)) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 1;
     }
+    printf("\nwe work yes\n");
 
     // Example: SELECT all students
     char* sql = read_sql_from_file(SQL_SELECT_STUDENTS);
@@ -45,10 +48,10 @@ int main(int argc, char* argv[]) {
 
     // --- Ülesanne 1: Lisa iseennast andmebaasi ---
     // Muuda need väärtused enda andmetega!
-    const char* my_eid = "SINU_EID";
-    const char* my_fname = "SINU_EESNIMI";
-    const char* my_lname = "SINU_PERENIMI";
-    const char* my_uniid = "SINU_UNIID";
+    const char* my_eid = "50503290316";
+    const char* my_fname = "Uko";
+    const char* my_lname = "Poschlin";
+    const char* my_uniid = "244508IACB";
 
     char* insert_student_sql = read_sql_from_file(SQL_INSERT_STUDENT);
     if (insert_student_sql) {
