@@ -1,0 +1,17 @@
+Maja Tallinn 6000 1800 900 45 11000
+Koda Tartu 0 7200 900 40 9400
+Tare Parnu 5400 0 300 12 8000
+Kaste Narva 5200 2200 1125 53 7400
+Saun Viljandi 0 8200 500 50 9600
+Veski Tallinn 4200 1600 825 42 11000
+Laut Tartu 0 2900 0 0 0
+Rehi Parnu 1500 0 0 0 0
+Ait Narva 4400 0 1005 50 8600
+Kuur Tallinn 1900 500 0 0 0
+Paju Tartu 5000 2000 870 44 7200
+Kelder Narva 0 3500 0 0 0
+Allik Viljandi 5600 1600 930 47 8000
+Saar Tallinn 0 3000 490 22 9200
+Juga Parnu 6300 1900 915 48 7300
+Parkla1 Tallinn 0 0 5000 300 10000
+Parkla2 Narva 0 0 8000 500 8500
