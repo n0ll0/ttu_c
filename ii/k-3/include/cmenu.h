@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 /** Check this before compilation */
-#define MAX_MENU_OPTIONS 5
+#define MAX_MENU_OPTIONS 6
 
 typedef struct {
   char* preview;

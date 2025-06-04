@@ -1,6 +1,7 @@
 #include "../include/purchase_ops.h"
 #include <sqlite3.h>
 #include <stdio.h>
+#include <string.h>
 
 // Helper: Validate positive integer
 int validate_positive_int(int value) { return value >= 0; }
@@ -83,27 +84,22 @@ void delete_purchase(sqlite3* db) {
   sqlite3_finalize(stmt);
 }
 
-// Menu for add/modify/delete
+// Menu for add/modify/delete using Menu struct and MenuPrompt
 void purchase_ops_menu(sqlite3* db) {
-  int op;
-  do {
-    printf("\n1. Add purchase\n2. Modify purchase\n3. Delete purchase\n0. "
-           "Back\nChoose: ");
-    scanf("%d", &op);
-    switch (op) {
-    case 1:
-      add_purchase(db);
-      break;
-    case 2:
-      modify_purchase(db);
-      break;
-    case 3:
-      delete_purchase(db);
-      break;
-    case 0:
-      break;
-    default:
-      printf("Invalid.\n");
+  Menu menu = PURCHASE_OPS_MENU;
+  while (MenuPrompt(&menu) == Ok) {
+    switch (menu.option) {
+      case PURCHASE_OPS_ADD:
+        add_purchase(db);
+        break;
+      case PURCHASE_OPS_MODIFY:
+        modify_purchase(db);
+        break;
+      case PURCHASE_OPS_DELETE:
+        delete_purchase(db);
+        break;
+      default:
+        return;
     }
-  } while (op != 0);
+  }
 }

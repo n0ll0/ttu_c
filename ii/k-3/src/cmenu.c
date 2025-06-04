@@ -26,3 +26,4 @@ FUNCTION_STATUS MenuPrompt(Menu* m) {
 
   return Ok;
 }
+
