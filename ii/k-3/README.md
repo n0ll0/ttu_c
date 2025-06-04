@@ -4,7 +4,18 @@
 **Course:** IAX0584 Programming II  
 **Topic:** SQL, C, sqlite3
 
+## How to Run
+
+To build and run the program with the provided database, use the following commands:
+
+```sh
+make clean
+make
+bin/my_program.exe ./db/shop1.db
+```
+
 ## Overview
+
 You are developing software for a retail store chain. Your goal is to make a system for analyzing clients’ shopping habits using an SQLite database and C (`sqlite3.h`).
 
 ## Data Structure
@@ -45,7 +56,3 @@ The database consists of the following tables:
 
 You can use the following database for testing:
 [shop1.db](https://blue.pri.ee/ttu/files/db/shop1.db)
-
-## Contact
-
-For questions, contact: rene.pihlak@taltech.ee

@@ -1,9 +1,6 @@
 # Compiler
 CC = gcc 
 
-# Compiler flags
-CFLAGS = -Iinclude -Ilibs -Wall -Wextra -lsqlite3
-
 DEBUG_FLAGS = -g
 RELEASE_FLAGS = -O2
 
@@ -12,6 +9,9 @@ SRC_DIR = src
 LIBS_DIR = libs
 OBJ_DIR = obj
 BIN_DIR = bin
+
+# Compiler flags
+CFLAGS = -Iinclude -I${LIBS_DIR} -Wall -Wextra -lsqlite3
 
 # Source files
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.c)

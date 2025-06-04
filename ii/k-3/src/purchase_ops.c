@@ -1,4 +1,5 @@
 #include "../include/purchase_ops.h"
+#include "../include/logger.h"
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string.h>
@@ -45,7 +46,7 @@ void modify_purchase(sqlite3* db) {
   printf("Enter new amount: ");
   scanf("%d", &amount);
   if (!validate_positive_int(amount)) {
-    printf("Amount must be non-negative.\n");
+    log_error("Amount must be non-negative.\n");
     return;
   }
   const char* sql = "UPDATE PURCHASES SET amount = ? WHERE id = ?;";
@@ -57,9 +58,9 @@ void modify_purchase(sqlite3* db) {
   sqlite3_bind_int(stmt, 1, amount);
   sqlite3_bind_int(stmt, 2, id);
   if (sqlite3_step(stmt) != SQLITE_DONE) {
-    printf("Update failed: %s\n", sqlite3_errmsg(db));
+    log_error("Update failed: %s\n", sqlite3_errmsg(db));
   } else {
-    printf("Purchase updated.\n");
+    log_event("Purchase updated.\n");
   }
   sqlite3_finalize(stmt);
 }
@@ -72,14 +73,14 @@ void delete_purchase(sqlite3* db) {
   const char* sql = "DELETE FROM PURCHASES WHERE id = ?;";
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
-    printf("Prepare failed: %s\n", sqlite3_errmsg(db));
+    log_error("Prepare failed: %s\n", sqlite3_errmsg(db));
     return;
   }
   sqlite3_bind_int(stmt, 1, id);
   if (sqlite3_step(stmt) != SQLITE_DONE) {
-    printf("Delete failed: %s\n", sqlite3_errmsg(db));
+    log_error("Delete failed: %s\n", sqlite3_errmsg(db));
   } else {
-    printf("Purchase deleted.\n");
+    log_event("Purchase deleted.\n");
   }
   sqlite3_finalize(stmt);
 }

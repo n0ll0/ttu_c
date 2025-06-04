@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <sqlite3.h>
 #include <string.h>
+#include "../include/logger.h"
 
 /**
  * @brief Prints all purchases grouped by clients.
@@ -26,10 +27,11 @@ void print_purchases_grouped_by_clients(sqlite3* db) {
         "ORDER BY client_name;";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
-        printf("Failed to prepare statement.\n");
+        log_error("Failed to prepare statement.\n");
         return;
     }
     char last_client[128] = "";
+    char buffer[256];
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *client = (const char*)sqlite3_column_text(stmt, 0);
         int purchase_id = sqlite3_column_int(stmt, 1);
@@ -37,12 +39,15 @@ void print_purchases_grouped_by_clients(sqlite3* db) {
         double amount = sqlite3_column_double(stmt, 3);
 
         if (strcmp(last_client, client) != 0) {
-            printf("\nClient: %s\n", client);
-            printf("  %-10s %-8s %-10s\n", "PurchaseID", "ShopID", "Amount");
+            snprintf(buffer, sizeof(buffer), "\nClient: %s\n", client);
+            log_event(buffer);
+            snprintf(buffer, sizeof(buffer), "  %-10s %-8s %-10s\n", "PurchaseID", "ShopID", "Amount");
+            log_event(buffer);
             strncpy(last_client, client, sizeof(last_client));
             last_client[sizeof(last_client)-1] = '\0';
         }
-        printf("  %-10d %-8d %-10.2f\n", purchase_id, shop_id, amount);
+        snprintf(buffer, sizeof(buffer), "  %-10d %-8d %-10.2f\n", purchase_id, shop_id, amount);
+        log_event(buffer);
     }
     sqlite3_finalize(stmt);
 }
@@ -60,14 +65,17 @@ void print_avg_spending_by_client(sqlite3* db) {
         "ORDER BY client_name;";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
-        printf("Failed to prepare statement.\n");
+        log_error("Failed to prepare statement.\n");
         return;
     }
-    printf("%-30s %-10s\n", "Client", "Avg Amount");
+    char buffer[256];
+    snprintf(buffer, sizeof(buffer), "%-30s %-10s\n", "Client", "Avg Amount");
+    log_event(buffer);
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *client = (const char*)sqlite3_column_text(stmt, 0);
         double avg = sqlite3_column_double(stmt, 1);
-        printf("%-30s %-10.2f\n", client, avg);
+        snprintf(buffer, sizeof(buffer), "%-30s %-10.2f\n", client, avg);
+        log_event(buffer);
     }
     sqlite3_finalize(stmt);
 }
@@ -87,15 +95,18 @@ void print_avg_spending_by_client_per_shop(sqlite3* db) {
         "ORDER BY client_name, shops.name;";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
-        printf("Failed to prepare statement.\n");
+        log_error("Failed to prepare statement.\n");
         return;
     }
-    printf("%-30s %-20s %-10s\n", "Client", "Shop", "Avg Amount");
+    char buffer[256];
+    snprintf(buffer, sizeof(buffer), "%-30s %-20s %-10s\n", "Client", "Shop", "Avg Amount");
+    log_event(buffer);
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *client = (const char*)sqlite3_column_text(stmt, 0);
         const char *shop = (const char*)sqlite3_column_text(stmt, 1);
         double avg = sqlite3_column_double(stmt, 2);
-        printf("%-30s %-20s %-10.2f\n", client, shop, avg);
+        snprintf(buffer, sizeof(buffer), "%-30s %-20s %-10.2f\n", client, shop, avg);
+        log_event(buffer);
     }
     sqlite3_finalize(stmt);
 }
@@ -114,15 +125,18 @@ void print_top10_clients_overall(sqlite3* db) {
         "LIMIT 10;";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
-        printf("Failed to prepare statement.\n");
+        log_error("Failed to prepare statement.\n");
         return;
     }
-    printf("%-3s %-30s %-10s\n", "No", "Client", "Total");
+    char buffer[256];
+    snprintf(buffer, sizeof(buffer), "%-3s %-30s %-10s\n", "No", "Client", "Total");
+    log_event(buffer);
     int rank = 1;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *client = (const char*)sqlite3_column_text(stmt, 0);
         double total = sqlite3_column_double(stmt, 1);
-        printf("%-3d %-30s %-10.2f\n", rank++, client, total);
+        snprintf(buffer, sizeof(buffer), "%-3d %-30s %-10.2f\n", rank++, client, total);
+        log_event(buffer);
     }
     sqlite3_finalize(stmt);
 }
@@ -142,10 +156,11 @@ void print_top10_clients_per_shop(sqlite3* db) {
         "ORDER BY shops.name, total DESC;";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
-        printf("Failed to prepare statement.\n");
+        log_error("Failed to prepare statement.\n");
         return;
     }
     char last_shop[128] = "";
+    char buffer[256];
     int rank = 1;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *shop = (const char*)sqlite3_column_text(stmt, 0);
@@ -153,15 +168,18 @@ void print_top10_clients_per_shop(sqlite3* db) {
         double total = sqlite3_column_double(stmt, 2);
 
         if (strcmp(last_shop, shop) != 0) {
-            if (last_shop[0] != '\0') printf("\n");
-            printf("Shop: %s\n", shop);
-            printf("%-3s %-30s %-10s\n", "No", "Client", "Total");
+            if (last_shop[0] != '\0') log_event("\n");
+            snprintf(buffer, sizeof(buffer), "Shop: %s\n", shop);
+            log_event(buffer);
+            snprintf(buffer, sizeof(buffer), "%-3s %-30s %-10s\n", "No", "Client", "Total");
+            log_event(buffer);
             rank = 1;
             strncpy(last_shop, shop, sizeof(last_shop));
             last_shop[sizeof(last_shop)-1] = '\0';
         }
         if (rank <= 10) {
-            printf("%-3d %-30s %-10.2f\n", rank, client, total);
+            snprintf(buffer, sizeof(buffer), "%-3d %-30s %-10.2f\n", rank, client, total);
+            log_event(buffer);
         }
         rank++;
     }

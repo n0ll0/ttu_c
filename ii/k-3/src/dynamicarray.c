@@ -3,6 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief Pushes a pointer onto the dynamic pointer array.
+ *
+ * Adds the pointer referenced by `ptr` to the end of the `DynamicPtrArray`.
+ * If the array is full, its capacity is increased.
+ *
+ * @param dpa Pointer to the DynamicPtrArray structure.
+ * @param ptr Address of the pointer to be added (i.e., pointer to void*).
+ * @return FUNCTION_STATUS Ok if successful, Error if `ptr` is NULL.
+ */
 FUNCTION_STATUS DynamicPtrArrayPush(DynamicPtrArray* dpa, void** ptr) {
   // printf("push %p\n", ptr);
   if (ptr == NULL) {
@@ -23,6 +33,16 @@ FUNCTION_STATUS DynamicPtrArrayPush(DynamicPtrArray* dpa, void** ptr) {
   return Ok;
 }
 
+/**
+ * @brief Pops (removes and frees) the last pointer from the dynamic pointer
+ * array.
+ *
+ * Frees the memory pointed to by the last element in the array and removes it
+ * from the array. If the array is empty, does nothing.
+ *
+ * @param dpa Pointer to the DynamicPtrArray structure.
+ * @return FUNCTION_STATUS Ok.
+ */
 FUNCTION_STATUS DynamicPtrArrayPop(DynamicPtrArray* dpa) {
   if (dpa->data == NULL) {
     return Ok;
@@ -33,6 +53,16 @@ FUNCTION_STATUS DynamicPtrArrayPop(DynamicPtrArray* dpa) {
   return Ok;
 }
 
+/**
+ * @brief Frees all pointers and memory associated with the dynamic pointer
+ * array.
+ *
+ * Iteratively pops and frees all pointers stored in the array, then frees the
+ * array itself. Resets the array's data pointer, capacity, and count to zero.
+ *
+ * @param dpa Pointer to the DynamicPtrArray structure.
+ * @return FUNCTION_STATUS Ok.
+ */
 FUNCTION_STATUS DynamicPtrArrayFree(DynamicPtrArray* dpa) {
   if (dpa->data == NULL) {
     return Ok;
